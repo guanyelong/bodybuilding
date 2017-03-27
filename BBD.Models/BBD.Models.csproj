@@ -30,8 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,7 +48,230 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BodyDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodyDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BodyDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BodyDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodyDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Consume_Log.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Dict.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Emp_Hos.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Hei_Wei.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Hosp_Info.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Serv_Info.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Serv_POF.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sms_Down.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sms_report.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sms_Tpl.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sms_up.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_Department.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_log.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_LoginLog.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_MenuInfo.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_Notice.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_Permission.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_Role.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_RolePermission.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_UserInfo.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_UserRole.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Sys_UserVipPermission.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_User_Account.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_User_Buy_Rec.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_User_Dislike_Food.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_User_Info.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Weight_Chg.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\tb_Weight_Chg_Self.cs">
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PocoModel\ExtensionModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExtensionModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tb_Consume_Log.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Dict.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Emp_Hos.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Hei_Wei.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Hosp_Info.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Serv_Info.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Serv_POF.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sms_Down.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sms_report.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sms_Tpl.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sms_up.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_Department.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_log.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_LoginLog.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_MenuInfo.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_Notice.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_Permission.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_Role.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_RolePermission.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_UserInfo.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_UserRole.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Sys_UserVipPermission.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_User_Account.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_User_Buy_Rec.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_User_Dislike_Food.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_User_Info.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Weight_Chg.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tb_Weight_Chg_Self.cs">
+      <DependentUpon>BodyDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="BodyDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BodyDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="BodyDB.edmx.diagram">
+      <DependentUpon>BodyDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BodyDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BodyDB.edmx</DependentUpon>
+      <LastGenOutput>BodyDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="BodyDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BodyDB.edmx</DependentUpon>
+      <LastGenOutput>BodyDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="PocoModel\ExtensionModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExtensionModels.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ModelExtension\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

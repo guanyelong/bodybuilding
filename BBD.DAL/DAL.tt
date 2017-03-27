@@ -1,0 +1,46 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#@
+ output extension=".cs"#>
+ <#
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this, 1);
+MetadataTools ef = new MetadataTools(this);
+
+string inputFile = @"../BBD.Models/BodyDB.edmx";    
+
+Dictionary<string,EdmItemCollection> dict=new Dictionary<string,EdmItemCollection> ();
+	string [] arryFile=inputFile.Split(';');
+    for (int i = 0; i < arryFile.Length; i++)
+    {
+			 string icon=arryFile[i].Substring(arryFile[i].LastIndexOf("/")+1,2);
+			 EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(arryFile[i]);
+			 dict.Add(icon,ItemCollection);
+    }
+string namespaceName = code.VsNamespaceSuggestion();
+
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+
+#>
+using System; 
+using System.Collections.Generic;    
+using System.Linq; 
+using System.Text;
+using BBD.Models;  
+using BBD.IDAL; 
+namespace BBD.DAL 
+{ 
+<#
+	foreach (KeyValuePair<string, EdmItemCollection> kv in dict)  {
+// Emit Entity Types
+foreach (EntityType entity in kv.Value.GetItems<EntityType>().OrderBy(e => e.Name))
+{
+    //fileManager.StartNewFile(entity.Name + "RepositoryExt.cs");
+    //BeginNamespace(namespaceName, code);
+    
+#>
+	public partial class <#=entity.Name#>_<#=kv.Key#>_DAL : BaseDAL<<#=entity.Name#>>,I<#=entity.Name#>_<#=kv.Key#>_DAL
+    {
+    }
+<#}}#>
+}

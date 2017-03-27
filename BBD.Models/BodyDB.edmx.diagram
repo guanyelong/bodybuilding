@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f6c47402ab2c43749d02dcdaaab29df9" Name="Diagram1">
+        <EntityTypeShape EntityType="BXUUModel.tb_Consume_Log" Width="1.5" PointX="6.875" PointY="0.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Dict" Width="1.5" PointX="7.25" PointY="7.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Emp_Hos" Width="1.5" PointX="6.5" PointY="4.125" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Hei_Wei" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Hosp_Info" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Serv_Info" Width="1.5" PointX="2.75" PointY="4" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Serv_POF" Width="1.5" PointX="4.75" PointY="4.125" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sms_Down" Width="1.5" PointX="2.625" PointY="9.875" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sms_report" Width="1.5" PointX="7.25" PointY="10.625" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sms_Tpl" Width="1.5" PointX="4.875" PointY="10.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sms_up" Width="1.5" PointX="0.5" PointY="10.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_Department" Width="1.5" PointX="10.125" PointY="14.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_MenuInfo" Width="1.5" PointX="9.5" PointY="10.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_Permission" Width="1.5" PointX="0.5" PointY="14.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_Role" Width="1.5" PointX="14" PointY="14.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_RolePermission" Width="1.5" PointX="12" PointY="14.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_UserInfo" Width="1.5" PointX="2.25" PointY="14.375" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_UserRole" Width="1.5" PointX="4.125" PointY="14.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_UserVipPermission" Width="1.5" PointX="6.125" PointY="14.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_User_Account" Width="1.5" PointX="9.75" PointY="4.25" />
+        <EntityTypeShape EntityType="BXUUModel.tb_User_Buy_Rec" Width="1.5" PointX="11.5" PointY="4.25" />
+        <EntityTypeShape EntityType="BXUUModel.tb_User_Dislike_Food" Width="1.5" PointX="11.5" PointY="0.75" />
+        <EntityTypeShape EntityType="BXUUModel.tb_User_Info" Width="1.5" PointX="8.125" PointY="14.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Weight_Chg" Width="1.5" PointX="2.625" PointY="0.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Weight_Chg_Self" Width="1.5" PointX="4.75" PointY="0.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_log" Width="1.5" PointX="10.875" PointY="7.75" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_LoginLog" Width="1.5" PointX="9" PointY="7.625" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_Notice" Width="1.5" PointX="0.5" PointY="19.5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

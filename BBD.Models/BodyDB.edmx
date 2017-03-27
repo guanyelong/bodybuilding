@@ -1,0 +1,1432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BXUUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_Consume_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="rec_date" Type="date" />
+          <Property Name="num" Type="int" />
+          <Property Name="flag" Type="int" />
+          <Property Name="creatorid" Type="int" />
+          <Property Name="creator" Type="varchar" MaxLength="50" />
+          <Property Name="c_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Dict">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KeyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KeyWords" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="KeyValue" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Seq" Type="float" />
+          <Property Name="C_Time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="state" Type="int" />
+          <Property Name="mark" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Emp_Hos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_id" Type="int" />
+          <Property Name="hospid" Type="int" />
+          <Property Name="creatorid" Type="int" />
+          <Property Name="creator" Type="varchar" MaxLength="50" />
+          <Property Name="c_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Hei_Wei">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Female" Type="varchar" MaxLength="20" />
+          <Property Name="Height" Type="float" />
+          <Property Name="St_weight" Type="float" />
+          <Property Name="Pt_weight" Type="float" />
+          <Property Name="WC" Type="float" />
+          <Property Name="Hipline" Type="float" />
+          <Property Name="Thigh_Cir" Type="float" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Hosp_Info">
+          <Key>
+            <PropertyRef Name="HospId" />
+          </Key>
+          <Property Name="HospId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hname" Type="varchar" MaxLength="100" />
+          <Property Name="address" Type="varchar" MaxLength="200" />
+          <Property Name="MapUrl" Type="varchar" MaxLength="200" />
+          <Property Name="tel" Type="varchar" MaxLength="50" />
+          <Property Name="sType" Type="int" />
+          <Property Name="traffic" Type="varchar" MaxLength="500" />
+          <Property Name="grade" Type="int" />
+          <Property Name="state" Type="int" />
+          <Property Name="CityId" Type="varchar" MaxLength="10" />
+          <Property Name="C_Time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="ModLastTime" Type="datetime" />
+          <Property Name="intro" Type="ntext" />
+          <Property Name="ModfyId" Type="int" />
+          <Property Name="IsDel" Type="int" />
+          <Property Name="PyShort" Type="varchar" MaxLength="20" />
+          <Property Name="PyLong" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tb_Serv_Info">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServId" Type="int" Nullable="false" />
+          <Property Name="ServName" Type="varchar" MaxLength="200" />
+          <Property Name="ServMemo" Type="varchar" MaxLength="1000" />
+          <Property Name="ServType" Type="varchar" MaxLength="10" />
+          <Property Name="state" Type="int" />
+          <Property Name="price" Type="money" />
+          <Property Name="CTime" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="IsDel" Type="int" />
+          <Property Name="LastModTime" Type="datetime" />
+          <Property Name="ModifyId" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_Serv_POF">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServId" Type="int" />
+          <Property Name="TouchFlag" Type="int" />
+          <Property Name="Times" Type="int" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Sms_Down">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="msg" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="creatorId" Type="int" />
+          <Property Name="creator" Type="varchar" MaxLength="50" />
+          <Property Name="c_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="sendFlag" Type="int" />
+          <Property Name="errMsg" Type="nvarchar" MaxLength="100" />
+          <Property Name="sendTime" Type="datetime" />
+          <Property Name="stype" Type="int" />
+          <Property Name="pipeId" Type="int" />
+          <Property Name="levelNum" Type="int" />
+          <Property Name="exId" Type="varchar" MaxLength="50" />
+          <Property Name="sysPlatform" Type="int" />
+          <Property Name="M_NO" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Sms_report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="R_time" Type="datetime" />
+          <Property Name="pipeId" Type="int" />
+          <Property Name="errMsg" Type="nvarchar" MaxLength="50" />
+          <Property Name="M_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="S_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Sms_Tpl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sms" Type="varchar" MaxLength="500" />
+          <Property Name="state" Type="int" />
+          <Property Name="creatorid" Type="int" />
+          <Property Name="creator" Type="varchar" MaxLength="50" />
+          <Property Name="c_time" Type="date" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Sms_up">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="msg" Type="nvarchar" MaxLength="500" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="S_time" Type="datetime" />
+          <Property Name="PipeId" Type="int" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="M_no" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Department">
+          <Key>
+            <PropertyRef Name="DepId" />
+          </Key>
+          <Property Name="DepId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepPId" Type="int" />
+          <Property Name="DepName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Depremark" Type="varchar" MaxLength="100" />
+          <Property Name="DepIsDel" Type="int" />
+          <Property Name="DepAddtime" Type="datetime" />
+          <Property Name="CityId" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DepNum" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“BXUU.dbo.tb_Sys_log”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="tb_Sys_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Thread" Type="varchar" MaxLength="100" />
+          <Property Name="Level" Type="varchar" MaxLength="100" />
+          <Property Name="Logger" Type="varchar" MaxLength="100" />
+          <Property Name="Message" Type="varchar" MaxLength="100" />
+          <Property Name="Exception" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“BXUU.dbo.tb_Sys_LoginLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="tb_Sys_LoginLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="loginName" Type="varchar" MaxLength="50" />
+          <Property Name="loginCity" Type="varchar" MaxLength="50" />
+          <Property Name="loginTime" Type="datetime" />
+          <Property Name="LoginIp" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Sys_MenuInfo">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mNum" Type="varchar" MaxLength="50" />
+          <Property Name="mPId" Type="int" />
+          <Property Name="mText" Type="varchar" MaxLength="200" />
+          <Property Name="mUrl" Type="varchar" MaxLength="200" />
+          <Property Name="mIcon" Type="varchar" MaxLength="200" />
+          <Property Name="mAddtime" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="mState" Type="varchar" MaxLength="20" />
+          <Property Name="mChecked" Type="bit" />
+          <Property Name="mSeq" Type="float" />
+          <Property Name="mPerNum" Type="varchar" MaxLength="50" />
+          <Property Name="mOrderindex" Type="float" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“BXUU.dbo.tb_Sys_Notice”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="tb_Sys_Notice">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contents" Type="nvarchar(max)" />
+          <Property Name="Hot" Type="int" />
+          <Property Name="Seq" Type="float" />
+          <Property Name="ClickNum" Type="int" />
+          <Property Name="IsDel" Type="int" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="C_Time" Type="smalldatetime" />
+          <Property Name="ShowImgUrl" Type="nvarchar" MaxLength="300" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="450" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsPush" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Permission">
+          <Key>
+            <PropertyRef Name="pId" />
+          </Key>
+          <Property Name="pId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pParentId" Type="int" Nullable="false" />
+          <Property Name="pName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pAreaName" Type="varchar" MaxLength="50" />
+          <Property Name="pControllerName" Type="varchar" MaxLength="150" />
+          <Property Name="pActionMenu" Type="int" />
+          <Property Name="pActionNum" Type="varchar" MaxLength="50" />
+          <Property Name="PActionName" Type="varchar" MaxLength="50" />
+          <Property Name="pFormMethod" Type="varchar" MaxLength="50" />
+          <Property Name="pOperationType" Type="int" />
+          <Property Name="pIco" Type="varchar" MaxLength="100" />
+          <Property Name="pOrder" Type="int" />
+          <Property Name="pIsLink" Type="int" />
+          <Property Name="pLinkUrl" Type="varchar" MaxLength="200" />
+          <Property Name="pIsShow" Type="int" />
+          <Property Name="pRemark" Type="varchar" MaxLength="200" />
+          <Property Name="pIsDel" Type="int" />
+          <Property Name="pState" Type="int" />
+          <Property Name="pOperTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Role">
+          <Key>
+            <PropertyRef Name="rId" />
+          </Key>
+          <Property Name="rId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rRemark" Type="varchar" MaxLength="100" />
+          <Property Name="rIsShow" Type="int" />
+          <Property Name="rIsDel" Type="int" />
+          <Property Name="rDepId" Type="int" />
+          <Property Name="rAddTime" Type="datetime" />
+          <Property Name="rNum" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Sys_RolePermission">
+          <Key>
+            <PropertyRef Name="rpId" />
+          </Key>
+          <Property Name="rpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rpRId" Type="int" Nullable="false" />
+          <Property Name="rpPId" Type="int" Nullable="false" />
+          <Property Name="rpIsDel" Type="int" />
+          <Property Name="rpAddtime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserInfo">
+          <Key>
+            <PropertyRef Name="Uid" />
+          </Key>
+          <Property Name="Uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uDepid" Type="int" />
+          <Property Name="uLoginName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="uPwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="uGender" Type="varchar" MaxLength="10" />
+          <Property Name="uIsDel" Type="int" />
+          <Property Name="uPost" Type="varchar" MaxLength="100" />
+          <Property Name="uRemark" Type="varchar" MaxLength="100" />
+          <Property Name="uAddtime" Type="datetime" />
+          <Property Name="uMobile" Type="varchar" MaxLength="20" />
+          <Property Name="CityId" Type="varchar" MaxLength="10" />
+          <Property Name="uName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserRole">
+          <Key>
+            <PropertyRef Name="urId" />
+          </Key>
+          <Property Name="urId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="urUid" Type="int" Nullable="false" />
+          <Property Name="urRid" Type="int" Nullable="false" />
+          <Property Name="urIsDel" Type="int" />
+          <Property Name="urAddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserVipPermission">
+          <Key>
+            <PropertyRef Name="vipId" />
+          </Key>
+          <Property Name="vipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vipUserId" Type="int" Nullable="false" />
+          <Property Name="VipPermission" Type="int" Nullable="false" />
+          <Property Name="vipRemark" Type="int" />
+          <Property Name="vipIsdel" Type="int" />
+          <Property Name="vipAddtime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_User_Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="TouchFlag" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="delay" Type="int" />
+          <Property Name="creatorId" Type="int" />
+          <Property Name="creator" Type="varchar" MaxLength="50" />
+          <Property Name="c_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Buy_Rec">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" />
+          <Property Name="RecDate" Type="date" />
+          <Property Name="Buy_Hospid" Type="int" />
+          <Property Name="BuyNum" Type="int" />
+          <Property Name="PayMoney" Type="money" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductPrice" Type="money" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Dislike_Food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="FoodType" Type="varchar" MaxLength="10" />
+          <Property Name="FoodName" Type="varchar" MaxLength="500" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Info">
+          <Key>
+            <PropertyRef Name="uId" />
+          </Key>
+          <Property Name="uId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Female" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Birth" Type="date" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="ComeFrom" Type="varchar" MaxLength="10" />
+          <Property Name="IndustryType" Type="varchar" MaxLength="10" />
+          <Property Name="Height" Type="float" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="WC" Type="float" />
+          <Property Name="Hipline" Type="float" />
+          <Property Name="Thigh_Cir" Type="float" />
+          <Property Name="Qq" Type="varchar" MaxLength="20" />
+          <Property Name="WeiXin" Type="varchar" MaxLength="50" />
+          <Property Name="BMI" Type="float" />
+          <Property Name="Enter_Code" Type="varchar" MaxLength="20" />
+          <Property Name="Self_code" Type="varchar" MaxLength="20" />
+          <Property Name="Cityid" Type="varchar" MaxLength="10" />
+          <Property Name="PicPath" Type="varchar" MaxLength="200" />
+          <Property Name="Myhope" Type="varchar" MaxLength="200" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tb_Weight_Chg">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="RecDate" Type="date" />
+          <Property Name="Hid" Type="int" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="TouchFlag" Type="int" />
+          <Property Name="PicPath" Type="varchar" MaxLength="200" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Weight_Chg_Self">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uId" Type="int" Nullable="false" />
+          <Property Name="RecDate" Type="date" />
+          <Property Name="Hid" Type="int" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="CreatorId" Type="int" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Function Name="Pro_Build_Recommend_Str" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Uname" Type="varchar" Mode="In" />
+          <Parameter Name="Umobile" Type="varchar" Mode="In" />
+          <Parameter Name="Para" Type="varchar" Mode="In" />
+          <Parameter Name="OutCode" Type="varchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="BXUUModelStoreContainer">
+          <EntitySet Name="tb_Consume_Log" EntityType="Self.tb_Consume_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Dict" EntityType="Self.tb_Dict" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Emp_Hos" EntityType="Self.tb_Emp_Hos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Hei_Wei" EntityType="Self.tb_Hei_Wei" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Hosp_Info" EntityType="Self.tb_Hosp_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Serv_Info" EntityType="Self.tb_Serv_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Serv_POF" EntityType="Self.tb_Serv_POF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sms_Down" EntityType="Self.tb_Sms_Down" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sms_report" EntityType="Self.tb_Sms_report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sms_Tpl" EntityType="Self.tb_Sms_Tpl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sms_up" EntityType="Self.tb_Sms_up" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_Department" EntityType="Self.tb_Sys_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_MenuInfo" EntityType="Self.tb_Sys_MenuInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_Permission" EntityType="Self.tb_Sys_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_Role" EntityType="Self.tb_Sys_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_RolePermission" EntityType="Self.tb_Sys_RolePermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_UserInfo" EntityType="Self.tb_Sys_UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_UserRole" EntityType="Self.tb_Sys_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_UserVipPermission" EntityType="Self.tb_Sys_UserVipPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_User_Account" EntityType="Self.tb_User_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_User_Buy_Rec" EntityType="Self.tb_User_Buy_Rec" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_User_Dislike_Food" EntityType="Self.tb_User_Dislike_Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_User_Info" EntityType="Self.tb_User_Info" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Weight_Chg" EntityType="Self.tb_Weight_Chg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Weight_Chg_Self" EntityType="Self.tb_Weight_Chg_Self" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_log" EntityType="Self.tb_Sys_log" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_Sys_log].[id] AS [id], 
+    [tb_Sys_log].[Date] AS [Date], 
+    [tb_Sys_log].[Thread] AS [Thread], 
+    [tb_Sys_log].[Level] AS [Level], 
+    [tb_Sys_log].[Logger] AS [Logger], 
+    [tb_Sys_log].[Message] AS [Message], 
+    [tb_Sys_log].[Exception] AS [Exception]
+    FROM [dbo].[tb_Sys_log] AS [tb_Sys_log]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tb_Sys_LoginLog" EntityType="Self.tb_Sys_LoginLog" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_Sys_LoginLog].[id] AS [id], 
+    [tb_Sys_LoginLog].[loginName] AS [loginName], 
+    [tb_Sys_LoginLog].[loginCity] AS [loginCity], 
+    [tb_Sys_LoginLog].[loginTime] AS [loginTime], 
+    [tb_Sys_LoginLog].[LoginIp] AS [LoginIp]
+    FROM [dbo].[tb_Sys_LoginLog] AS [tb_Sys_LoginLog]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tb_Sys_Notice" EntityType="Self.tb_Sys_Notice" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_Sys_Notice].[Id] AS [Id], 
+    [tb_Sys_Notice].[Title] AS [Title], 
+    [tb_Sys_Notice].[Contents] AS [Contents], 
+    [tb_Sys_Notice].[Hot] AS [Hot], 
+    [tb_Sys_Notice].[Seq] AS [Seq], 
+    [tb_Sys_Notice].[ClickNum] AS [ClickNum], 
+    [tb_Sys_Notice].[IsDel] AS [IsDel], 
+    [tb_Sys_Notice].[Creator] AS [Creator], 
+    [tb_Sys_Notice].[C_Time] AS [C_Time], 
+    [tb_Sys_Notice].[ShowImgUrl] AS [ShowImgUrl], 
+    [tb_Sys_Notice].[FilePath] AS [FilePath], 
+    [tb_Sys_Notice].[FileName] AS [FileName], 
+    [tb_Sys_Notice].[IsPush] AS [IsPush]
+    FROM [dbo].[tb_Sys_Notice] AS [tb_Sys_Notice]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BXUUModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BXUUEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="Pro_Build_Recommend_Str">
+            <Parameter Name="Uname" Mode="In" Type="String" />
+            <Parameter Name="Umobile" Mode="In" Type="String" />
+            <Parameter Name="Para" Mode="In" Type="String" />
+            <Parameter Name="OutCode" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
+          <EntitySet Name="tb_Dicts" EntityType="BXUUModel.tb_Dict" />
+          <EntitySet Name="tb_Emp_Hoss" EntityType="BXUUModel.tb_Emp_Hos" />
+          <EntitySet Name="tb_Hei_Weis" EntityType="BXUUModel.tb_Hei_Wei" />
+          <EntitySet Name="tb_Hosp_Infos" EntityType="BXUUModel.tb_Hosp_Info" />
+          <EntitySet Name="tb_Serv_Infos" EntityType="BXUUModel.tb_Serv_Info" />
+          <EntitySet Name="tb_Serv_POFs" EntityType="BXUUModel.tb_Serv_POF" />
+          <EntitySet Name="tb_Sms_Downs" EntityType="BXUUModel.tb_Sms_Down" />
+          <EntitySet Name="tb_Sms_reports" EntityType="BXUUModel.tb_Sms_report" />
+          <EntitySet Name="tb_Sms_Tpls" EntityType="BXUUModel.tb_Sms_Tpl" />
+          <EntitySet Name="tb_Sms_ups" EntityType="BXUUModel.tb_Sms_up" />
+          <EntitySet Name="tb_Sys_Departments" EntityType="BXUUModel.tb_Sys_Department" />
+          <EntitySet Name="tb_Sys_MenuInfos" EntityType="BXUUModel.tb_Sys_MenuInfo" />
+          <EntitySet Name="tb_Sys_Permissions" EntityType="BXUUModel.tb_Sys_Permission" />
+          <EntitySet Name="tb_Sys_Roles" EntityType="BXUUModel.tb_Sys_Role" />
+          <EntitySet Name="tb_Sys_RolePermissions" EntityType="BXUUModel.tb_Sys_RolePermission" />
+          <EntitySet Name="tb_Sys_UserInfos" EntityType="BXUUModel.tb_Sys_UserInfo" />
+          <EntitySet Name="tb_Sys_UserRoles" EntityType="BXUUModel.tb_Sys_UserRole" />
+          <EntitySet Name="tb_Sys_UserVipPermissions" EntityType="BXUUModel.tb_Sys_UserVipPermission" />
+          <EntitySet Name="tb_User_Accounts" EntityType="BXUUModel.tb_User_Account" />
+          <EntitySet Name="tb_User_Buy_Recs" EntityType="BXUUModel.tb_User_Buy_Rec" />
+          <EntitySet Name="tb_User_Dislike_Foods" EntityType="BXUUModel.tb_User_Dislike_Food" />
+          <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
+          <EntitySet Name="tb_Weight_Chgs" EntityType="BXUUModel.tb_Weight_Chg" />
+          <EntitySet Name="tb_Weight_Chg_Selfs" EntityType="BXUUModel.tb_Weight_Chg_Self" />
+          <EntitySet Name="tb_Sys_logs" EntityType="BXUUModel.tb_Sys_log" />
+          <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
+          <EntitySet Name="tb_Sys_Notices" EntityType="BXUUModel.tb_Sys_Notice" />
+        </EntityContainer>
+        <EntityType Name="tb_Consume_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="rec_date" Type="DateTime" Precision="0" />
+          <Property Name="num" Type="Int32" />
+          <Property Name="flag" Type="Int32" />
+          <Property Name="creatorid" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Dict">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KeyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KeyWords" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="KeyValue" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Seq" Type="Double" />
+          <Property Name="C_Time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="mark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Emp_Hos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_id" Type="Int32" />
+          <Property Name="hospid" Type="Int32" />
+          <Property Name="creatorid" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Hei_Wei">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Female" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="St_weight" Type="Double" />
+          <Property Name="Pt_weight" Type="Double" />
+          <Property Name="WC" Type="Double" />
+          <Property Name="Hipline" Type="Double" />
+          <Property Name="Thigh_Cir" Type="Double" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Hosp_Info">
+          <Key>
+            <PropertyRef Name="HospId" />
+          </Key>
+          <Property Name="HospId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MapUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sType" Type="Int32" />
+          <Property Name="traffic" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="grade" Type="Int32" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="CityId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="C_Time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="ModLastTime" Type="DateTime" Precision="3" />
+          <Property Name="intro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModfyId" Type="Int32" />
+          <Property Name="IsDel" Type="Int32" />
+          <Property Name="PyShort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PyLong" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Serv_Info">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServId" Type="Int32" Nullable="false" />
+          <Property Name="ServName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ServMemo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ServType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDel" Type="Int32" />
+          <Property Name="LastModTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_Serv_POF">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServId" Type="Int32" />
+          <Property Name="TouchFlag" Type="Int32" />
+          <Property Name="Times" Type="Int32" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Sms_Down">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="msg" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="creatorId" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sendFlag" Type="Int32" />
+          <Property Name="errMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sendTime" Type="DateTime" Precision="3" />
+          <Property Name="stype" Type="Int32" />
+          <Property Name="pipeId" Type="Int32" />
+          <Property Name="levelNum" Type="Int32" />
+          <Property Name="exId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sysPlatform" Type="Int32" />
+          <Property Name="M_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_Sms_report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="R_time" Type="DateTime" Precision="3" />
+          <Property Name="pipeId" Type="Int32" />
+          <Property Name="errMsg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="M_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="S_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Sms_Tpl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="creatorid" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="0" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Sms_up">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="msg" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="S_time" Type="DateTime" Precision="3" />
+          <Property Name="PipeId" Type="Int32" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="M_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Department">
+          <Key>
+            <PropertyRef Name="DepId" />
+          </Key>
+          <Property Name="DepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepPId" Type="Int32" />
+          <Property Name="DepName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Depremark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DepIsDel" Type="Int32" />
+          <Property Name="DepAddtime" Type="DateTime" Precision="3" />
+          <Property Name="CityId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DepNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Sys_MenuInfo">
+          <Key>
+            <PropertyRef Name="mId" />
+          </Key>
+          <Property Name="mId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mPId" Type="Int32" />
+          <Property Name="mText" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="mUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="mIcon" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="mAddtime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mChecked" Type="Boolean" />
+          <Property Name="mSeq" Type="Double" />
+          <Property Name="mPerNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mOrderindex" Type="Double" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Permission">
+          <Key>
+            <PropertyRef Name="pId" />
+          </Key>
+          <Property Name="pId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pParentId" Type="Int32" Nullable="false" />
+          <Property Name="pName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pAreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pControllerName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="pActionMenu" Type="Int32" />
+          <Property Name="pActionNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pFormMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pOperationType" Type="Int32" />
+          <Property Name="pIco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pOrder" Type="Int32" />
+          <Property Name="pIsLink" Type="Int32" />
+          <Property Name="pLinkUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pIsShow" Type="Int32" />
+          <Property Name="pRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pIsDel" Type="Int32" />
+          <Property Name="pState" Type="Int32" />
+          <Property Name="pOperTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Role">
+          <Key>
+            <PropertyRef Name="rId" />
+          </Key>
+          <Property Name="rId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="rIsShow" Type="Int32" />
+          <Property Name="rIsDel" Type="Int32" />
+          <Property Name="rDepId" Type="Int32" />
+          <Property Name="rAddTime" Type="DateTime" Precision="3" />
+          <Property Name="rNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Sys_RolePermission">
+          <Key>
+            <PropertyRef Name="rpId" />
+          </Key>
+          <Property Name="rpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rpRId" Type="Int32" Nullable="false" />
+          <Property Name="rpPId" Type="Int32" Nullable="false" />
+          <Property Name="rpIsDel" Type="Int32" />
+          <Property Name="rpAddtime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserInfo">
+          <Key>
+            <PropertyRef Name="Uid" />
+          </Key>
+          <Property Name="Uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uDepid" Type="Int32" />
+          <Property Name="uLoginName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="uPwd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="uGender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="uIsDel" Type="Int32" />
+          <Property Name="uPost" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="uRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="uAddtime" Type="DateTime" Precision="3" />
+          <Property Name="uMobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CityId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="uName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserRole">
+          <Key>
+            <PropertyRef Name="urId" />
+          </Key>
+          <Property Name="urId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="urUid" Type="Int32" Nullable="false" />
+          <Property Name="urRid" Type="Int32" Nullable="false" />
+          <Property Name="urIsDel" Type="Int32" />
+          <Property Name="urAddTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Sys_UserVipPermission">
+          <Key>
+            <PropertyRef Name="vipId" />
+          </Key>
+          <Property Name="vipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vipUserId" Type="Int32" Nullable="false" />
+          <Property Name="VipPermission" Type="Int32" Nullable="false" />
+          <Property Name="vipRemark" Type="Int32" />
+          <Property Name="vipIsdel" Type="Int32" />
+          <Property Name="vipAddtime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_User_Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="TouchFlag" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="delay" Type="Int32" />
+          <Property Name="creatorId" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Buy_Rec">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" />
+          <Property Name="RecDate" Type="DateTime" Precision="0" />
+          <Property Name="Buy_Hospid" Type="Int32" />
+          <Property Name="BuyNum" Type="Int32" />
+          <Property Name="PayMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Dislike_Food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="FoodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FoodName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_User_Info">
+          <Key>
+            <PropertyRef Name="uId" />
+          </Key>
+          <Property Name="uId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Female" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComeFrom" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IndustryType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="WC" Type="Double" />
+          <Property Name="Hipline" Type="Double" />
+          <Property Name="Thigh_Cir" Type="Double" />
+          <Property Name="Qq" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeiXin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BMI" Type="Double" />
+          <Property Name="Enter_Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Self_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cityid" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Myhope" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tb_Weight_Chg">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="RecDate" Type="DateTime" Precision="0" />
+          <Property Name="Hid" Type="Int32" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="TouchFlag" Type="Int32" />
+          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Weight_Chg_Self">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="RecDate" Type="DateTime" Precision="0" />
+          <Property Name="Hid" Type="Int32" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tb_Sys_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Thread" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Logger" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Sys_LoginLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="loginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loginCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loginTime" Type="DateTime" Precision="3" />
+          <Property Name="LoginIp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Sys_Notice">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hot" Type="Int32" />
+          <Property Name="Seq" Type="Double" />
+          <Property Name="ClickNum" Type="Int32" />
+          <Property Name="IsDel" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="C_Time" Type="DateTime" Precision="0" />
+          <Property Name="ShowImgUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsPush" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BXUUModelStoreContainer" CdmEntityContainer="BXUUEntities">
+          <FunctionImportMapping FunctionImportName="Pro_Build_Recommend_Str" FunctionName="BXUUModel.Store.Pro_Build_Recommend_Str" />
+          <EntitySetMapping Name="tb_Consume_Logs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Consume_Log">
+              <MappingFragment StoreEntitySet="tb_Consume_Log">
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="rec_date" ColumnName="rec_date" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Dicts">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Dict">
+              <MappingFragment StoreEntitySet="tb_Dict">
+                <ScalarProperty Name="mark" ColumnName="mark" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="C_Time" ColumnName="C_Time" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="KeyValue" ColumnName="KeyValue" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="KeyName" ColumnName="KeyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Emp_Hoss">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Emp_Hos">
+              <MappingFragment StoreEntitySet="tb_Emp_Hos">
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
+                <ScalarProperty Name="hospid" ColumnName="hospid" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Hei_Weis">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Hei_Wei">
+              <MappingFragment StoreEntitySet="tb_Hei_Wei">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Thigh_Cir" ColumnName="Thigh_Cir" />
+                <ScalarProperty Name="Hipline" ColumnName="Hipline" />
+                <ScalarProperty Name="WC" ColumnName="WC" />
+                <ScalarProperty Name="Pt_weight" ColumnName="Pt_weight" />
+                <ScalarProperty Name="St_weight" ColumnName="St_weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Female" ColumnName="Female" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Hosp_Infos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Hosp_Info">
+              <MappingFragment StoreEntitySet="tb_Hosp_Info">
+                <ScalarProperty Name="PyLong" ColumnName="PyLong" />
+                <ScalarProperty Name="PyShort" ColumnName="PyShort" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="ModfyId" ColumnName="ModfyId" />
+                <ScalarProperty Name="intro" ColumnName="intro" />
+                <ScalarProperty Name="ModLastTime" ColumnName="ModLastTime" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="C_Time" ColumnName="C_Time" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="traffic" ColumnName="traffic" />
+                <ScalarProperty Name="sType" ColumnName="sType" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="MapUrl" ColumnName="MapUrl" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="Hname" ColumnName="Hname" />
+                <ScalarProperty Name="HospId" ColumnName="HospId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Serv_Infos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Serv_Info">
+              <MappingFragment StoreEntitySet="tb_Serv_Info">
+                <ScalarProperty Name="ModifyId" ColumnName="ModifyId" />
+                <ScalarProperty Name="LastModTime" ColumnName="LastModTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="CTime" ColumnName="CTime" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="ServType" ColumnName="ServType" />
+                <ScalarProperty Name="ServMemo" ColumnName="ServMemo" />
+                <ScalarProperty Name="ServName" ColumnName="ServName" />
+                <ScalarProperty Name="ServId" ColumnName="ServId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Serv_POFs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Serv_POF">
+              <MappingFragment StoreEntitySet="tb_Serv_POF">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="Times" ColumnName="Times" />
+                <ScalarProperty Name="TouchFlag" ColumnName="TouchFlag" />
+                <ScalarProperty Name="ServId" ColumnName="ServId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sms_Downs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sms_Down">
+              <MappingFragment StoreEntitySet="tb_Sms_Down">
+                <ScalarProperty Name="M_NO" ColumnName="M_NO" />
+                <ScalarProperty Name="sysPlatform" ColumnName="sysPlatform" />
+                <ScalarProperty Name="exId" ColumnName="exId" />
+                <ScalarProperty Name="levelNum" ColumnName="levelNum" />
+                <ScalarProperty Name="pipeId" ColumnName="pipeId" />
+                <ScalarProperty Name="stype" ColumnName="stype" />
+                <ScalarProperty Name="sendTime" ColumnName="sendTime" />
+                <ScalarProperty Name="errMsg" ColumnName="errMsg" />
+                <ScalarProperty Name="sendFlag" ColumnName="sendFlag" />
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorId" ColumnName="creatorId" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sms_reports">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sms_report">
+              <MappingFragment StoreEntitySet="tb_Sms_report">
+                <ScalarProperty Name="S_time" ColumnName="S_time" />
+                <ScalarProperty Name="M_no" ColumnName="M_no" />
+                <ScalarProperty Name="errMsg" ColumnName="errMsg" />
+                <ScalarProperty Name="pipeId" ColumnName="pipeId" />
+                <ScalarProperty Name="R_time" ColumnName="R_time" />
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sms_Tpls">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sms_Tpl">
+              <MappingFragment StoreEntitySet="tb_Sms_Tpl">
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="sms" ColumnName="sms" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sms_ups">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sms_up">
+              <MappingFragment StoreEntitySet="tb_Sms_up">
+                <ScalarProperty Name="M_no" ColumnName="M_no" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="PipeId" ColumnName="PipeId" />
+                <ScalarProperty Name="S_time" ColumnName="S_time" />
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_Departments">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_Department">
+              <MappingFragment StoreEntitySet="tb_Sys_Department">
+                <ScalarProperty Name="DepNum" ColumnName="DepNum" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="DepAddtime" ColumnName="DepAddtime" />
+                <ScalarProperty Name="DepIsDel" ColumnName="DepIsDel" />
+                <ScalarProperty Name="Depremark" ColumnName="Depremark" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="DepPId" ColumnName="DepPId" />
+                <ScalarProperty Name="DepId" ColumnName="DepId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_MenuInfos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_MenuInfo">
+              <MappingFragment StoreEntitySet="tb_Sys_MenuInfo">
+                <ScalarProperty Name="mOrderindex" ColumnName="mOrderindex" />
+                <ScalarProperty Name="mPerNum" ColumnName="mPerNum" />
+                <ScalarProperty Name="mSeq" ColumnName="mSeq" />
+                <ScalarProperty Name="mChecked" ColumnName="mChecked" />
+                <ScalarProperty Name="mState" ColumnName="mState" />
+                <ScalarProperty Name="mAddtime" ColumnName="mAddtime" />
+                <ScalarProperty Name="mIcon" ColumnName="mIcon" />
+                <ScalarProperty Name="mUrl" ColumnName="mUrl" />
+                <ScalarProperty Name="mText" ColumnName="mText" />
+                <ScalarProperty Name="mPId" ColumnName="mPId" />
+                <ScalarProperty Name="mNum" ColumnName="mNum" />
+                <ScalarProperty Name="mId" ColumnName="mId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_Permissions">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_Permission">
+              <MappingFragment StoreEntitySet="tb_Sys_Permission">
+                <ScalarProperty Name="pOperTime" ColumnName="pOperTime" />
+                <ScalarProperty Name="pState" ColumnName="pState" />
+                <ScalarProperty Name="pIsDel" ColumnName="pIsDel" />
+                <ScalarProperty Name="pRemark" ColumnName="pRemark" />
+                <ScalarProperty Name="pIsShow" ColumnName="pIsShow" />
+                <ScalarProperty Name="pLinkUrl" ColumnName="pLinkUrl" />
+                <ScalarProperty Name="pIsLink" ColumnName="pIsLink" />
+                <ScalarProperty Name="pOrder" ColumnName="pOrder" />
+                <ScalarProperty Name="pIco" ColumnName="pIco" />
+                <ScalarProperty Name="pOperationType" ColumnName="pOperationType" />
+                <ScalarProperty Name="pFormMethod" ColumnName="pFormMethod" />
+                <ScalarProperty Name="PActionName" ColumnName="PActionName" />
+                <ScalarProperty Name="pActionNum" ColumnName="pActionNum" />
+                <ScalarProperty Name="pActionMenu" ColumnName="pActionMenu" />
+                <ScalarProperty Name="pControllerName" ColumnName="pControllerName" />
+                <ScalarProperty Name="pAreaName" ColumnName="pAreaName" />
+                <ScalarProperty Name="pName" ColumnName="pName" />
+                <ScalarProperty Name="pParentId" ColumnName="pParentId" />
+                <ScalarProperty Name="pId" ColumnName="pId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_Roles">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_Role">
+              <MappingFragment StoreEntitySet="tb_Sys_Role">
+                <ScalarProperty Name="rNum" ColumnName="rNum" />
+                <ScalarProperty Name="rAddTime" ColumnName="rAddTime" />
+                <ScalarProperty Name="rDepId" ColumnName="rDepId" />
+                <ScalarProperty Name="rIsDel" ColumnName="rIsDel" />
+                <ScalarProperty Name="rIsShow" ColumnName="rIsShow" />
+                <ScalarProperty Name="rRemark" ColumnName="rRemark" />
+                <ScalarProperty Name="rName" ColumnName="rName" />
+                <ScalarProperty Name="rId" ColumnName="rId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_RolePermissions">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_RolePermission">
+              <MappingFragment StoreEntitySet="tb_Sys_RolePermission">
+                <ScalarProperty Name="rpAddtime" ColumnName="rpAddtime" />
+                <ScalarProperty Name="rpIsDel" ColumnName="rpIsDel" />
+                <ScalarProperty Name="rpPId" ColumnName="rpPId" />
+                <ScalarProperty Name="rpRId" ColumnName="rpRId" />
+                <ScalarProperty Name="rpId" ColumnName="rpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_UserInfos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_UserInfo">
+              <MappingFragment StoreEntitySet="tb_Sys_UserInfo">
+                <ScalarProperty Name="uName" ColumnName="uName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="uMobile" ColumnName="uMobile" />
+                <ScalarProperty Name="uAddtime" ColumnName="uAddtime" />
+                <ScalarProperty Name="uRemark" ColumnName="uRemark" />
+                <ScalarProperty Name="uPost" ColumnName="uPost" />
+                <ScalarProperty Name="uIsDel" ColumnName="uIsDel" />
+                <ScalarProperty Name="uGender" ColumnName="uGender" />
+                <ScalarProperty Name="uPwd" ColumnName="uPwd" />
+                <ScalarProperty Name="uLoginName" ColumnName="uLoginName" />
+                <ScalarProperty Name="uDepid" ColumnName="uDepid" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_UserRoles">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_UserRole">
+              <MappingFragment StoreEntitySet="tb_Sys_UserRole">
+                <ScalarProperty Name="urAddTime" ColumnName="urAddTime" />
+                <ScalarProperty Name="urIsDel" ColumnName="urIsDel" />
+                <ScalarProperty Name="urRid" ColumnName="urRid" />
+                <ScalarProperty Name="urUid" ColumnName="urUid" />
+                <ScalarProperty Name="urId" ColumnName="urId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_UserVipPermissions">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_UserVipPermission">
+              <MappingFragment StoreEntitySet="tb_Sys_UserVipPermission">
+                <ScalarProperty Name="vipAddtime" ColumnName="vipAddtime" />
+                <ScalarProperty Name="vipIsdel" ColumnName="vipIsdel" />
+                <ScalarProperty Name="vipRemark" ColumnName="vipRemark" />
+                <ScalarProperty Name="VipPermission" ColumnName="VipPermission" />
+                <ScalarProperty Name="vipUserId" ColumnName="vipUserId" />
+                <ScalarProperty Name="vipId" ColumnName="vipId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Accounts">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Account">
+              <MappingFragment StoreEntitySet="tb_User_Account">
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorId" ColumnName="creatorId" />
+                <ScalarProperty Name="delay" ColumnName="delay" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="TouchFlag" ColumnName="TouchFlag" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Buy_Recs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Buy_Rec">
+              <MappingFragment StoreEntitySet="tb_User_Buy_Rec">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PayMoney" ColumnName="PayMoney" />
+                <ScalarProperty Name="BuyNum" ColumnName="BuyNum" />
+                <ScalarProperty Name="Buy_Hospid" ColumnName="Buy_Hospid" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Dislike_Foods">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Dislike_Food">
+              <MappingFragment StoreEntitySet="tb_User_Dislike_Food">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="FoodType" ColumnName="FoodType" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Infos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Info">
+              <MappingFragment StoreEntitySet="tb_User_Info">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="Myhope" ColumnName="Myhope" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="Cityid" ColumnName="Cityid" />
+                <ScalarProperty Name="Self_code" ColumnName="Self_code" />
+                <ScalarProperty Name="Enter_Code" ColumnName="Enter_Code" />
+                <ScalarProperty Name="BMI" ColumnName="BMI" />
+                <ScalarProperty Name="WeiXin" ColumnName="WeiXin" />
+                <ScalarProperty Name="Qq" ColumnName="Qq" />
+                <ScalarProperty Name="Thigh_Cir" ColumnName="Thigh_Cir" />
+                <ScalarProperty Name="Hipline" ColumnName="Hipline" />
+                <ScalarProperty Name="WC" ColumnName="WC" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="IndustryType" ColumnName="IndustryType" />
+                <ScalarProperty Name="ComeFrom" ColumnName="ComeFrom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Female" ColumnName="Female" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="HospId" ColumnName="HospId" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Weight_Chgs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Weight_Chg">
+              <MappingFragment StoreEntitySet="tb_Weight_Chg">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="TouchFlag" ColumnName="TouchFlag" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Hid" ColumnName="Hid" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Weight_Chg_Selfs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Weight_Chg_Self">
+              <MappingFragment StoreEntitySet="tb_Weight_Chg_Self">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Hid" ColumnName="Hid" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_logs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_log">
+              <MappingFragment StoreEntitySet="tb_Sys_log">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_LoginLogs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_LoginLog">
+              <MappingFragment StoreEntitySet="tb_Sys_LoginLog">
+                <ScalarProperty Name="LoginIp" ColumnName="LoginIp" />
+                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+                <ScalarProperty Name="loginCity" ColumnName="loginCity" />
+                <ScalarProperty Name="loginName" ColumnName="loginName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_Notices">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_Notice">
+              <MappingFragment StoreEntitySet="tb_Sys_Notice">
+                <ScalarProperty Name="IsPush" ColumnName="IsPush" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="ShowImgUrl" ColumnName="ShowImgUrl" />
+                <ScalarProperty Name="C_Time" ColumnName="C_Time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="ClickNum" ColumnName="ClickNum" />
+                <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="Hot" ColumnName="Hot" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
