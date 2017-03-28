@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "字典编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Dict
+<form id="dialogForm" method="post" action="#">
+    @{
+        if (Model.Id > 0)
+        {
+            <input type="hidden" name="keyName" value="@Model.KeyName" />
+        }
+    }
+    <input name="state" type="hidden" value="@Model.state" />
+    <table style="width: 90%; text-align: right;">
+        @{
+            if (Model.Id == 0)
+            {
+                <tr>
+                    <td>
+                        <label for="keyName">
+                            字典类型:
+                        </label>
+                    </td>
+                    <td>
+                        <input id="keyName" class="easyui-combobox" type="text" name="keyName" data-options="required:true,missingMessage:'字典类型不能为空'" value="@Model.KeyName" />
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <input name="Id" type="hidden" value="@Model.Id" class="dict" />
+            }
+        }
+        <tr>
+            <td>
+                <label for="KeyWords">
+                    字典名称:
+                </label>
+            </td>
+            <td>
+                <input id="KeyWords" class="easyui-textbox" type="text" name="KeyWords" data-options="required:true,missingMessage:'字典名称不能为空'" value="@Model.KeyWords" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="KeyValue">
+                    字典值:
+                </label>
+            </td>
+            <td>
+                <input class="easyui-textbox" name="KeyValue" data-options="required:true,missingMessage:'字典值不能为空'" value="@Model.KeyValue" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Seq">
+                    排序:
+                </label>
+            </td>
+            <td>
+                <input class="easyui-textbox" name="Seq" data-options="required:true,missingMessage:'排序不能为空'" value="@Model.Seq" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="mark">
+                    备注:
+                </label>
+            </td>
+            <td>
+                <input class="easyui-textbox" name="mark" data-options="validType:['unnormal','length[0,25]'],missingMessage:'备注长度不能超过25个字'" value="@Model.mark" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitDictCombo();
+    });
+
+    //绑定上级菜单
+    function InitDictCombo() {
+
+        $('#keyName').combobox({
+            url: '/Dictionary/GetDictCombobox',
+            valueField: 'id',
+            textField: 'text'
+            //onSelect: function (rec) {
+            //    var val = $('#keyName').combobox('getText');
+            //    if (val=="请选择") {
+
+            //    }
+            //},
+            //onLoadSuccess: function () {
+            //    var val = $('#keyName').combobox('getText');
+
+            //}
+        })
+    }
+</script>
+<script src="~/Scripts/Easyui/easyui-validate-extend.js"></script>
