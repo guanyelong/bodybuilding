@@ -33,6 +33,22 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -45,10 +61,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPHelper.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="MD5Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyExpressionParser.cs" />
+    <Compile Include="Redis\DoRedisBase.cs" />
+    <Compile Include="Redis\HashOperator.cs" />
+    <Compile Include="Redis\RedisConfigInfo.cs" />
+    <Compile Include="Redis\RedisManager.cs" />
+    <Compile Include="Redis\RedisOperatorBase.cs" />
     <Compile Include="SQLHelp.cs" />
+    <Compile Include="SysEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BBD.Models\BBD.Models.csproj">
@@ -58,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLL\ServiceStack.Common.dll" />
+    <Content Include="DLL\ServiceStack.Interfaces.dll" />
+    <Content Include="DLL\ServiceStack.Redis.dll" />
+    <Content Include="DLL\ServiceStack.Text.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

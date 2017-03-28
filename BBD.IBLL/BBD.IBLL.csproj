@@ -52,6 +52,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IBLL.tt</DependentUpon>
     </Compile>
+    <Compile Include="IBLLExtension\Itb_Consume_Log_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Dict_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Emp_Hos_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Hei_Wei_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Hosp_Info_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Serv_Info_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Serv_POF_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sms_Tpl_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_Department_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_MenuInfo_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_Permission_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_RolePermission_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_Role_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_UserInfo_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Sys_UserRole_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_User_Account_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_User_Buy_Rec_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_User_Dislike_Food_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_User_Info_Bo_BLL.cs" />
     <Compile Include="IBLLSession.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,9 +106,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="IBLLExtension\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "部门编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Sys_Department
+<form id="dialogForm" method="post" action="#">
+    <input name="DepId" type="hidden" value="@Model.DepId" />
+    <input name="DepIsDel" type="hidden" value="@Model.DepIsDel" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="DepNum">
+                    部门编码:
+                </label>
+            </td>
+            <td>
+                <input class="easyui-textbox" type="text" name="DepNum" readonly="readonly" data-options="required:true,missingMessage:'部门编码不能为空'" value="@Model.DepNum" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="DepName">
+                    部门名称:
+                </label>
+            </td>
+            <td>
+                <input id="DepName" class="easyui-textbox" type="text" name="DepName" data-options="required:true,missingMessage:'部门名称不能为空',validType:['chinese','length[2,20]']" value="@Model.DepName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="DepPId">
+                    上级部门:
+                </label>
+            </td>
+            <td>
+                <input id="DepPId" class="easyui-textbox" type="text" name="DepPId" data-options="required:true,missingMessage:'上级部门不能为空'" value="@Model.DepPId" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="CityId">
+                    所属城市:
+                </label>
+            </td>
+            <td>
+                <input id="CityId" class="easyui-combobox" name="CityId" type="text" data-options="required:true,missingMessage:'所属城市不能为空',validType:'length[2,5]'" value="@Model.CityId" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Depremark">
+                    部门描述:
+                </label>
+            </td>
+            <td>
+                <input class="easyui-textbox" name="Depremark" data-options="multiline:true,validType:['unnormal','length[0,50]']" style="height:60px" value="@Model.Depremark" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script src="~/Scripts/Easyui/easyui-validate-extend.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitDepartment();
+        InitCity();
+    });
+
+    //绑定部门数据
+    function InitDepartment() {
+        var departUrl = "/Department/GetAppDeparmtTree";
+
+        $("#DepPId").combotree({
+            url: departUrl
+        });
+    }
+
+    function InitCity() {
+        var ciryUrl = "/Department/GetAppCityTree";
+
+        $("#CityId").combotree({
+            url: ciryUrl
+        });
+    }
+</script>

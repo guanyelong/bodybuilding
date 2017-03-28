@@ -63,6 +63,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelExtension\tb_Sys_Department.cs" />
+    <Compile Include="ModelExtension\tb_Sys_UserInfo.cs" />
     <Compile Include="PocoModel\tb_Consume_Log.cs">
       <DependentUpon>ExtensionModels.tt</DependentUpon>
     </Compile>
@@ -257,6 +259,7 @@
       <DependentUpon>BodyDB.edmx</DependentUpon>
       <LastGenOutput>BodyDB.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="BodyDB.edmx.sql" />
     <Content Include="BodyDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BodyDB.edmx</DependentUpon>
@@ -270,9 +273,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ModelExtension\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
