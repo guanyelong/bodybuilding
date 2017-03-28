@@ -36,6 +36,22 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,6 +68,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BLL.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLLExtension\tb_Consume_Log_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Dict_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Emp_Hos_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Hei_Wei_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Hosp_Info_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Serv_Info_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Serv_POF_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sms_Down_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sms_report_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sms_Tpl_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sms_up_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_Department_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_MenuInfo_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_Permission_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_RolePermission_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_Role_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_UserInfo_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Sys_UserRole_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_User_Account_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_User_Buy_Rec_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_User_Dislike_Food_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_User_Info_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Weight_Chg_Bo_Service.cs" />
+    <Compile Include="BLLExtension\tb_Weight_Chg_Self_Bo_Service.cs" />
     <Compile Include="BLLSession.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,13 +135,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BLLSession.cs</LastGenOutput>
     </Content>
+    <Content Include="DLL\ServiceStack.Common.dll" />
+    <Content Include="DLL\ServiceStack.Interfaces.dll" />
+    <Content Include="DLL\ServiceStack.Redis.dll" />
+    <Content Include="DLL\ServiceStack.Text.dll" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BLLExtension\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
