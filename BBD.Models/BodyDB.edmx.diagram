@@ -31,8 +31,8 @@
         <EntityTypeShape EntityType="BXUUModel.tb_Weight_Chg" Width="1.5" PointX="2.625" PointY="0.5" />
         <EntityTypeShape EntityType="BXUUModel.tb_Weight_Chg_Self" Width="1.5" PointX="4.75" PointY="0.5" />
         <EntityTypeShape EntityType="BXUUModel.tb_Sys_log" Width="1.5" PointX="10.875" PointY="7.75" />
-        <EntityTypeShape EntityType="BXUUModel.tb_Sys_LoginLog" Width="1.5" PointX="9" PointY="7.625" />
         <EntityTypeShape EntityType="BXUUModel.tb_Sys_Notice" Width="1.5" PointX="0.5" PointY="19.5" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Sys_LoginLog" Width="1.5" PointX="9.125" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

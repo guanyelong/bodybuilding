@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BBD.Models;  
 using BBD.IDAL; 
-namespace BBD.DAL 
+namespace BBD.DAL   
 { 
 	public partial class tb_Consume_Log_Bo_DAL : BaseDAL<tb_Consume_Log>,Itb_Consume_Log_Bo_DAL
     {

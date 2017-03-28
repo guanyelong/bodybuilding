@@ -179,13 +179,11 @@
           <Property Name="CityId" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="DepNum" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“BXUU.dbo.tb_Sys_log”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="tb_Sys_log">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" />
           <Property Name="Thread" Type="varchar" MaxLength="100" />
           <Property Name="Level" Type="varchar" MaxLength="100" />
@@ -193,16 +191,14 @@
           <Property Name="Message" Type="varchar" MaxLength="100" />
           <Property Name="Exception" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6002: 表/视图“BXUU.dbo.tb_Sys_LoginLog”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="tb_Sys_LoginLog">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="loginName" Type="varchar" MaxLength="50" />
           <Property Name="loginCity" Type="varchar" MaxLength="50" />
-          <Property Name="loginTime" Type="datetime" />
+          <Property Name="loginTime" Type="datetime" StoreGeneratedPattern="Identity" />
           <Property Name="LoginIp" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tb_Sys_MenuInfo">
@@ -447,6 +443,8 @@
           <EntitySet Name="tb_Sms_Tpl" EntityType="Self.tb_Sms_Tpl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Sms_up" EntityType="Self.tb_Sms_up" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Sys_Department" EntityType="Self.tb_Sys_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_log" EntityType="Self.tb_Sys_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_Sys_LoginLog" EntityType="Self.tb_Sys_LoginLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Sys_MenuInfo" EntityType="Self.tb_Sys_MenuInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Sys_Permission" EntityType="Self.tb_Sys_Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Sys_Role" EntityType="Self.tb_Sys_Role" Schema="dbo" store:Type="Tables" />
@@ -460,26 +458,6 @@
           <EntitySet Name="tb_User_Info" EntityType="Self.tb_User_Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Weight_Chg" EntityType="Self.tb_Weight_Chg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_Weight_Chg_Self" EntityType="Self.tb_Weight_Chg_Self" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_Sys_log" EntityType="Self.tb_Sys_log" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tb_Sys_log].[id] AS [id], 
-    [tb_Sys_log].[Date] AS [Date], 
-    [tb_Sys_log].[Thread] AS [Thread], 
-    [tb_Sys_log].[Level] AS [Level], 
-    [tb_Sys_log].[Logger] AS [Logger], 
-    [tb_Sys_log].[Message] AS [Message], 
-    [tb_Sys_log].[Exception] AS [Exception]
-    FROM [dbo].[tb_Sys_log] AS [tb_Sys_log]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tb_Sys_LoginLog" EntityType="Self.tb_Sys_LoginLog" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tb_Sys_LoginLog].[id] AS [id], 
-    [tb_Sys_LoginLog].[loginName] AS [loginName], 
-    [tb_Sys_LoginLog].[loginCity] AS [loginCity], 
-    [tb_Sys_LoginLog].[loginTime] AS [loginTime], 
-    [tb_Sys_LoginLog].[LoginIp] AS [LoginIp]
-    FROM [dbo].[tb_Sys_LoginLog] AS [tb_Sys_LoginLog]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="tb_Sys_Notice" EntityType="Self.tb_Sys_Notice" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tb_Sys_Notice].[Id] AS [Id], 
@@ -535,8 +513,8 @@
           <EntitySet Name="tb_Weight_Chgs" EntityType="BXUUModel.tb_Weight_Chg" />
           <EntitySet Name="tb_Weight_Chg_Selfs" EntityType="BXUUModel.tb_Weight_Chg_Self" />
           <EntitySet Name="tb_Sys_logs" EntityType="BXUUModel.tb_Sys_log" />
-          <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
           <EntitySet Name="tb_Sys_Notices" EntityType="BXUUModel.tb_Sys_Notice" />
+          <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
         </EntityContainer>
         <EntityType Name="tb_Consume_Log">
           <Key>
@@ -926,16 +904,6 @@
           <Property Name="Message" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Exception" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tb_Sys_LoginLog">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="loginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="loginCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="loginTime" Type="DateTime" Precision="3" />
-          <Property Name="LoginIp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="tb_Sys_Notice">
           <Key>
             <PropertyRef Name="Id" />
@@ -954,6 +922,16 @@
           <Property Name="FilePath" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsPush" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_Sys_LoginLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="loginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loginCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="loginTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginIp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1376,17 +1354,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_Sys_LoginLogs">
-            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_LoginLog">
-              <MappingFragment StoreEntitySet="tb_Sys_LoginLog">
-                <ScalarProperty Name="LoginIp" ColumnName="LoginIp" />
-                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
-                <ScalarProperty Name="loginCity" ColumnName="loginCity" />
-                <ScalarProperty Name="loginName" ColumnName="loginName" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_Sys_Notices">
             <EntityTypeMapping TypeName="BXUUModel.tb_Sys_Notice">
               <MappingFragment StoreEntitySet="tb_Sys_Notice">
@@ -1403,6 +1370,17 @@
                 <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Sys_LoginLogs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Sys_LoginLog">
+              <MappingFragment StoreEntitySet="tb_Sys_LoginLog">
+                <ScalarProperty Name="LoginIp" ColumnName="LoginIp" />
+                <ScalarProperty Name="loginTime" ColumnName="loginTime" />
+                <ScalarProperty Name="loginCity" ColumnName="loginCity" />
+                <ScalarProperty Name="loginName" ColumnName="loginName" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

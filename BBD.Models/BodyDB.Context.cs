@@ -53,8 +53,8 @@ namespace BBD.Models
         public virtual DbSet<tb_Weight_Chg> tb_Weight_Chgs { get; set; }
         public virtual DbSet<tb_Weight_Chg_Self> tb_Weight_Chg_Selfs { get; set; }
         public virtual DbSet<tb_Sys_log> tb_Sys_logs { get; set; }
-        public virtual DbSet<tb_Sys_LoginLog> tb_Sys_LoginLogs { get; set; }
         public virtual DbSet<tb_Sys_Notice> tb_Sys_Notices { get; set; }
+        public virtual DbSet<tb_Sys_LoginLog> tb_Sys_LoginLogs { get; set; }
     
         public virtual int Pro_Build_Recommend_Str(string uname, string umobile, string para, ObjectParameter outCode)
         {

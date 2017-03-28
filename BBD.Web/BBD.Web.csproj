@@ -1353,6 +1353,7 @@
     <Content Include="Scripts\Easyui\themes\ui-sunny\validatebox.css" />
     <Content Include="Scripts\Easyui\themes\ui-sunny\validatebox_warning.png" />
     <Content Include="Scripts\Easyui\themes\ui-sunny\window.css" />
+    <Content Include="Scripts\JCenter.js" />
     <Content Include="Scripts\JECommon.js" />
     <Content Include="Scripts\JLayout.js" />
     <Content Include="Scripts\JLogin.js" />
@@ -1408,6 +1409,8 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Dictionary\Index.cshtml" />
     <Content Include="Views\Dictionary\Dialog.cshtml" />
+    <Content Include="Views\Home\Center.cshtml" />
+    <Content Include="Views\Home\Portal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
