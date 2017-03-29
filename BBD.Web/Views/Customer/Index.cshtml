@@ -1,0 +1,344 @@
+﻿
+@{
+    ViewBag.Title = "用户信息表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section queryform
+{
+    <form id="appUserForm">
+        <label for="UserName">
+            姓名:
+        </label>
+        <input class="easyui-textbox" type="text" id="UserName" name="UserName" style="width: 115px" />
+        <label for="UserMobile">
+            手机号:
+        </label>
+        <input class="easyui-textbox" type="text" id="UserMobile" name="UserMobile" style="width: 115px" />
+        <label for="FemaleTree">
+            性别:
+        </label>
+        <select id="FemaleTree" class="easyui-combobox" name="FemaleTree" style="width:200px;">
+            <option value="">请选择</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+        <label for="ComeFromTree">
+            来源:
+        </label>
+        <input id="ComeFromTree" class="easyui-combobox" name="ComeFromTree" style="width:200px;" />
+        <label for="ComeFromTree">
+            所属门店:
+        </label>
+        <input id="HospTree" class="easyui-combobox" name="HospTree" style="width:200px;" />
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="query">查询</a>
+    </form>
+}
+
+<div style="padding-left:2px;padding-right:2px;height:100%;">
+    <table id="Usersgrid"></table>
+</div>
+<div id="Usersdialog"></div>
+<script type="text/javascript">
+    /* 系统用户管理Javascript文件 */
+    $(document).ready(function () {
+        //加载Grid
+        InitToolbar();
+        $("#query").click(function () {
+            ReloadGrid();
+        })
+    });
+
+    // 查询
+    function ReloadGrid() {
+        var queryData = {
+            Name: $.trim($("#UserName").textbox("getValue")),
+            Mobile: $.trim($("#UserMobile").textbox("getValue")),
+            Female: $("#FemaleTree").combobox("getValue"),
+            ComeFrom: $("#ComeFromTree").combobox("getValue"),
+            HospId: $("#HospTree").combobox("getValue")
+        };
+        $("#Usersgrid").datagrid("load", queryData);
+    }
+    //根据权限设置装载grid
+    function InitToolbar() {
+        var toolbar = [];
+        var actionBar1 = {
+            id: "RT06010201",
+            text: "新增"
+        };
+        var actionBar2 = {
+            id: "RT06010202",
+            text: "编辑"
+        };
+        var actionBar3 = {
+            id: "RT06010203",
+            text: "删除"
+        };
+        var actionBar4 = {
+            id: "RT06010204",
+            text: "刷新"
+        };
+        var actionBar5 = {
+            id: "RT06010205",
+            text: "邀请"
+        };
+
+
+        actionBar1.iconCls = "icon-add",
+        actionBar1.handler = function () {
+            ShowEditOrViewDialog('add');
+        }
+        actionBar2.iconCls = "icon-edit",
+        actionBar2.handler = function () {
+            ShowEditOrViewDialog('edit');
+        }
+        actionBar3.iconCls = "icon-remove",
+        actionBar3.handler = function () {
+            DeleteSelectRow();
+        }
+        actionBar4.iconCls = "icon-reload",
+        actionBar4.handler = function () {
+            ReloadGrid();
+        }
+        actionBar5.iconCls = "icon-add",
+        actionBar5.handler = function () {
+            ShowEnterDialog();
+        }
+        toolbar.push(actionBar1);
+        toolbar.push(actionBar2);
+        toolbar.push(actionBar3);
+        toolbar.push(actionBar5);
+        toolbar.push(actionBar4);
+        InitGrid(toolbar);
+    }
+
+    function InitGrid(toolbar) {
+        var queryData = {
+            Name: $.trim($("#UserName").textbox("getValue")),
+            Mobile: $.trim($("#UserMobile").textbox("getValue")),
+            Female: $("#FemaleTree").combobox("getValue"),
+            ComeFrom: $("#ComeFromTree").combobox("getValue"),
+            HospId: $("#HospTree").combobox("getValue")
+        };
+        $('#Usersgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/HeiWei/GetAppHeiWeiList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '升高与标准体重信息',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            method: 'post',
+            idField: 'Id',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "uId", field: "uId", width: 175, hidden: true },
+                          { title: "门店", field: "HospName", width: 175, sortable: true },
+                          { title: "姓名", field: "Name", width: 175, sortable: true },
+                          { title: "出生日期", field: "Female", width: 175, sortable: true },
+                          { title: "手机号码", field: "Mobile", width: 175, sortable: true },
+                          { title: "性别", field: "Female", width: 175, sortable: true },
+                          { title: "来源", field: "ComeFrom", width: 175, sortable: true },
+                          { title: "本人推荐码", field: "Self_code", width: 175, sortable: true },
+                          { title: "入会推荐人", field: "EnterName", width: 95, sortable: true }
+
+            ]],
+            toolbar: toolbar
+        })
+    };
+
+    //显示新增编辑页面
+    function ShowEditOrViewDialog(action) {
+        var title = "新增数据";
+        var Id = 0;
+        if (action == "edit") {
+            title = "编辑数据";
+            var selectedRows = $("#Usersgrid").datagrid("getSelected");
+            if (!selectedRows) {
+                $.messager.alert("提示", "请选择需要编辑的数据");
+                return;
+            }
+            Id = selectedRows.Id;
+        }
+        var href = "/HeiWei/Dialog" + "?Id=" + Id;
+
+        $("#Usersdialog").dialog({
+            title: title,
+            width: 550,
+            height: 300,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveHeiWei();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Usersdialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    //邀请
+    function ShowEnterDialog() {
+        var selectedRows = $("#Usersgrid").datagrid("getSelected");
+        if (!selectedRows) {
+            $.messager.alert("提示", "请选择需要邀请的客户");
+            return;
+        }
+        var href = "/HeiWei/EnterDialog" + "?Id=" + Id;
+        $("#Usersdialog").dialog({
+            title: title,
+            width: 550,
+            height: 300,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    EnterHeiWei();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Usersdialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    //删除选中行
+    function DeleteSelectRow() {
+        var selectedRow = $("#Usersgrid").datagrid("getSelected");
+        if (!selectedRow) {
+            $.messager.alert("提示", "请选择需要删除的数据");
+            return;
+        }
+
+        //确定要删除选中
+        $.messager.confirm("删除提示", "确定要删除所选择的数据么", function (data) {
+            if (data) {
+                var id = selectedRow.Id;
+                var csUrl = "/HeiWei/DeleteHeiWei";
+                $.ajax({
+                    url: csUrl,
+                    data: { Id: id },
+                    dataType: "json",
+                    success: function (returnData) {
+                        //failed
+                        if (returnData.result == "error") {
+                            $.messager.alert("提示", "删除失败 " + returnData.message);
+                            return;
+                        }
+                        //success
+                        $.messager.alert("提示", "数据删除成功");
+                        ReloadGrid();
+                    },
+                    error: function (returnData) {
+                        $.messager.alert("提示", "删除失败 ");
+                    }
+                });
+            }
+        });
+
+    }
+
+    //邀请按钮
+    function EnterHeiWei() {
+        $.ajax({
+            url: csUrl,
+            data: { Id: id },
+            dataType: "json",
+            success: function (returnData) {
+                //failed
+                if (returnData.result == "error") {
+                    $.messager.alert("提示", "删除失败 " + returnData.message);
+                    return;
+                }
+                //success
+                $.messager.alert("提示", "数据删除成功");
+                ReloadGrid();
+            },
+            error: function (returnData) {
+                $.messager.alert("提示", "删除失败 ");
+            }
+        });
+    }
+
+    function SaveHeiWei() {
+        //保存按钮
+        $("#dialogForm").form("submit", {
+            url: "/HeiWei/SaveHeiWei",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#Usersdialog").dialog("close");
+                    ReloadGrid();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+
+    function InitComeFrom() {
+        var timeUrl = "/HeiWei/GetAppComeFrom";
+        $("#App_TimeSpan").combobox({
+            url: timeUrl,
+            valueField: 'value',
+            textField: 'text',
+            editable: false,
+            onSelect: function (rec) {
+                $('#App_DrId').combobox('clear');
+                var hospId = $('#App_HospId').combobox('getValue');
+                var deptId = $('#App_DeptId').combobox('getValue');
+                var dateId = $('#App_Date').datebox('getValue');
+                var timeId = rec.value;
+                InitdrCombo(hospId, deptId, dateId, timeId);
+            },
+            onLoadSuccess: function () {
+
+            }
+        });
+    }
+
+    function InitHosp() {
+        var timeUrl = "/HeiWei/GetAppHosp";
+        $("#App_TimeSpan").combobox({
+            url: timeUrl,
+            valueField: 'value',
+            textField: 'text',
+            editable: false,
+            onSelect: function (rec) {
+                $('#App_DrId').combobox('clear');
+                var hospId = $('#App_HospId').combobox('getValue');
+                var deptId = $('#App_DeptId').combobox('getValue');
+                var dateId = $('#App_Date').datebox('getValue');
+                var timeId = rec.value;
+                InitdrCombo(hospId, deptId, dateId, timeId);
+            },
+            onLoadSuccess: function () {
+
+            }
+        });
+    }
+
+</script>

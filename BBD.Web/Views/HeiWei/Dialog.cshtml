@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "体重编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Hei_Wei
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="Id" value="@Model.Id" name="Id" />
+    <input type="hidden" name="Female" id="Female" value="" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="Female">
+                    性别:
+                </label>
+            </td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(Model.Female))
+                {
+                    if (Model.Female == "男")
+                    {
+                        <input type="radio" name="groupFemale" checked value="男" onclick="selFemale(this)" /><text>男</text>
+                        <input type="radio" name="groupFemale" value="女" onclick="selFemale(this)" /><text>女</text>
+                    }
+                    else if (Model.Female == "女")
+                    {
+                        <input type="radio" name="groupFemale" value="男" onclick="selFemale(this)" /><text>男</text>
+                        <input type="radio" name="groupFemale" checked value="女" onclick="selFemale(this)" /><text>女</text>
+                    }
+                }
+                else
+                {
+                    <input type="radio" name="groupFemale" checked value="男" onclick="selFemale(this)" /><text>男</text>
+                    <input type="radio" name="groupFemale" value="女" onclick="selFemale(this)" /><text>女</text>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Height">
+                    升高（厘米）:
+                </label>
+            </td>
+            <td>
+                <input id="Height" class="easyui-textbox" type="text" name="Height" value="@Model.Height" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="St_weight">
+                    标准体重（公斤）:
+                </label>
+            </td>
+            <td>
+                <input id="St_weight" class="easyui-textbox" type="text" name="St_weight" value="@Model.St_weight" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Pt_weight">
+                    美学体重（公斤）:
+                </label>
+            </td>
+            <td>
+                <input id="Pt_weight" class="easyui-textbox" type="text" name="Pt_weight" value="@Model.Pt_weight" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="WC">
+                    腰围:
+                </label>
+            </td>
+            <td>
+                <input id="WC" class="easyui-textbox" type="text" name="WC" value="@Model.WC" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Hipline">
+                    臀围:
+                </label>
+            </td>
+            <td>
+                <input id="Hipline" class="easyui-textbox" type="text" name="Hipline" value="@Model.Hipline" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Thigh_Cir">
+                    大腿围:
+                </label>
+            </td>
+            <td>
+                <input id="Thigh_Cir" class="easyui-textbox" type="text" name="Thigh_Cir" value="@Model.Thigh_Cir" />
+            </td>
+        </tr>
+
+    </table>
+    <script type="text/javascript">
+        function selFemale() {
+            $("#Female").val($(obj).val());
+        }
+    </script>
+</form>
