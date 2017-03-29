@@ -118,6 +118,7 @@ namespace BBD.DAL
         /// <returns></returns>
         public int Modifyed(T model, params string[] proNames)
         {
+            DbPublic.Set<T>().Attach(model);
             DbEntityEntry entry = DbPublic.Entry<T>(model);
             entry.State = EntityState.Unchanged;
             Type t = typeof(T);
@@ -145,6 +146,7 @@ namespace BBD.DAL
         /// <returns></returns>
         public int Modify(T model, params  Expression<Func<T, object>>[] ignorePerperties)
         {
+            DbPublic.Set<T>().Attach(model);
             DbEntityEntry entry = DbPublic.Entry<T>(model);
             entry.State = EntityState.Unchanged;
             int iret = -1;

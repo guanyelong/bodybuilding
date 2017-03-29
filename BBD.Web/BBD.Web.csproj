@@ -171,6 +171,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BuyRecController.cs" />
     <Compile Include="Controllers\ConsumeController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\HeiWeiController.cs" />
@@ -1358,7 +1359,7 @@
     <Content Include="Scripts\JLayout.js" />
     <Content Include="Scripts\JLogin.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1411,13 +1412,15 @@
     <Content Include="Views\Dictionary\Dialog.cshtml" />
     <Content Include="Views\Home\Center.cshtml" />
     <Content Include="Views\Home\Portal.cshtml" />
+    <Content Include="Views\HeiWei\Index.cshtml" />
+    <Content Include="Views\HeiWei\Dialog.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\BuyRec\" />
     <Folder Include="Views\Consume\" />
-    <Folder Include="Views\HeiWei\" />
     <Folder Include="Views\Hosp\" />
     <Folder Include="Views\Serv\" />
   </ItemGroup>
