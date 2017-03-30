@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BodyDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelExtension\tb_Hosp_Info.cs" />
     <Compile Include="ModelExtension\tb_Sys_Department.cs" />
     <Compile Include="ModelExtension\tb_Sys_UserInfo.cs" />
     <Compile Include="PocoModel\tb_Consume_Log.cs">

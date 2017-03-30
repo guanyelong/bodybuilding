@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "门店编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Easyui/locale/easyui-lang-zh_CN.js"></script>
+@model BBD.Models.tb_Hosp_Info
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="HospId" value="@Model.HospId" name="HospId" />
+    <input type="hidden" name="Female" id="Female" value="" />
+    <input type="hidden" id="sType" name="sType" value="@Model.sType" />
+    <input type="hidden" id="CityId" name="CityId" value="@Model.CityId" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="Hname">
+                    门店名称:
+                </label>
+            </td>
+            <td>
+                <input id="Hname" class="easyui-textbox" type="text" name="Hname" value="@Model.Hname" data-options="required:true" />
+            </td>
+            <td>
+                <label for="tel">
+                    联系电话:
+                </label>
+            </td>
+            <td>
+                <input id="tel" class="easyui-textbox" type="text" name="tel" value="@Model.tel" data-options="required:true" />
+            </td>
+            <td>
+                <label for="Citytree">
+                    所属城市:
+                </label>
+            </td>
+            <td>
+                <input id="Citytree" class="easyui-combobox" type="text" name="Citytree" />
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <label for="sTypetree">
+                    门店类别:
+                </label>
+            </td>
+            <td>
+                <input id="sTypetree" class="easyui-combobox" type="text" name="sTypetree" />
+            </td>
+            <td>
+                <label for="MapUrl">
+                    地铁路线:
+                </label>
+            </td>
+            <td>
+                <input id="MapUrl" class="easyui-textbox" type="text" name="MapUrl" value="@Model.MapUrl" />
+            </td>
+            <td>
+                <label for="traffic">
+                    乘车路线:
+                </label>
+            </td>
+            <td>
+                <input id="traffic" class="easyui-textbox" type="text" name="traffic" value="@Model.traffic" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="grade">
+                    等级:
+                </label>
+            </td>
+            <td>
+                <input id="grade" class="easyui-textbox" type="text" name="grade" value="@Model.grade" />
+            </td>
+            
+            <td>
+                <label for="address">
+                    地址:
+                </label>
+            </td>
+            <td>
+                <input id="address" class="easyui-textbox" type="text" name="address" value="@Model.address" style="height:80px" data-options="multiline:true" />
+            </td>
+            <td>
+                <label for="intro">
+                    简介:
+                </label>
+            </td>
+            <td>
+                <input id="intro" class="easyui-textbox" type="text" name="intro" value="@Model.intro" style="height:80px" data-options="multiline:true" />
+            </td>
+        </tr>
+
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            InitsTypeCombo();
+            InitsCityCombo();
+        })
+
+        function InitsTypeCombo() {
+            var hosUrl = "/Hosp/GetAppsTypeTree";
+            $("#sTypetree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#sType").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#sTypetree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#sType").val();
+                        if (stype==0)
+                            $('#sTypetree').combobox('select', data[0].id);
+                        else
+                            $('#sTypetree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+
+        function InitsCityCombo() {
+            var cityUrl = "/Hosp/GetAppCityTree";
+            $("#Citytree").combobox({
+                url: cityUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#CityId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#Citytree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#CityId").val();
+                        if (stype == 0)
+                            $('#Citytree').combobox('select', data[0].id);
+                        else
+                            $('#Citytree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+    </script>
+</form>

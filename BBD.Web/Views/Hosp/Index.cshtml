@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "门店列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section queryform
+{
+    <form id="appHospForm">
+        <label for="HospHname">
+            门店名称:
+        </label>
+        <input class="easyui-combobox" type="text" id="HospHname" name="HospHname" style="width: 115px" />
+        <label for="HospTel">
+            门店电话:
+        </label>
+        <input class="easyui-textbox" type="text" id="HospTel" name="HospTel" style="width: 115px" />
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="query">查询</a>
+    </form>
+}
+<div style="padding-left:2px;padding-right:2px;height:100%;">
+    <table id="Hospgrid"></table>
+</div>
+<div id="Hospdialog"></div>
+<script type="text/javascript">
+    /* 系统用户管理Javascript文件 */
+    $(document).ready(function () {
+        //加载Grid
+        InitToolbar();
+        InitCombobox();
+        $("#query").click(function () {
+            ReloadGrid();
+        })
+    });
+    // 查询
+    function ReloadGrid() {
+        var queryData = {
+            Hname: $.trim($("#HospHname").textbox("getValue")),
+            tel: $("#HospTel").textbox("getValue")
+        };
+        $("#Hospgrid").datagrid("load", queryData);
+    }
+    //根据权限设置装载grid
+    function InitToolbar() {
+        var toolbar = [];
+        var actionBar1 = {
+            id: "RT06010201",
+            text: "新增"
+        };
+        var actionBar2 = {
+            id: "RT06010202",
+            text: "编辑"
+        };
+        var actionBar3 = {
+            id: "RT06010203",
+            text: "删除"
+        };
+        var actionBar4 = {
+            id: "RT06010204",
+            text: "刷新"
+        };
+        actionBar1.iconCls = "icon-add",
+        actionBar1.handler = function () {
+            ShowEditOrViewDialog('add');
+        }
+        actionBar2.iconCls = "icon-edit",
+        actionBar2.handler = function () {
+            ShowEditOrViewDialog('edit');
+        }
+        actionBar3.iconCls = "icon-remove",
+        actionBar3.handler = function () {
+            DeleteSelectRow();
+        }
+        actionBar4.iconCls = "icon-reload",
+        actionBar4.handler = function () {
+            ReloadGrid();
+        }
+        toolbar.push(actionBar1);
+        toolbar.push(actionBar2);
+        toolbar.push(actionBar3);
+        toolbar.push(actionBar4);
+        InitGrid(toolbar);
+    }
+
+    function InitGrid(toolbar) {
+        var queryData = {
+            Hname: $.trim($("#HospHname").textbox("getValue")),
+            tel: $("#HospTel").textbox("getValue")
+        };
+        $('#Hospgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/Hosp/GetAppHospList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '升高与标准体重信息',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            method: 'post',
+            idField: 'HospId',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "HospId", field: "HospId", width: 175, hidden: true },
+                          { title: "店名", field: "Hname", width: 175, sortable: true },
+                          { title: "地址", field: "address", width: 175, sortable: true },
+                          { title: "联系电话", field: "tel", width: 95, sortable: true },
+                          { title: "门店类别", field: "sTypeName", width: 95, sortable: true },
+                          { title: "等级", field: "grade", width: 95, sortable: true },
+                          { title: "所属城市", field: "CityName", width: 95, sortable: true },
+                          {
+                              title: "状态", field: "IsDel", width: 95, sortable: true, formatter: function (value) {
+                                  if (value == 0) return "正常";
+                                  else return "已删除";
+                              }
+                          }
+
+            ]],
+            toolbar: toolbar
+        })
+    };
+
+    function InitCombobox() {
+        $('#HospHname').combobox({
+            prompt: '输入关键字后自动搜索',
+            required: false,
+            mode: 'remote',
+            url: '/Hosp/QueryHospKeyWord',
+            editable: true,
+            valueField: 'value',
+            textField: 'text',
+            hasDownArrow: false,
+            onBeforeLoad: function (param) {
+                if (param == null || param.q == null || param.q == "" || param.q.replace(/ /g, '') == '') {
+                    var value = $(this).combobox('getValue');
+                    if (value) {// 修改的时候才会出现q为空而value不为空
+                        param.id = value;
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            onSelect: function (record) {
+                ReloadGrid();
+            }
+        });
+    }
+
+    //显示新增编辑页面
+    function ShowEditOrViewDialog(action) {
+        var title = "新增门店";
+        var Id = 0;
+        if (action == "edit") {
+            title = "编辑门店";
+            var selectedRows = $("#Hospgrid").datagrid("getSelected");
+            if (!selectedRows) {
+                $.messager.alert("提示", "请选择需要编辑的门店");
+                return;
+            }
+            Id = selectedRows.HospId;
+        }
+        var href = "/Hosp/Dialog" + "?Id=" + Id;
+
+        $("#Hospdialog").dialog({
+            title: title,
+            width: 850,
+            height: 450,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveHosp();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Hospdialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    //删除选中行
+    function DeleteSelectRow() {
+        var selectedRow = $("#Hospgrid").datagrid("getSelected");
+        if (!selectedRow) {
+            $.messager.alert("提示", "请选择需要删除的门店");
+            return;
+        }
+
+        //确定要删除选中
+        $.messager.confirm("删除提示", "确定要删除所选择的门店么", function (data) {
+            if (data) {
+                var id = selectedRow.HospId;
+                var csUrl = "/Hosp/DeleteHosp";
+                $.ajax({
+                    url: csUrl,
+                    data: { Id: id },
+                    dataType: "json",
+                    success: function (returnData) {
+                        //failed
+                        if (returnData.result == "error") {
+                            $.messager.alert("提示", "删除失败 " + returnData.message);
+                            return;
+                        }
+                        //success
+                        $.messager.alert("提示", "数据删除成功");
+                        ReloadGrid();
+                    },
+                    error: function (returnData) {
+                        $.messager.alert("提示", "删除失败 ");
+                    }
+                });
+            }
+        });
+
+    }
+
+    function SaveHosp() {
+        //保存按钮
+        $("#dialogForm").form("submit", {
+            url: "/Hosp/SaveHosp",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#Hospdialog").dialog("close");
+                    ReloadGrid();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+</script>

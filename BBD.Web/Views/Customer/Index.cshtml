@@ -26,7 +26,7 @@
             来源:
         </label>
         <input id="ComeFromTree" class="easyui-combobox" name="ComeFromTree" style="width:200px;" />
-        <label for="ComeFromTree">
+        <label for="HospTree">
             所属门店:
         </label>
         <input id="HospTree" class="easyui-combobox" name="HospTree" style="width:200px;" />
@@ -43,6 +43,8 @@
     $(document).ready(function () {
         //加载Grid
         InitToolbar();
+        InitComeFromComb();
+        InitHospComb();
         $("#query").click(function () {
             ReloadGrid();
         })
@@ -121,7 +123,7 @@
             HospId: $("#HospTree").combobox("getValue")
         };
         $('#Usersgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
-            url: '/HeiWei/GetAppHeiWeiList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            url: '/Customer/GetAppUserList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
             title: '升高与标准体重信息',
             fit: true,
             fitColumns: true,
@@ -299,44 +301,40 @@
         });
     }
 
-    function InitComeFrom() {
-        var timeUrl = "/HeiWei/GetAppComeFrom";
-        $("#App_TimeSpan").combobox({
+    function InitComeFromComb() {
+        var timeUrl = "/Customer/GetAppComeFrom";
+        $("#ComeFromTree").combobox({
             url: timeUrl,
             valueField: 'value',
             textField: 'text',
             editable: false,
             onSelect: function (rec) {
-                $('#App_DrId').combobox('clear');
-                var hospId = $('#App_HospId').combobox('getValue');
-                var deptId = $('#App_DeptId').combobox('getValue');
-                var dateId = $('#App_Date').datebox('getValue');
-                var timeId = rec.value;
-                InitdrCombo(hospId, deptId, dateId, timeId);
+                
             },
             onLoadSuccess: function () {
-
+                var data = $('#ComeFromTree').combobox('getData');
+                if (data.length > 0) {
+                    $('#ComeFromTree').combobox('select', data[0].id);
+                }
             }
         });
     }
 
-    function InitHosp() {
-        var timeUrl = "/HeiWei/GetAppHosp";
-        $("#App_TimeSpan").combobox({
+    function InitHospComb() {
+        var timeUrl = "/Customer/GetAppHosp";
+        $("#HospTree").combobox({
             url: timeUrl,
             valueField: 'value',
             textField: 'text',
             editable: false,
             onSelect: function (rec) {
-                $('#App_DrId').combobox('clear');
-                var hospId = $('#App_HospId').combobox('getValue');
-                var deptId = $('#App_DeptId').combobox('getValue');
-                var dateId = $('#App_Date').datebox('getValue');
-                var timeId = rec.value;
-                InitdrCombo(hospId, deptId, dateId, timeId);
+                
             },
             onLoadSuccess: function () {
-
+                var data = $('#HospTree').combobox('getData');
+                if (data.length > 0) {
+                    $('#HospTree').combobox('select', data[0].id);
+                }
             }
         });
     }
