@@ -393,7 +393,8 @@
           <Property Name="Myhope" Type="varchar" MaxLength="200" />
           <Property Name="CreatorId" Type="int" />
           <Property Name="Creator" Type="varchar" MaxLength="50" />
-          <Property Name="C_time" Type="datetime" />
+          <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="isDel" Type="int" />
         </EntityType>
         <EntityType Name="tb_Weight_Chg">
           <Key>
@@ -509,12 +510,12 @@
           <EntitySet Name="tb_User_Accounts" EntityType="BXUUModel.tb_User_Account" />
           <EntitySet Name="tb_User_Buy_Recs" EntityType="BXUUModel.tb_User_Buy_Rec" />
           <EntitySet Name="tb_User_Dislike_Foods" EntityType="BXUUModel.tb_User_Dislike_Food" />
-          <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
           <EntitySet Name="tb_Weight_Chgs" EntityType="BXUUModel.tb_Weight_Chg" />
           <EntitySet Name="tb_Weight_Chg_Selfs" EntityType="BXUUModel.tb_Weight_Chg_Self" />
           <EntitySet Name="tb_Sys_logs" EntityType="BXUUModel.tb_Sys_log" />
           <EntitySet Name="tb_Sys_Notices" EntityType="BXUUModel.tb_Sys_Notice" />
           <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
+          <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
         </EntityContainer>
         <EntityType Name="tb_Consume_Log">
           <Key>
@@ -833,36 +834,6 @@
           <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="tb_User_Info">
-          <Key>
-            <PropertyRef Name="uId" />
-          </Key>
-          <Property Name="uId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HospId" Type="Int32" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Female" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="Birth" Type="DateTime" Precision="0" />
-          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ComeFrom" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IndustryType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Height" Type="Double" />
-          <Property Name="Weight" Type="Double" />
-          <Property Name="WC" Type="Double" />
-          <Property Name="Hipline" Type="Double" />
-          <Property Name="Thigh_Cir" Type="Double" />
-          <Property Name="Qq" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="WeiXin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BMI" Type="Double" />
-          <Property Name="Enter_Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Self_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Cityid" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Myhope" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CreatorId" Type="Int32" />
-          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="C_time" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tb_Weight_Chg">
           <Key>
             <PropertyRef Name="Id" />
@@ -932,6 +903,37 @@
           <Property Name="loginCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="loginTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LoginIp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_User_Info">
+          <Key>
+            <PropertyRef Name="uId" />
+          </Key>
+          <Property Name="uId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Female" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ComeFrom" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IndustryType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="WC" Type="Double" />
+          <Property Name="Hipline" Type="Double" />
+          <Property Name="Thigh_Cir" Type="Double" />
+          <Property Name="Qq" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WeiXin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BMI" Type="Double" />
+          <Property Name="Enter_Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Self_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cityid" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Myhope" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isDel" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1279,37 +1281,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_User_Infos">
-            <EntityTypeMapping TypeName="BXUUModel.tb_User_Info">
-              <MappingFragment StoreEntitySet="tb_User_Info">
-                <ScalarProperty Name="C_time" ColumnName="C_time" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
-                <ScalarProperty Name="Myhope" ColumnName="Myhope" />
-                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
-                <ScalarProperty Name="Cityid" ColumnName="Cityid" />
-                <ScalarProperty Name="Self_code" ColumnName="Self_code" />
-                <ScalarProperty Name="Enter_Code" ColumnName="Enter_Code" />
-                <ScalarProperty Name="BMI" ColumnName="BMI" />
-                <ScalarProperty Name="WeiXin" ColumnName="WeiXin" />
-                <ScalarProperty Name="Qq" ColumnName="Qq" />
-                <ScalarProperty Name="Thigh_Cir" ColumnName="Thigh_Cir" />
-                <ScalarProperty Name="Hipline" ColumnName="Hipline" />
-                <ScalarProperty Name="WC" ColumnName="WC" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="IndustryType" ColumnName="IndustryType" />
-                <ScalarProperty Name="ComeFrom" ColumnName="ComeFrom" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Birth" ColumnName="Birth" />
-                <ScalarProperty Name="Female" ColumnName="Female" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="HospId" ColumnName="HospId" />
-                <ScalarProperty Name="uId" ColumnName="uId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_Weight_Chgs">
             <EntityTypeMapping TypeName="BXUUModel.tb_Weight_Chg">
               <MappingFragment StoreEntitySet="tb_Weight_Chg">
@@ -1381,6 +1352,38 @@
                 <ScalarProperty Name="loginCity" ColumnName="loginCity" />
                 <ScalarProperty Name="loginName" ColumnName="loginName" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Infos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Info">
+              <MappingFragment StoreEntitySet="tb_User_Info">
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="Myhope" ColumnName="Myhope" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="Cityid" ColumnName="Cityid" />
+                <ScalarProperty Name="Self_code" ColumnName="Self_code" />
+                <ScalarProperty Name="Enter_Code" ColumnName="Enter_Code" />
+                <ScalarProperty Name="BMI" ColumnName="BMI" />
+                <ScalarProperty Name="WeiXin" ColumnName="WeiXin" />
+                <ScalarProperty Name="Qq" ColumnName="Qq" />
+                <ScalarProperty Name="Thigh_Cir" ColumnName="Thigh_Cir" />
+                <ScalarProperty Name="Hipline" ColumnName="Hipline" />
+                <ScalarProperty Name="WC" ColumnName="WC" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="IndustryType" ColumnName="IndustryType" />
+                <ScalarProperty Name="ComeFrom" ColumnName="ComeFrom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Female" ColumnName="Female" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="HospId" ColumnName="HospId" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1419,6 +1419,7 @@
     <Content Include="Views\EmpHos\Index.cshtml" />
     <Content Include="Views\Hosp\Index.cshtml" />
     <Content Include="Views\Hosp\Dialog.cshtml" />
+    <Content Include="Views\Customer\Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />

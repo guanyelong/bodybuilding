@@ -19,18 +19,33 @@ namespace BBD.Web.Controllers
             return View();
         }
 
+        public ActionResult Dialog(int Id)
+        {
+            tb_User_Info hw = new tb_User_Info();
+            if (Id != 0)
+            {
+                hw = oc.iBllSession.Itb_User_Info_Bo_BLL.GetObjet(p => p.uId == Id);
+            }
+            return View(hw);
+        }
+
         public ActionResult GetAppUserList()
         {
             int pageIndex = int.Parse(Request["page"]);  //当前页  
             int pageSize = int.Parse(Request["rows"]);  //页面行数
-            string Hname = Request["Name"];
-            string tel = Request["Mobile"];
+            string Name = Request["Name"];
+            string Mobile = Request["Mobile"];
+            string Female = Request["Female"];
+            string ComeFrom = Request["ComeFrom"];
+            string HospId = Request["HospId"];
             int count = 0;
-            tb_Hosp_Info info = new tb_Hosp_Info();
-            info.Hname = Hname;
-            info.tel = tel;
-            IList<tb_Hosp_Info> query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetAppHospList(pageIndex, pageSize, ref count, info);
-
+            tb_User_Info info = new tb_User_Info();
+            info.Name = Name;
+            info.Mobile = Mobile;
+            info.Female = Female;
+            info.ComeFrom = ComeFrom;
+            info.HospId = string.IsNullOrWhiteSpace(HospId) ? 0 : int.Parse(HospId);
+            IList<tb_User_Info> query = oc.iBllSession.Itb_User_Info_Bo_BLL.GetAppUserList(pageIndex, pageSize, ref count, info);
             var data = new
             {
                 total = count,
@@ -39,17 +54,70 @@ namespace BBD.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Dialog(int Id)
+        public JsonResult DeleteUser(int Id)
         {
-            tb_User_Info hi = new tb_User_Info();
+            string errMsg = "";
             if (Id != 0)
             {
-                hi = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetObjet(p => p.HospId == Id);
+                var info = oc.iBllSession.Itb_User_Info_Bo_BLL.GetObjet(p => p.uId == Id);
+                if (info != null)
+                {
+                    info.isDel = 1;
+                    string[] prop = { "isDel" };
+                    int num = oc.iBllSession.Itb_User_Info_Bo_BLL.Modify(info,prop);
+                    if (num < 1) errMsg = "删除失败";
+                }
+                else
+                {
+                    errMsg = "未找到数据";
+                }
             }
-            return View(hi);
+            var result = new { result = "ok", message = "操作成功" };
+
+            if (!string.IsNullOrEmpty(errMsg))
+            {
+                result = new { result = "error", message = errMsg };
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAppComeFrom() {
+        [HttpPost]
+        public JsonResult SaveUser(tb_User_Info ui)
+        {
+            if (ui == null)
+            {
+                return Json(new { result = "error", mesage = "数据为空" });
+            }
+            string errMsg = "";
+            ui.Female = string.IsNullOrWhiteSpace(ui.Female) ? "男" : ui.Female;
+            if (ui.Height != null && ui.Weight != null) ui.BMI = ui.Weight / (ui.Height * ui.Height);
+            if (ui.uId == 0)
+            {
+                ui.isDel = 0;
+                //ui.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                
+                int num = oc.iBllSession.Itb_User_Info_Bo_BLL.Add(ui);
+                if (num < 1) errMsg = "添加失败";
+            }
+            else
+            {
+                string[] prop = { "uId", "C_time", "CreatorId", "Creator", "isDel", "HospName", "ComeFromName", "IndustryTypeName", "CityName" };
+                int num = oc.iBllSession.Itb_User_Info_Bo_BLL.Modifyed(ui, prop);
+                if (num < 1) errMsg = "修改失败";
+            }
+            var result = new { result = "ok", message = "操作成功" };
+
+            if (!string.IsNullOrEmpty(errMsg))
+            {
+                result = new { result = "error", message = errMsg };
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAppComeFromTree()
+        {
             List<Hashtable> htlist = new List<Hashtable>();
             var query = oc.iBllSession.Itb_Dict_Bo_BLL.GetListBy(p => p.KeyName == "comfrom", p => p.Seq);
             Hashtable htq = new Hashtable();
@@ -68,7 +136,27 @@ namespace BBD.Web.Controllers
             return Json(htlist, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAppHosp()
+        public JsonResult GetAppCityTree()
+        {
+            List<Hashtable> htlist = new List<Hashtable>();
+            var query = oc.iBllSession.Itb_Dict_Bo_BLL.GetListBy(p => p.KeyName == "city", p => p.Seq);
+            Hashtable htq = new Hashtable();
+            htq.Add("id", "");
+            htq.Add("value", "");
+            htq.Add("text", "请选择");
+            htlist.Add(htq);
+            foreach (var item in query)
+            {
+                Hashtable ht = new Hashtable();
+                ht.Add("id", item.KeyValue);
+                ht.Add("value", item.KeyValue);
+                ht.Add("text", item.KeyWords);
+                htlist.Add(ht);
+            }
+            return Json(htlist, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAppHospTree()
         {
             List<Hashtable> htlist = new List<Hashtable>();
             var query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetListBy(p => p.IsDel == 0, p => p.C_Time, false);
@@ -83,6 +171,25 @@ namespace BBD.Web.Controllers
                 ht.Add("id", item.HospId);
                 ht.Add("value", item.HospId);
                 ht.Add("text", item.Hname);
+                htlist.Add(ht);
+            }
+            return Json(htlist, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetAppIndustryTypeTree()
+        {
+            List<Hashtable> htlist = new List<Hashtable>();
+            var query = oc.iBllSession.Itb_Dict_Bo_BLL.GetListBy(p => p.KeyName == "IndustryType", p => p.Seq);
+            Hashtable htq = new Hashtable();
+            htq.Add("id", "");
+            htq.Add("value", "");
+            htq.Add("text", "请选择");
+            htlist.Add(htq);
+            foreach (var item in query)
+            {
+                Hashtable ht = new Hashtable();
+                ht.Add("id", item.KeyValue);
+                ht.Add("value", item.KeyValue);
+                ht.Add("text", item.KeyWords);
                 htlist.Add(ht);
             }
             return Json(htlist, JsonRequestBehavior.AllowGet);

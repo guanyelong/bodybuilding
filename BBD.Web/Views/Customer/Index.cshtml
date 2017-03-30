@@ -109,7 +109,7 @@
         toolbar.push(actionBar1);
         toolbar.push(actionBar2);
         toolbar.push(actionBar3);
-        toolbar.push(actionBar5);
+        //toolbar.push(actionBar5);
         toolbar.push(actionBar4);
         InitGrid(toolbar);
     }
@@ -139,24 +139,44 @@
             pageSize: 15,
             pageList: [15, 30, 45, 60],
             method: 'post',
-            idField: 'Id',
+            idField: 'uId',
             queryParams: queryData,  //异步查询的参数
             columns: [[
-                          { title: "uId", field: "uId", width: 175, hidden: true },
-                          { title: "门店", field: "HospName", width: 175, sortable: true },
-                          { title: "姓名", field: "Name", width: 175, sortable: true },
-                          { title: "出生日期", field: "Female", width: 175, sortable: true },
-                          { title: "手机号码", field: "Mobile", width: 175, sortable: true },
-                          { title: "性别", field: "Female", width: 175, sortable: true },
-                          { title: "来源", field: "ComeFrom", width: 175, sortable: true },
-                          { title: "本人推荐码", field: "Self_code", width: 175, sortable: true },
-                          { title: "入会推荐人", field: "EnterName", width: 95, sortable: true }
+                          { title: "uId", field: "uId", width: 95, hidden: true },
+                          { title: "门店", field: "HospName", width: 95, sortable: true },
+                          { title: "姓名", field: "Name", width: 35, sortable: true },
+                          { title: "出生日期", field: "Birth", width: 95, sortable: true, formatter: DataYMDFormat },
+                          { title: "手机号码", field: "Mobile", width: 95, sortable: true },
+                          { title: "性别", field: "Female", width: 35, sortable: true },
+                          { title: "来源", field: "ComeFromName", width: 95, sortable: true },
+                          { title: "本人推荐码", field: "Self_code", width: 95, sortable: true },
+                          { title: "入会推荐人", field: "EnterName", width: 95, sortable: true },
+                          { title: "客户减重期望", field: "Myhope", width: 95, sortable: true },
+                          { title: "所在城市", field: "CityName", width: 95, sortable: true },
+                          {
+                              title: "状态", field: "isDel", width: 95, sortable: true, formatter: function (value) {
+                                  if (value == 0) return "正常";
+                                  else return "已删除";
+                              }
+                          }
 
             ]],
             toolbar: toolbar
         })
     };
 
+    function DataYMDFormat(val) {
+        if (val != null && val != "") {
+            var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+            //月份为0-11，所以+1，月份小于10时补个0
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "年" + month + "月" + currentDate + "日";
+        }
+        else {
+            return "";
+        }
+    }
     //显示新增编辑页面
     function ShowEditOrViewDialog(action) {
         var title = "新增数据";
@@ -168,14 +188,14 @@
                 $.messager.alert("提示", "请选择需要编辑的数据");
                 return;
             }
-            Id = selectedRows.Id;
+            Id = selectedRows.uId;
         }
-        var href = "/HeiWei/Dialog" + "?Id=" + Id;
+        var href = "/Customer/Dialog" + "?Id=" + Id;
 
         $("#Usersdialog").dialog({
             title: title,
-            width: 550,
-            height: 300,
+            width: 850,
+            height: 400,
             closed: false,
             cache: false,
             href: href,
@@ -183,7 +203,7 @@
             buttons: [{
                 text: '&nbsp;保存&nbsp;',
                 handler: function () {
-                    SaveHeiWei();
+                    SaveUser();
                 }
             }, {
                 text: '&nbsp;关闭&nbsp;',
@@ -196,12 +216,14 @@
 
     //邀请
     function ShowEnterDialog() {
+        var Id = 0;
         var selectedRows = $("#Usersgrid").datagrid("getSelected");
         if (!selectedRows) {
             $.messager.alert("提示", "请选择需要邀请的客户");
             return;
         }
-        var href = "/HeiWei/EnterDialog" + "?Id=" + Id;
+        Id = selectedRows.uId;
+        var href = "/Customer/EnterDialog" + "?Id=" + Id;
         $("#Usersdialog").dialog({
             title: title,
             width: 550,
@@ -213,7 +235,7 @@
             buttons: [{
                 text: '&nbsp;保存&nbsp;',
                 handler: function () {
-                    EnterHeiWei();
+                    EnterUser();
                 }
             }, {
                 text: '&nbsp;关闭&nbsp;',
@@ -235,8 +257,8 @@
         //确定要删除选中
         $.messager.confirm("删除提示", "确定要删除所选择的数据么", function (data) {
             if (data) {
-                var id = selectedRow.Id;
-                var csUrl = "/HeiWei/DeleteHeiWei";
+                var id = selectedRow.uId;
+                var csUrl = "/Customer/DeleteUser";
                 $.ajax({
                     url: csUrl,
                     data: { Id: id },
@@ -260,32 +282,39 @@
 
     }
 
-    //邀请按钮
-    function EnterHeiWei() {
-        $.ajax({
-            url: csUrl,
-            data: { Id: id },
-            dataType: "json",
-            success: function (returnData) {
-                //failed
-                if (returnData.result == "error") {
-                    $.messager.alert("提示", "删除失败 " + returnData.message);
-                    return;
-                }
-                //success
-                $.messager.alert("提示", "数据删除成功");
-                ReloadGrid();
-            },
-            error: function (returnData) {
-                $.messager.alert("提示", "删除失败 ");
-            }
-        });
-    }
+    //邀请码按钮
+    //function EnterUser() {
+    //    var selectedRow = $("#Usersgrid").datagrid("getSelected");
+    //    if (!selectedRow) {
+    //        $.messager.alert("提示", "请选择需要邀请的用户");
+    //        return;
+    //    }
+    //    var id = selectedRow.uId;
+    //    var enterUrl = "/Customer/EnterUser";
+    //    $.ajax({
+    //        url: enterUrl,
+    //        data: { Id: id },
+    //        dataType: "json",
+    //        success: function (returnData) {
+    //            //failed
+    //            if (returnData.result == "error") {
+    //                $.messager.alert("提示", "邀请失败 " + returnData.message);
+    //                return;
+    //            }
+    //            //success
+    //            $.messager.alert("提示", "用户邀请成功");
+    //            ReloadGrid();
+    //        },
+    //        error: function (returnData) {
+    //            $.messager.alert("提示", "邀请失败 ");
+    //        }
+    //    });
+    //}
 
-    function SaveHeiWei() {
+    function SaveUser() {
         //保存按钮
         $("#dialogForm").form("submit", {
-            url: "/HeiWei/SaveHeiWei",
+            url: "/Customer/SaveUser",
             success: function (data) {
                 //form 提交返回的是字符串，需要转换成json
                 var returnData = $.parseJSON(data)
@@ -302,7 +331,7 @@
     }
 
     function InitComeFromComb() {
-        var timeUrl = "/Customer/GetAppComeFrom";
+        var timeUrl = "/Customer/GetAppComeFromTree";
         $("#ComeFromTree").combobox({
             url: timeUrl,
             valueField: 'value',
@@ -321,7 +350,7 @@
     }
 
     function InitHospComb() {
-        var timeUrl = "/Customer/GetAppHosp";
+        var timeUrl = "/Customer/GetAppHospTree";
         $("#HospTree").combobox({
             url: timeUrl,
             valueField: 'value',

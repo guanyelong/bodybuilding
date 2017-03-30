@@ -1,0 +1,314 @@
+﻿@{
+    ViewBag.Title = "用户编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/Easyui/locale/easyui-lang-zh_CN.js"></script>
+@model BBD.Models.tb_User_Info
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="uId" value="@Model.uId" name="uId" />
+    <input type="hidden" name="Female" id="Female" value="@Model.Female" />
+    <input type="hidden" id="ComeFrom" name="ComeFrom" value="@Model.ComeFrom" />
+    <input type="hidden" id="IndustryType" name="IndustryType" value="@Model.IndustryType" />
+    <input type="hidden" id="Cityid" name="Cityid" value="@Model.Cityid" />
+    <input type="hidden" id="HospId" name="HospId" value="@Model.HospId" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="HospIdtree">
+                    所属门店:
+                </label>
+            </td>
+            <td>
+                <input id="HospIdtree" class="easyui-combobox" type="text" name="HospIdtree" />
+            </td>
+            <td>
+                <label for="Citytree">
+                    所属城市:
+                </label>
+            </td>
+            <td>
+                <input id="Citytree" class="easyui-combobox" type="text" name="Citytree" />
+            </td>
+            <td>
+                <label for="Name">
+                    姓名:
+                </label>
+            </td>
+            <td>
+                <input id="Name" class="easyui-textbox" type="text" name="Name" value="@Model.Name" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Mobile">
+                    联系电话:
+                </label>
+            </td>
+            <td>
+                <input id="Mobile" class="easyui-textbox" type="text" name="Mobile" value="@Model.Mobile" data-options="required:true" />
+            </td>
+            <td>
+                <label for="Female">
+                    性别:
+                </label>
+            </td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(Model.Female))
+                {
+                    if (Model.Female == "男")
+                    {
+                        <input type="radio" name="groupFemale" checked value="男" onclick="selFemale(this)" /><text>男</text>
+                        <input type="radio" name="groupFemale" value="女" onclick="selFemale(this)" /><text>女</text>
+                    }
+                    else if (Model.Female == "女")
+                    {
+                        <input type="radio" name="groupFemale" value="男" onclick="selFemale(this)" /><text>男</text>
+                        <input type="radio" name="groupFemale" checked value="女" onclick="selFemale(this)" /><text>女</text>
+                    }
+                }
+                else
+                {
+                    <input type="radio" name="groupFemale" checked value="男" onclick="selFemale(this)" /><text>男</text>
+                    <input type="radio" name="groupFemale" value="女" onclick="selFemale(this)" /><text>女</text>
+                }
+            </td>
+            <td>
+                <label for="Birth">
+                    出生日期:
+                </label>
+            </td>
+            <td>
+                <input id="Birth" class="easyui-datebox" type="text" name="Birth"  value="@Model.Birth"/>
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+                <label for="Enter_Code">
+                    推荐码:
+                </label>
+            </td>
+            <td>
+                <input id="Enter_Code" class="easyui-textbox" type="text" name="Enter_Code" value="@Model.Enter_Code" />
+            </td>
+            <td>
+                <label for="ComeFromtree">
+                    来源:
+                </label>
+            </td>
+            <td>
+                <input id="ComeFromtree" class="easyui-combobox" type="text" name="ComeFromtree" />
+            </td>
+            <td>
+                <label for="IndustryTypetree">
+                    客户所在行业:
+                </label>
+            </td>
+            <td>
+                <input id="IndustryTypetree" class="easyui-combobox" type="text" name="IndustryTypetree" />
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+                <label for="Height">
+                    身高（cm）:
+                </label>
+            </td>
+            <td>
+                <input id="Height" class="easyui-textbox" type="text" name="Height" value="@Model.Height" />
+            </td>
+            <td>
+                <label for="Weight">
+                    体重（kg）:
+                </label>
+            </td>
+            <td>
+                <input id="Weight" class="easyui-textbox" type="text" name="Weight" value="@Model.Weight" />
+            </td>
+            <td>
+                <label for="WC">
+                    腰围:
+                </label>
+            </td>
+            <td>
+                <input id="WC" class="easyui-textbox" type="text" name="WC" value="@Model.WC" />
+            </td>
+        </tr>
+        <tr>
+
+            
+            <td>
+                <label for="Hipline">
+                    腿围:
+                </label>
+            </td>
+            <td>
+                <input id="Hipline" class="easyui-textbox" type="text" name="Hipline" value="@Model.Hipline" />
+            </td>
+            <td>
+                <label for="Thigh_Cir">
+                    大腿围:
+                </label>
+            </td>
+            <td>
+                <input id="Thigh_Cir" class="easyui-textbox" type="text" name="Thigh_Cir" value="@Model.Thigh_Cir" />
+            </td>
+            <td>
+                <label for="Qq">
+                    QQ:
+                </label>
+            </td>
+            <td>
+                <input id="Qq" class="easyui-textbox" type="text" name="Qq" value="@Model.Qq" />
+            </td>
+            
+        </tr>
+        <tr>
+            
+            <td>
+                <label for="WeiXin">
+                    微信:
+                </label>
+            </td>
+            <td>
+                <input id="WeiXin" class="easyui-textbox" type="text" name="WeiXin" value="@Model.WeiXin" />
+            </td>
+            
+
+            <td>
+                <label for="PicPath">
+                    照片:
+                </label>
+            </td>
+            <td>
+                <input id="PicPath" class="easyui-textbox" type="text" name="PicPath" value="@Model.PicPath" />
+            </td>
+            <td>
+                <label for="Email">
+                    邮件:
+                </label>
+            </td>
+            <td>
+                <input id="Email" class="easyui-textbox" type="text" name="Email" value="@Model.Email" />
+            </td>
+        </tr>
+        <tr>
+            
+            <td>
+                <label for="Myhope">
+                    客户减重期望:
+                </label>
+            </td>
+            <td>
+                <input id="Myhope" class="easyui-textbox" type="text" name="Myhope" value="@Model.Myhope" style="height:80px" data-options="multiline:true" />
+            </td>
+            <td colspan="4"></td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            InitIndustryTypeCombo();
+            InitComeFromCombo();
+            InitCityCombo();
+            InitHospCombo();
+        })
+
+
+        function InitIndustryTypeCombo() {
+            var hosUrl = "/Customer/GetAppIndustryTypeTree";
+            $("#IndustryTypetree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#IndustryType").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#IndustryTypetree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#IndustryType").val();
+                        if (stype == 0 || stype=="")
+                            $('#IndustryTypetree').combobox('select', data[0].id);
+                        else
+                            $('#IndustryTypetree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+
+        function InitCityCombo() {
+            var cityUrl = "/Customer/GetAppCityTree";
+            $("#Citytree").combobox({
+                url: cityUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#Cityid").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#Citytree').combobox('getData');
+                    if (data.length > 0) {
+                        var cityId = $("#Cityid").val();
+                        if (cityId == 0 || cityId == "" || cityId==null)
+                            $('#Citytree').combobox('select', data[0].id);
+                        else
+                            $('#Citytree').combobox('select', cityId);
+                    }
+                }
+            });
+        }
+
+        function InitComeFromCombo() {
+            var cityUrl = "/Customer/GetAppComeFromTree";
+            $("#ComeFromtree").combobox({
+                url: cityUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#ComeFrom").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#ComeFromtree').combobox('getData');
+                    if (data.length > 0) {
+                        var cfrom = $("#ComeFrom").val();
+                        if (cfrom == 0 || cfrom == "" || cfrom==null)
+                            $('#ComeFromtree').combobox('select', data[0].id);
+                        else
+                            $('#ComeFromtree').combobox('select', cfrom);
+                    }
+                }
+            });
+        }
+
+        function InitHospCombo() {
+            var hosUrl = "/Customer/GetAppHospTree";
+            $("#HospIdtree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#HospId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#HospIdtree').combobox('getData');
+                    if (data.length > 0) {
+                        var hid = $("#HospId").val();
+                        if (hid == 0 || hid == "" || hid==null)
+                            $('#HospIdtree').combobox('select', data[0].id);
+                        else
+                            $('#HospIdtree').combobox('select', hid);
+                    }
+                }
+            });
+        }
+
+        function selFemale() {
+            $("#Female").val($(obj).val());
+        }
+    </script>
+</form>
