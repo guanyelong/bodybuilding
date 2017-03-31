@@ -122,6 +122,7 @@ namespace BBD.Web.Controllers
                 else
                 {
                     user.uPwd = BBD.Common.MD5Helper.MD5Encrypt32bit(user.uPwd);
+                    user.uIsDel = 0;
                     int identity = oc.iBllSession.Itb_Sys_UserInfo_Bo_BLL.Add(user);
                     if (identity == 0) errMsg = "系统插入数据失败！";
                     else BBD.Common.LogHelper.Info(String.Format("新增用户,ID-{0}", user.Uid.ToString()) + "后台用户添加");
@@ -161,8 +162,14 @@ namespace BBD.Web.Controllers
             }
 
             string errMsg = string.Empty;
-            oc.iBllSession.Itb_Sys_UserInfo_Bo_BLL.DeleteUser(userId, ref errMsg);
-
+            //oc.iBllSession.Itb_Sys_UserInfo_Bo_BLL.DeleteUser(userId, ref errMsg);
+            var info = oc.iBllSession.Itb_Sys_UserInfo_Bo_BLL.GetObjet(p => p.Uid == userId);
+            if (info != null)
+            {
+                info.uIsDel = 1;
+                string[] prop = { "uIsDel" };
+                oc.iBllSession.Itb_Sys_UserInfo_Bo_BLL.Modify(info, prop);
+            }
             var result = new { result = "ok", message = "操作成功" };
             if (!string.IsNullOrEmpty(errMsg))
             {

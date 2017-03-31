@@ -19,6 +19,8 @@
                 <label for="HospTel">
                     门店电话:
                 </label>
+                <input class="easyui-textbox" type="text" id="HospTel" name="HospTel" style="width: 115px" />
+                <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="HospQuery">查询</a>
             </div>
                 <div style="height:510px">
                     <table id="HosGrid"></table>
@@ -26,8 +28,10 @@
             </div>
         <div class="easyui-panel" data-options="region:'east'" style="width:49%;padding:3px" title="店员">
             <div style="height:30px">
-                <label for="EmpName">店员名称:</label>
-                <input class="easyui-textbox" type="text" id="roleName" name="useroleNamerName" style="width: 115px" />
+                <label for="LoginName">
+                    姓名:
+                </label>
+                <input class="easyui-textbox" type="text" id="LoginName" name="LoginName" style="width: 115px" />
                 <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="EmpQuery">查询</a>
             </div>
             <div style="height:540px;overflow:hidden">
@@ -36,6 +40,7 @@
         </div>
     </div>
 </div>
+<div id="Hospdialog"></div>
 <div id="dialog"></div>
 <script type="text/javascript">
     // 设置角色所拥有的的权限
@@ -46,12 +51,24 @@
         //初始化EmpQuery
         InitEmpToolbar();
 
+        $("#HospQuery").click(function () {
+            $("#HosGrid").datagrid("load", {
+                Hname: $.trim($("#HospHname").textbox("getValue")),
+                tel: $("#HospTel").textbox("getValue")
+            });
+        });
         $("#EmpQuery").click(function () {
             $("#EmpGrid").datagrid("load", {
-                name: $("#EmpName").val()
+                name: $.trim($("#LoginName").textbox("getValue"))
             });
         });
     });
+    function ReloadGridHosp() {
+        var queryData = {
+            name: $.trim($("#LoginName").textbox("getValue"))
+        };
+        $("#EmpGrid").datagrid("load", queryData);
+    }
 
     function InitHosToolbar() {
         var toolbar = [];
@@ -116,7 +133,7 @@
             ]],
             toolbar: toolbar,
             onSelect: function (index, row) {
-                QueryActionGrid();
+                ReloadGrid();
             }
         })
     }
@@ -127,7 +144,7 @@
         var Id = 0;
         if (action == "edit") {
             title = "编辑门店";
-            var selectedRows = $("#Hospgrid").datagrid("getSelected");
+            var selectedRows = $("#HosGrid").datagrid("getSelected");
             if (!selectedRows) {
                 $.messager.alert("提示", "请选择需要编辑的门店");
                 return;
@@ -168,7 +185,7 @@
                 if (returnData && returnData.result == 'ok') {
                     $.messager.alert("提示", returnData.message);
                     $("#Hospdialog").dialog("close");
-                    ReloadGrid();
+                    ReloadGridHosp();
                 }
                 else {
                     $.messager.alert("提示", returnData.message);
@@ -177,26 +194,166 @@
         });
     }
 
+    function InitCombobox() {
+        $('#HospHname').combobox({
+            prompt: '输入关键字后自动搜索',
+            required: false,
+            mode: 'remote',
+            url: '/Hosp/QueryHospKeyWord',
+            editable: true,
+            valueField: 'value',
+            textField: 'text',
+            hasDownArrow: false,
+            onBeforeLoad: function (param) {
+                if (param == null || param.q == null || param.q == "" || param.q.replace(/ /g, '') == '') {
+                    var value = $(this).combobox('getValue');
+                    if (value) {// 修改的时候才会出现q为空而value不为空
+                        param.id = value;
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            onSelect: function (record) {
+                ReloadGridHosp();
+            }
+        });
+    }
+
+
+
+
+    //店员
     function InitEmpToolbar() {
         var toolbar = [];
         var actionBar1 = {
             id: "RT06020101",
             text: "新增"
         };
-        var actionBar2 = {
-            id: "RT06020102",
-            text: "编辑"
-        };
         actionBar1.iconCls = "icon-add",
         actionBar1.handler = function () {
-            ShowEditOrViewDialog('add');
-        }
-        actionBar2.iconCls = "icon-edit",
-        actionBar2.handler = function () {
-            ShowEditOrViewDialog('edit');
+            ShowEditOrViewDialog_Emp('add');
         }
         toolbar.push(actionBar1);
-        toolbar.push(actionBar2);
-        InitHosGrid(toolbar);
+        InitEmpGrid(toolbar);
     }
+
+    function InitEmpGrid(toolbar) {
+        var queryData = {
+            name: $("#LoginName").val(),
+            hospId:0
+        };
+        $('#EmpGrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/EmpHos/GetAppUserList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '升高与标准体重信息',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            method: 'post',
+            idField: 'Uid',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "Uid", field: "Uid", width: 95, hidden: true },
+                          { title: "用户名", field: "uLoginName", width: 95 },
+                          { title: "真实姓名", field: "uName", width: 95 },
+                          { title: "手机", field: "uMobile", width: 95, formatter: subMobile },
+                          { title: "城市", field: "CityName", width: 95 },
+                          { title: "职位", field: "uPost", width: 95 },
+                          { title: "所在部门", field: "uDepName", width: 95 }
+
+            ]],
+            toolbar: toolbar
+        })
+    };
+
+    function subMobile(val) {
+        if (val != null && val != "") {
+            val = val.substring(0, 3) + "********";
+            return val;
+        } else {
+            return "";
+        }
+    }
+
+    function ReloadGrid() {
+        var selectRow = $("#HosGrid").datagrid("getSelected");
+        if (!selectRow) {
+            $.messager.alert("提示", "请先选择门店");
+            return;
+        }
+        var queryData = {
+            name: $.trim($("#LoginName").textbox("getValue")),
+            hospId: selectRow.HospId
+        };
+        $("#EmpGrid").datagrid("load", queryData);
+    }
+
+    //显示新增编辑页面
+    function ShowEditOrViewDialog_Emp(action) {
+        var title = "分配店员";
+        var href = "/EmpHos/Dialog";
+        var userId = 0;
+        var selectRow = $("#HosGrid").datagrid("getSelected");
+        if (!selectRow) {
+            $.messager.alert("提示", "请先选择门店");
+            return;
+        }
+
+        href = href + "?Id=" + selectRow.HospId;
+        $("#dialog").dialog({
+            title: title,
+            width: 550,
+            height: 330,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveEmp();
+                }
+            }, {
+                text: '&nbsp;取消&nbsp;',
+                handler: function () {
+                    $("#dialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function SaveEmp() {
+        //保存按钮
+        var selectRows = $("#grid").datagrid("getSelections");
+        var selectRow = $("#HosGrid").datagrid("getSelected");
+        var ids = [];
+        if (selectRows.length == 0) {//删除所有关联的店员
+
+        } else {
+            for (var i = 0; i < selectRows.length; i++) {
+                ids.push(selectRows[i].Uid);
+            }
+        }
+            $.post("/EmpHos/SaveEmp", { hospid: selectRow.HospId, ids: ids.toString() }, function (returnData) {
+            if (returnData && returnData.result == 'ok') {
+                $.messager.alert("提示", returnData.message);
+                $("#dialog").dialog("close");
+                ReloadGrid();
+            }
+            else {
+                $.messager.alert("提示", returnData.message);
+            }
+        })
+    }
+
   </script>

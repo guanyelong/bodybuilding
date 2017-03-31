@@ -10,7 +10,7 @@ namespace BBD.Models
     {
         public string uDepName { get; set; }
         public string uDepNum { get; set; }
-
         public string CityName { get; set; }
+        public string Checked { get; set; }
     }
 }

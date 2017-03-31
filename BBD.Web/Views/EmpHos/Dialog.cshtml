@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "绑定店员";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section queryform
+{
+    <form id="appUserForm">
+        <label for="uName">
+            用户名称:
+        </label>
+        <input class="easyui-textbox" type="text" id="uName" name="uName" style="width: 115px" />
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="Uquery">查询</a>
+    </form>
+}
+<input type="hidden" name="uHospId" id="uHospId" value="@ViewBag.HospId" />
+<div style="padding-left:2px;padding-right:2px;height:100%;">
+    <table id="grid" title="绑定店员"></table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //加载Grid,先获取按钮
+        $("#Uquery").click(function () {
+            ReloadGridEmp();
+        });
+        InitGrid();
+    });
+
+    function ReloadGridEmp() {
+        var queryData = {
+            name: $.trim($("#uName").val()),
+            hospid: $("#uHospId").val()
+        };
+        $("#grid").datagrid("load", queryData);
+    }
+
+    function InitGrid() {
+        var queryData = {
+            name: $.trim($("#uName").val()),
+            hospid: $("#uHospId").val()
+        };
+
+        $('#grid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/EmpHos/GetAppEmpList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '用户列表',
+            iconCls: 'icon-view',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            checkOnSelect: true,//选择checkbox则选择行  
+            selectOnCheck: true,//选择行则选择checkbox  
+            singleSelect: false,  //选中行唯一
+            method: 'post',
+            idField: 'Uid',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "Uid", field: "Uid", width: 95, hidden: true },
+                          { field:"ck",checkbox:true},
+                          { title: "用户名", field: "uLoginName", width: 95 },
+                          { title: "真实姓名", field: "uName", width: 95 },
+                          { title: "手机", field: "uMobile", width: 95, formatter: subMobile },
+                          { title: "城市", field: "CityName", width: 95 },
+                          { title: "职位", field: "uPost", width: 95 },
+                          { title: "所在部门", field: "uDepName", width: 95 },
+            ]],
+            onLoadSuccess: function (row, data) {
+                if (row != null && row.total > 0) {
+                    var rowData = row.rows;
+                    $.each(rowData, function (idx, item) {
+                        if (item.Checked == "checked") $("#grid").datagrid("selectRow", idx);
+                    })
+                }
+            }
+        })
+    };
+
+</script>
+
+
