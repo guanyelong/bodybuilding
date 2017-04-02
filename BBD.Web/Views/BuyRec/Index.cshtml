@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "客户购买记录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section queryform{
+    <div style="padding:8px">
+        <span>预约工单查询客户工单。</span>
+    </div>
+}
+<div class="easyui-panel" data-options="region:'west'" style="height:40%; width:100%;" title="预约记录">
+    <div style="padding-left:2px;padding-right:2px;height:100%;">
+        <table id="App_grid" title="购买记录"></table>
+    </div>
+</div>
+<div class="easyui-panel" data-options="region:'east'" style="height: 60%; width: 100%; padding: 3px; " title="推荐服务">
+    <form id="appAppointmentForm">
+        <div style="height:5%">
+            <label for="Serv_ServName">
+                服务名称:
+            </label>
+            <input class="easyui-textbox" type="text" id="Serv_ServName" name="Serv_ServName" style="width: 115px" />
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="Serv_query">查询</a>&nbsp;&nbsp;
+        </div>
+    </form>
+    <div style="padding-left: 2px; padding-right: 2px; height: 95%;">
+        <table id="serv_grid" title="服务列表"></table>
+    </div>
+</div>
+<div id="Buy_dialog"></div>
+<div id="Serv_dialog"></div>
+<script type="text/javascript">
+    /*****************************购买记录******************************************/
+    $(document).ready(function () {
+        Buy_InitGrid();
+
+    });
+
+    //装载Grid
+    function Buy_InitGrid() {
+        var Buy_queryData = {
+            uid:window.parent.$("#g_uid").val()
+        };
+        $('#App_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/BuyRec/GetAppBuyRecList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '购买记录',
+            iconCls: 'icon-view',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            method: 'post',
+            idField: 'Id',
+            queryParams: Buy_queryData,  //异步查询的参数
+            columns: [[
+                          { title: "Id", field: "Id", width: 95, hidden: true },
+                          { title: "uId", field: "uId", width: 95, hidden: true },
+                          { title: "产品名称", field: "ProductName", width: 135, sortable: true },
+                          { title: "产品价格（元）", field: "ProductPrice", width: 95, sortable: true },
+                          { title: "产品点穴次数", field: "TouchTimes", width: 65, sortable: true },
+                          { title: "产品点仪器次数", field: "InstrumentTimes", width: 65, sortable: true },
+                          { title: "结算门店", field: "Hname", width: 95, sortable: true },
+                          { title: "购买日期", field: "RecDate", width: 135, sortable: true, formatter: DataYMDFormat },
+                          { title: "购买数量", field: "BuyNum", width: 95, sortable: true },
+                          { title: "消费金额", field: "PayMoney", width: 95, sortable: true }
+
+            ]],
+            onClickCell: function (index, row) {
+                
+            }
+        })
+    };
+
+    function DataYMDFormat(val) {
+        if (val != null && val != "") {
+            var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+            //月份为0-11，所以+1，月份小于10时补个0
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "年" + month + "月" + currentDate + "日";
+        }
+        else {
+            return "";
+        }
+    }
+
+
+    /*****************************推荐服务******************************************/
+    $(document).ready(function () {
+        Serv_InitGrid();
+
+    });
+
+    function Serv_InitGrid() {
+        var Serv_queryData = {
+            ServName: $("#Serv_ServName").val()
+        };
+        $('#App_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/BuyRec/GetAppServList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '购买记录',
+            iconCls: 'icon-view',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            method: 'post',
+            idField: 'ID',
+            queryParams: Serv_queryData,  //异步查询的参数
+            columns: [[
+                          { title: "ID", field: "ID", width: 95, hidden: true },
+                          { title: "ServId", field: "ServId", width: 95, hidden: true },
+                          { title: "产品名称", field: "ServName", width: 135, sortable: true },
+                          { title: "产品类型", field: "ServType", width: 95, sortable: true },
+                          { title: "产品价格（元）", field: "price", width: 95, sortable: true },
+                          { title: "产品点穴次数", field: "TouchTimes", width: 65, sortable: true },
+                          { title: "产品点仪器次数", field: "InstrumentTimes", width: 65, sortable: true },
+                          { title: "ServId", field: "ServId", width: 95, formatter: Operation },
+
+            ]],
+            onClickCell: function (index, row) {
+
+            },
+            onLoadSuccess: function (row, data) {
+                if (data != null && data.total > 0) {
+                    $('.addcls').linkbutton({ text: '立即购买', plain: true, iconCls: 'icon-add' });
+                } else if (data != null && data.total == 0) {
+                   
+                }
+            }
+        })
+    };
+
+    function Operation(value, row, index) {
+        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowEditOrViewDialog(" + row.ID + ")\">立即购买</a>";
+        return btnAdd;
+    }
+
+    function ShowEditOrViewDialog(servid) {
+
+        var href = "/BuyRec/";
+        $("#Serv_dialog").dialog({
+            title: title,
+            width: 850,
+            height: 330,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveUsers();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Serv_dialog").dialog("close");
+                }
+            }]
+        });
+    }
+</script>
+
+

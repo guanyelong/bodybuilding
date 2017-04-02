@@ -171,9 +171,12 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BuyRecController.cs" />
     <Compile Include="Controllers\ConsumeController.cs" />
+    <Compile Include="Controllers\ConsumeLogController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
+    <Compile Include="Controllers\DislikeFoodController.cs" />
+    <Compile Include="Controllers\EmpCenterController.cs" />
     <Compile Include="Controllers\EmpHosController.cs" />
     <Compile Include="Controllers\HeiWeiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionController.cs" />
     <Compile Include="Controllers\ServController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -211,6 +215,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Data\qqwry.dat" />
+    <Content Include="Scripts\center_JLayout.js" />
+    <Content Include="Scripts\center_JTabs.js" />
     <Content Include="Scripts\Easyui\demo\accordion\datagrid_data1.json" />
     <Content Include="Scripts\Easyui\demo\combobox\combobox_data1.json" />
     <Content Include="Scripts\Easyui\demo\combobox\combobox_data2.json" />
@@ -1421,11 +1427,17 @@
     <Content Include="Views\Hosp\Dialog.cshtml" />
     <Content Include="Views\Customer\Dialog.cshtml" />
     <Content Include="Views\EmpHos\Dialog.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\Service\Dialog.cshtml" />
+    <Content Include="Views\EmpCenter\Index.cshtml" />
+    <Content Include="Views\BuyRec\Index.cshtml" />
+    <Content Include="Views\ConsumeLog\Index.cshtml" />
+    <Content Include="Views\DislikeFood\Index.cshtml" />
+    <Content Include="Views\BuyRec\Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\BuyRec\" />
     <Folder Include="Views\Consume\" />
     <Folder Include="Views\Serv\" />
   </ItemGroup>

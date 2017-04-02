@@ -22,7 +22,8 @@ namespace BBD.BLL
                     new SqlParameter("@Mobile",info.Mobile),
                     new SqlParameter("@Female",info.Female),
                     new SqlParameter("@ComeFrom",info.ComeFrom),
-                    new SqlParameter("@HospId",info.HospId)
+                    new SqlParameter("@HospId",info.HospId),
+                    new SqlParameter("@uid",info.uId)
                 };
                 DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("Pro_Select_Customer", System.Data.CommandType.StoredProcedure, param);
                 if (dt == null) return null;

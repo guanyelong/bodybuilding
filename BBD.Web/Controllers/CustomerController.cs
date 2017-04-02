@@ -38,6 +38,7 @@ namespace BBD.Web.Controllers
             string Female = Request["Female"];
             string ComeFrom = Request["ComeFrom"];
             string HospId = Request["HospId"];
+            string uid = Request["uid"];
             int count = 0;
             tb_User_Info info = new tb_User_Info();
             info.Name = Name;
@@ -45,6 +46,10 @@ namespace BBD.Web.Controllers
             info.Female = Female;
             info.ComeFrom = ComeFrom;
             info.HospId = string.IsNullOrWhiteSpace(HospId) ? 0 : int.Parse(HospId);
+            if (!string.IsNullOrWhiteSpace(uid) && uid != "0")
+                info.uId = int.Parse(uid);
+            else
+                info.uId = 0;
             IList<tb_User_Info> query = oc.iBllSession.Itb_User_Info_Bo_BLL.GetAppUserList(pageIndex, pageSize, ref count, info);
             var data = new
             {

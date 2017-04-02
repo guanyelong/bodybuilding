@@ -1,33 +1,28 @@
-﻿
-@{
-    ViewBag.Title = "门店列表";
+﻿@{
+    ViewBag.Title = "服务信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section queryform
 {
-    <form id="appHospForm">
-        <label for="HospHname">
-            门店名称:
+    <form id="appServForm">
+        <label for="SerName">
+            服务名称:
         </label>
-        <input class="easyui-combobox" type="text" id="HospHname" name="HospHname" style="width: 115px" />
-        <label for="HospTel">
-            门店电话:
-        </label>
-        <input class="easyui-textbox" type="text" id="HospTel" name="HospTel" style="width: 115px" />
+        <input class="easyui-textbox" type="text" id="SerName" name="SerName" style="width: 115px" />
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="query">查询</a>
     </form>
 }
+
 <div style="padding-left:2px;padding-right:2px;height:100%;">
-    <table id="Hospgrid"></table>
+    <table id="Servgrid"></table>
 </div>
-<div id="Hospdialog"></div>
+<div id="Servdialog"></div>
 <script type="text/javascript">
     /* 系统用户管理Javascript文件 */
     $(document).ready(function () {
         //加载Grid
         InitToolbar();
-        InitCombobox();
         $("#query").click(function () {
             ReloadGrid();
         })
@@ -35,10 +30,9 @@
     // 查询
     function ReloadGrid() {
         var queryData = {
-            Hname: $.trim($("#HospHname").textbox("getValue")),
-            tel: $("#HospTel").textbox("getValue")
+            ServName: $.trim($("#SerName").textbox("getValue"))
         };
-        $("#Hospgrid").datagrid("load", queryData);
+        $("#Servgrid").datagrid("load", queryData);
     }
     //根据权限设置装载grid
     function InitToolbar() {
@@ -84,12 +78,11 @@
 
     function InitGrid(toolbar) {
         var queryData = {
-            Hname: $.trim($("#HospHname").textbox("getValue")),
-            tel: $("#HospTel").textbox("getValue")
+            ServName: $.trim($("#SerName").textbox("getValue"))
         };
-        $('#Hospgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
-            url: '/Hosp/GetAppHospList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
-            title: '升高与标准体重信息',
+        $('#Servgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/Service/GetAppServList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '服务列表',
             fit: true,
             fitColumns: true,
             nowrap: true,
@@ -104,20 +97,24 @@
             pageSize: 15,
             pageList: [15, 30, 45, 60],
             method: 'post',
-            idField: 'HospId',
+            idField: 'ID',
             queryParams: queryData,  //异步查询的参数
             columns: [[
-                          { title: "HospId", field: "HospId", width: 135, hidden: true },
-                          { title: "店名", field: "Hname", width: 135, sortable: true },
-                          { title: "地址", field: "address", width: 175, sortable: true },
-                          { title: "联系电话", field: "tel", width: 95, sortable: true },
-                          { title: "门店类别", field: "sTypeName", width: 95, sortable: true },
-                          { title: "等级", field: "grade", width: 95, sortable: true },
-                          { title: "所属城市", field: "CityName", width: 95, sortable: true },
+                          { title: "ID", field: "ID", width: 95, hidden: true },
+                          { title: "名称", field: "ServName", width: 95, sortable: true },
+                          { title: "类型", field: "ServTypeName", width: 95, sortable: true },
+                          { title: "价格", field: "price", width: 95, sortable: true },
+                          { title: "描述", field: "ServMemo", width: 95, sortable: true },
                           {
-                              title: "状态", field: "IsDel", width: 95, sortable: true, formatter: function (value) {
-                                  if (value == 0) return "正常";
-                                  else return "已删除";
+                              title: "状态", field: "state", width: 95, sortable: true, formatter: function (value) {
+                                  if (value == 0) return "启用";
+                                  else if (value == 1) return "禁用";
+                              }
+                          },
+                          {
+                              title: "是否删除", field: "IsDel", width: 95, sortable: true, formatter: function (value) {
+                                  if (value == 0) return "未删除";
+                                  else if (value == 1) return "已删除";
                               }
                           }
 
@@ -126,51 +123,27 @@
         })
     };
 
-    function InitCombobox() {
-        $('#HospHname').combobox({
-            prompt: '输入关键字后自动搜索',
-            required: false,
-            mode: 'remote',
-            url: '/Hosp/QueryHospKeyWord',
-            editable: true,
-            valueField: 'value',
-            textField: 'text',
-            hasDownArrow: false,
-            onBeforeLoad: function (param) {
-                if (param == null || param.q == null || param.q == "" || param.q.replace(/ /g, '') == '') {
-                    var value = $(this).combobox('getValue');
-                    if (value) {// 修改的时候才会出现q为空而value不为空
-                        param.id = value;
-                        return true;
-                    }
-                    return false;
-                }
-            },
-            onSelect: function (record) {
-                ReloadGrid();
-            }
-        });
-    }
-
     //显示新增编辑页面
     function ShowEditOrViewDialog(action) {
-        var title = "新增门店";
+
+        var title = "新增数据";
+
         var Id = 0;
         if (action == "edit") {
-            title = "编辑门店";
-            var selectedRows = $("#Hospgrid").datagrid("getSelected");
+            title = "编辑数据";
+            var selectedRows = $("#Servgrid").datagrid("getSelected");
             if (!selectedRows) {
-                $.messager.alert("提示", "请选择需要编辑的门店");
+                $.messager.alert("提示", "请选择需要编辑的数据");
                 return;
             }
-            Id = selectedRows.HospId;
+            Id = selectedRows.ID;
         }
-        var href = "/Hosp/Dialog" + "?Id=" + Id;
+        var href = "/Service/Dialog" + "?Id=" + Id;
 
-        $("#Hospdialog").dialog({
+        $("#Servdialog").dialog({
             title: title,
-            width: 850,
-            height: 450,
+            width: 550,
+            height: 300,
             closed: false,
             cache: false,
             href: href,
@@ -178,12 +151,12 @@
             buttons: [{
                 text: '&nbsp;保存&nbsp;',
                 handler: function () {
-                    SaveHosp();
+                    SaveServ();
                 }
             }, {
                 text: '&nbsp;关闭&nbsp;',
                 handler: function () {
-                    $("#Hospdialog").dialog("close");
+                    $("#Servdialog").dialog("close");
                 }
             }]
         });
@@ -191,17 +164,17 @@
 
     //删除选中行
     function DeleteSelectRow() {
-        var selectedRow = $("#Hospgrid").datagrid("getSelected");
+        var selectedRow = $("#Servgrid").datagrid("getSelected");
         if (!selectedRow) {
-            $.messager.alert("提示", "请选择需要删除的门店");
+            $.messager.alert("提示", "请选择需要删除的数据");
             return;
         }
 
         //确定要删除选中
-        $.messager.confirm("删除提示", "确定要删除所选择的门店么", function (data) {
+        $.messager.confirm("删除提示", "确定要删除所选择的数据么", function (data) {
             if (data) {
-                var id = selectedRow.HospId;
-                var csUrl = "/Hosp/DeleteHosp";
+                var id = selectedRow.ID;
+                var csUrl = "/Service/DeleteServ";
                 $.ajax({
                     url: csUrl,
                     data: { Id: id },
@@ -225,16 +198,16 @@
 
     }
 
-    function SaveHosp() {
+    function SaveServ() {
         //保存按钮
         $("#dialogForm").form("submit", {
-            url: "/Hosp/SaveHosp",
+            url: "/Service/SaveServ",
             success: function (data) {
                 //form 提交返回的是字符串，需要转换成json
                 var returnData = $.parseJSON(data)
                 if (returnData && returnData.result == 'ok') {
                     $.messager.alert("提示", returnData.message);
-                    $("#Hospdialog").dialog("close");
+                    $("#Servdialog").dialog("close");
                     ReloadGrid();
                 }
                 else {
@@ -244,3 +217,4 @@
         });
     }
 </script>
+

@@ -116,6 +116,7 @@
 
     function InitGrid(toolbar) {
         var queryData = {
+            uid: window.parent.$("#g_uid").val(),
             Name: $.trim($("#UserName").textbox("getValue")),
             Mobile: $.trim($("#UserMobile").textbox("getValue")),
             Female: $("#FemaleTree").combobox("getValue"),
@@ -161,7 +162,17 @@
                           }
 
             ]],
-            toolbar: toolbar
+            toolbar: toolbar,
+            onClickRow: function (index,rowData) {
+                window.parent.$("#g_uid").val(rowData.uId);
+            },
+            onLoadSuccess: function (row, data) {
+                if (data != null && data.total > 0) {
+                    window.parent.$("#g_uid").val("0");
+                } else {
+                    window.parent.$("#g_uid").val("0");
+                }
+            }
         })
     };
 

@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "编辑服务";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Serv_Info
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="ID" value="@Model.ID" name="ID" />
+    <input type="hidden" name="ServType" id="ServType" value="@Model.ServType" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="ServName">
+                    服务名称:
+                </label>
+            </td>
+            <td>
+                <input id="ServName" class="easyui-textbox" type="text" name="ServName" value="@Model.ServName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServTypetree">
+                    服务类型:
+                </label>
+            </td>
+            <td>
+                <input id="ServTypetree" class="easyui-combobox" type="text" name="ServTypetree" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="price">
+                    价格:
+                </label>
+            </td>
+            <td>
+                <input id="price" class="easyui-textbox" type="text" name="price" value="@Model.price" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServMemo">
+                    说明:
+                </label>
+            </td>
+            <td>
+                <input id="ServMemo" class="easyui-textbox" type="text" name="ServMemo" value="@Model.ServMemo" style="height:80px" data-options="multiline:true" />
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            InitTypeCombo();
+        })
+
+        function InitTypeCombo() {
+            var cityUrl = "/Service/GetAppServiceTree";
+            $("#ServTypetree").combobox({
+                url: cityUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#ServType").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#ServTypetree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#ServType").val();
+                        if (stype == 0)
+                            $('#ServTypetree').combobox('select', data[0].id);
+                        else
+                            $('#ServTypetree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+    </script>
+</form>
