@@ -9,11 +9,11 @@ $(function () {
     obj2.url = "/BuyRec/Index";
     obj2.text = "购买记录";
     var obj3 = new Object();
-    obj3.url = "/ConsumeLog/Index";
-    obj3.text = "消费记录";
+    obj3.url = "/Account/Index";
+    obj3.text = "账户信息";
     var obj4 = new Object();
     obj4.url = "/DislikeFood/Index";
-    obj4.text = "客户不喜食物";
+    obj4.text = "客户体重信息";
     nodes.push(obj1);
     nodes.push(obj2);
     nodes.push(obj3);
@@ -90,8 +90,10 @@ $(function () {
 })
 
 function createFrame(url) {
+    var suid = $("#g_uid").val();
+    if (suid == "" || suid.length == 0) suid = 0;
     var param = "?uid={0}";
-    if ($("#g_uid")) param = param.replace("{0}", $("#g_uid").val());
+    if ($("#g_uid")) param = param.replace("{0}", suid);
     else  param.replace("{0}","0");
     return '<iframe  src="' + url + param + '" frameborder="0" style="border:0;width:100%;height:99.4%;overflow:scroll;"></iframe>';
 }

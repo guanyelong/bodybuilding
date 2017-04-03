@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "食物编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_User_Dislike_Food
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="id" value="@Model.id" name="id" />
+    <input type="hidden" name="FoodType" id="FoodType" value="@Model.FoodType" />
+    
+
+    <input type="hidden" name="uId" id="uId" value="@Model.uId" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="FoodTypetree">
+                    类别:
+                </label>
+            </td>
+            <td>
+                <input id="FoodTypetree" type="text" name="FoodTypetree" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="FoodName">
+                    内容:
+                </label>
+            </td>
+            <td>
+                <input id="FoodName" class="easyui-textbox" type="text" name="FoodName" value="@Model.FoodName" style="height:80px" data-options="multiline:true,required:true" />
+            </td>
+        </tr>
+
+    </table>
+    <script type="text/javascript">
+        var isFload = true;
+        $(function () {
+            InitFoodTypeCombo();
+        })
+
+        function InitFoodTypeCombo() {
+            var typeUrl = "/DislikeFood/GetAppFoodTypeTree";
+            $("#FoodTypetree").combobox({
+                url: typeUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    if (isFload) {
+                        isFload = false;
+
+                    } else {
+                        $("#FoodType").val(rec.value);
+                        chengeContent(rec.value);
+                    }
+                },
+                onLoadSuccess: function () {
+                    var data = $('#FoodTypetree').combobox('getData');
+                    if (data.length > 0) {
+                        if (isFload) {
+                            var stype = $("#FoodType").val();
+                            if (stype == 0 || stype=="")
+                                $('#FoodTypetree').combobox('select', data[0].id);
+                            else
+                                $('#FoodTypetree').combobox('select', stype);
+                        } else {
+                            $('#FoodTypetree').combobox('select', data[0].id);
+                        }
+                    }
+                }
+            });
+        }
+
+        function chengeContent(type) {
+            $.post("/DislikeFood/GetAppFoodContentForType", { uid: $("#uId").val(), type: type }, function (returnData) {
+                $("#FoodName").textbox('setValue', returnData.message);
+            });
+        }
+
+    </script>
+</form>

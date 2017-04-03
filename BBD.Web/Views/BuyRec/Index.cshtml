@@ -43,7 +43,7 @@
         };
         $('#App_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
             url: '/BuyRec/GetAppBuyRecList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
-            title: '购买记录',
+            title: '工单记录',
             iconCls: 'icon-view',
             fit: true,
             fitColumns: true,
@@ -72,6 +72,7 @@
                           { title: "购买日期", field: "RecDate", width: 135, sortable: true, formatter: DataYMDFormat },
                           { title: "购买数量", field: "BuyNum", width: 95, sortable: true },
                           { title: "消费金额", field: "PayMoney", width: 95, sortable: true }
+                          //{ title: "操作", field: "Opet", width: 95, formatter: Opet }
 
             ]],
             onClickCell: function (index, row) {
@@ -93,6 +94,37 @@
         }
     }
 
+    function Opet(value, row, index) {
+        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowConsumeDialog(" + row.ID + ")\">立即使用</a>";
+        var btnHistory = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowHistoryDialog(" + row.ID + ")\">消费记录</a>";
+    }
+
+    function ShowConsumeDialog(servid) {
+
+        var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val();
+        $("#Buy_dialog").dialog({
+            title: "购买服务",
+            width: 850,
+            height: 330,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveProduct();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Buy_dialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+
 
     /*****************************推荐服务******************************************/
     $(document).ready(function () {
@@ -104,7 +136,7 @@
         var Serv_queryData = {
             ServName: $("#Serv_ServName").val()
         };
-        $('#App_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
+        $('#serv_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
             url: '/BuyRec/GetAppServList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
             title: '购买记录',
             iconCls: 'icon-view',
@@ -128,11 +160,11 @@
                           { title: "ID", field: "ID", width: 95, hidden: true },
                           { title: "ServId", field: "ServId", width: 95, hidden: true },
                           { title: "产品名称", field: "ServName", width: 135, sortable: true },
-                          { title: "产品类型", field: "ServType", width: 95, sortable: true },
+                          { title: "产品类型", field: "ServTypeName", width: 95, sortable: true },
                           { title: "产品价格（元）", field: "price", width: 95, sortable: true },
                           { title: "产品点穴次数", field: "TouchTimes", width: 65, sortable: true },
                           { title: "产品点仪器次数", field: "InstrumentTimes", width: 65, sortable: true },
-                          { title: "ServId", field: "ServId", width: 95, formatter: Operation },
+                          { title: "操作", field: "Opet", width: 95, formatter: Operation }
 
             ]],
             onClickCell: function (index, row) {
@@ -149,15 +181,15 @@
     };
 
     function Operation(value, row, index) {
-        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowEditOrViewDialog(" + row.ID + ")\">立即购买</a>";
+        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowPayDialog(" + row.ID + ")\">立即购买</a>";
         return btnAdd;
     }
 
-    function ShowEditOrViewDialog(servid) {
+    function ShowPayDialog(servid) {
 
-        var href = "/BuyRec/";
+        var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val();
         $("#Serv_dialog").dialog({
-            title: title,
+            title: "购买服务",
             width: 850,
             height: 330,
             closed: false,
@@ -167,7 +199,7 @@
             buttons: [{
                 text: '&nbsp;保存&nbsp;',
                 handler: function () {
-                    SaveUsers();
+                    SaveProduct();
                 }
             }, {
                 text: '&nbsp;关闭&nbsp;',
@@ -177,6 +209,25 @@
             }]
         });
     }
+
+    function SaveProduct() {
+        $("#dialogForm").form("submit", {
+            url: "/BuyRec/SaveBuyRec",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#Serv_dialog").dialog("close");
+                    Buy_InitGrid();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+
 </script>
 
 

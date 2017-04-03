@@ -10,5 +10,7 @@ namespace BBD.Models
     {
         public string ServTypeName { get; set; }
 
+        public int TouchTimes { get; set; }
+        public int InstrumentTimes { get; set; }
     }
 }

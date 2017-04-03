@@ -190,6 +190,7 @@
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
+    <Compile Include="Controllers\WeightChgController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1434,9 +1435,12 @@
     <Content Include="Views\ConsumeLog\Index.cshtml" />
     <Content Include="Views\DislikeFood\Index.cshtml" />
     <Content Include="Views\BuyRec\Dialog.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\ConsumeDialog.cshtml" />
+    <Content Include="Views\DislikeFood\FoodDialog.cshtml" />
+    <Content Include="Views\WeightChg\Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Consume\" />
     <Folder Include="Views\Serv\" />

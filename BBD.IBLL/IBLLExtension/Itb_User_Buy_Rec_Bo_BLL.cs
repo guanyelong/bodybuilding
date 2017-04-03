@@ -10,5 +10,6 @@ namespace BBD.IBLL
     public partial interface Itb_User_Buy_Rec_Bo_BLL
     {
         IList<tb_User_Buy_Rec> GetAppBuyRecList(int pageIndex, int pageSize, ref int count, tb_User_Buy_Rec info);
+        bool BuyProductor(tb_User_Buy_Rec br);
     }
 }

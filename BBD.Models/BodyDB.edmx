@@ -488,7 +488,6 @@
             <Parameter Name="Para" Mode="In" Type="String" />
             <Parameter Name="OutCode" Mode="InOut" Type="String" />
           </FunctionImport>
-          <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
           <EntitySet Name="tb_Dicts" EntityType="BXUUModel.tb_Dict" />
           <EntitySet Name="tb_Emp_Hoss" EntityType="BXUUModel.tb_Emp_Hos" />
           <EntitySet Name="tb_Hei_Weis" EntityType="BXUUModel.tb_Hei_Wei" />
@@ -516,20 +515,8 @@
           <EntitySet Name="tb_Sys_Notices" EntityType="BXUUModel.tb_Sys_Notice" />
           <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
           <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
+          <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
         </EntityContainer>
-        <EntityType Name="tb_Consume_Log">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="uId" Type="Int32" Nullable="false" />
-          <Property Name="rec_date" Type="DateTime" Precision="0" />
-          <Property Name="num" Type="Int32" />
-          <Property Name="flag" Type="Int32" />
-          <Property Name="creatorid" Type="Int32" />
-          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="tb_Dict">
           <Key>
             <PropertyRef Name="Id" />
@@ -935,6 +922,19 @@
           <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="isDel" Type="Int32" />
         </EntityType>
+        <EntityType Name="tb_Consume_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="rec_date" Type="DateTime" Precision="0" />
+          <Property Name="num" Type="Int32" />
+          <Property Name="flag" Type="Int32" />
+          <Property Name="creatorid" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -942,20 +942,6 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BXUUModelStoreContainer" CdmEntityContainer="BXUUEntities">
           <FunctionImportMapping FunctionImportName="Pro_Build_Recommend_Str" FunctionName="BXUUModel.Store.Pro_Build_Recommend_Str" />
-          <EntitySetMapping Name="tb_Consume_Logs">
-            <EntityTypeMapping TypeName="BXUUModel.tb_Consume_Log">
-              <MappingFragment StoreEntitySet="tb_Consume_Log">
-                <ScalarProperty Name="c_time" ColumnName="c_time" />
-                <ScalarProperty Name="creator" ColumnName="creator" />
-                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
-                <ScalarProperty Name="flag" ColumnName="flag" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="rec_date" ColumnName="rec_date" />
-                <ScalarProperty Name="uId" ColumnName="uId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_Dicts">
             <EntityTypeMapping TypeName="BXUUModel.tb_Dict">
               <MappingFragment StoreEntitySet="tb_Dict">
@@ -1384,6 +1370,20 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="HospId" ColumnName="HospId" />
                 <ScalarProperty Name="uId" ColumnName="uId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Consume_Logs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Consume_Log">
+              <MappingFragment StoreEntitySet="tb_Consume_Log">
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="rec_date" ColumnName="rec_date" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

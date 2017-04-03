@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "新增消费";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Consume_Log
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="Id" value="@Model.Id" name="Id" />
+    <input type="hidden" id="uId" value="@Model.uId" name="uId" />
+    <input type="hidden" id="HEnum" value="@ViewBag.Enum" />
+    <input type="hidden" id="HTnum" value="@ViewBag.Tnum" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="uName">
+                    姓名:
+                </label>
+            </td>
+            <td>
+               @Model.uName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Enum">
+                    点穴治疗:
+                </label>
+            </td>
+            <td>
+                <input id="Enum"  type="text" name="Enum" value="@Model.Enum" />
+                <text>次（剩余</text>@ViewBag.Enum<text>）次</text>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Tnum">
+                    仪器治疗:
+                </label>
+            </td>
+            <td>
+                <input id="Tnum" type="text" name="Tnum" value="@Model.Tnum" />
+                <text>次（剩余</text>@ViewBag.Tnum<text>）次</text>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            InitData();
+        })
+
+        function InitData() {
+            debugger
+            $('#Enum').numberbox({
+                max: parseInt($("#HEnum").val()),
+                min:0,
+                precision: 0
+            });
+            $('#Tnum').numberbox({
+                max: parseInt($("#HTnum").val()),
+                min: 0,
+                precision: 0
+            });
+        }
+    </script>
+</form>

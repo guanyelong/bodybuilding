@@ -35,8 +35,6 @@ public partial class BXUUEntities : DbContext
     }
 
 
-    public virtual DbSet<tb_Consume_Log> tb_Consume_Logs { get; set; }
-
     public virtual DbSet<tb_Dict> tb_Dicts { get; set; }
 
     public virtual DbSet<tb_Emp_Hos> tb_Emp_Hoss { get; set; }
@@ -90,6 +88,8 @@ public partial class BXUUEntities : DbContext
     public virtual DbSet<tb_Sys_LoginLog> tb_Sys_LoginLogs { get; set; }
 
     public virtual DbSet<tb_User_Info> tb_User_Infos { get; set; }
+
+    public virtual DbSet<tb_Consume_Log> tb_Consume_Logs { get; set; }
 
 
     public virtual int Pro_Build_Recommend_Str(string uname, string umobile, string para, ObjectParameter outCode)

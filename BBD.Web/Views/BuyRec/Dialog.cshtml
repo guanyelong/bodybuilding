@@ -1,6 +1,153 @@
-﻿
-@{
-    ViewBag.Title = "Dialog";
+﻿@{
+    ViewBag.Title = "购买服务";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model BBD.Models.tb_Serv_Buy_temp
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="ID" value="@Model.ID" name="ID" />
+    <input type="hidden" id="uId" value="@Model.uId" name="uId" />
+    <input type="hidden" id="HospId" value="" name="HospId" />
+    <input type="hidden" id="currentHospId" value="@ViewBag.currentHospId" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                门店:
+            </td>
+            <td>
+                <input id="HospIdtree" class="easyui-combobox" type="text" name="HospIdtree" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                购买人:
+            </td>
+            <td>
+                <input id="uidtree" class="easyui-combobox" type="text" name="uidtree" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServName">
+                    服务名称:
+                </label>
+            </td>
+            <td>
+                <label for="ServName">
+                    @Model.ServName
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServMemo">
+                    服务描述:
+                </label>
+            </td>
+            <td>
+                @Model.ServMemo
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServPrice">
+                    价格:
+                </label>
+            </td>
+            <td>
+                <input id="ServPrice" class="easyui-textbox" readonly type="text" name="ServPrice" value="@Model.ServPrice" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="ServNum">
+                    数量:
+                </label>
+            </td>
+            <td>
+                <input id="ServNum" name="ServNum" value="@Model.ServNum" style="width:120px;" data-options="required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                应付金额:
+            </td>
+            <td>
+                <input id="PayMoney" class="easyui-numberbox" readonly type="text" name="PayMoney" value="@Model.PayMoney" data-options="required:true,min:1,precision:2" />
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        var isload = true;
+        $(function () {
+           
+            InitHospCombo();
+            InitUidCombo();
+        })
 
+        $('#ServNum').numberspinner({
+            min: 1,
+            max: 100,
+            increment:1,
+            //editable: false,
+            onChange: function () {
+                var num = $('#ServNum').numberspinner('getValue');
+                var price = $("#ServPrice").textbox('getValue');
+                var sum = parseInt(num) * parseFloat(price);
+                $("#PayMoney").numberbox('setValue', sum);
+            }
+        });
 
+        function InitHospCombo() {
+            var hosUrl = "/Customer/GetAppHospTree";
+            $("#HospIdtree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#HospId").val(rec.value);
+                    InitUidCombo(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#HospIdtree').combobox('getData');
+                    if (data.length > 0) {
+                        var hid = $("#currentHospId").val();
+                        if (hid == 0 || hid == "" || hid == null)
+                            $('#HospIdtree').combobox('select', data[0].id);
+                        else
+                            $('#HospIdtree').combobox('select', hid);
+                        
+                    }
+                }
+            });
+        }
+        function InitUidCombo(hospId) {
+            var userUrl = "/BuyRec/GetAppUserTree?hospId=" + hospId;
+            $("#uidtree").combobox({
+                url: userUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#uId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#uidtree').combobox('getData');
+                    if (data.length > 0) {
+                        if (isload) {
+                            isload = false;
+                            var hid = $("#uId").val();
+                            if (hid == 0 || hid == "" || hid == null)
+                                $('#uidtree').combobox('select', data[0].id);
+                            else
+                                $('#uidtree').combobox('select', hid);
+                        } else {
+                            $('#uidtree').combobox('select', data[0].id);
+                        }
+                        
+                    }
+                }
+            });
+        }
+    </script>
+</form>
