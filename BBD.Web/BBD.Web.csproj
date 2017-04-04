@@ -191,6 +191,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\WeightChgController.cs" />
+    <Compile Include="Controllers\WeightChgSelfController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1439,6 +1440,9 @@
     <Content Include="Views\Account\ConsumeDialog.cshtml" />
     <Content Include="Views\DislikeFood\FoodDialog.cshtml" />
     <Content Include="Views\WeightChg\Dialog.cshtml" />
+    <Content Include="Views\WeightChg\Index.cshtml" />
+    <Content Include="Views\WeightChgSelf\Dialog.cshtml" />
+    <Content Include="Views\ConsumeLog\ConsumeDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

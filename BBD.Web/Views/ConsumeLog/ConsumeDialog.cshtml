@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "结束消费记录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Consume_Log
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="Id" value="@Model.Id" name="Id" />
+    <input type="hidden" id="uId" name="uId" value="@Model.uId" />
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="flag">
+                    类型:
+                </label>
+            </td>
+            <td>
+               @if (Model.flag==0)
+               {
+                   <text>仪器</text>
+               }
+               else if (Model.flag==1)
+               {
+                   <text>点穴</text>
+               }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="num">
+                    次数:
+                </label>
+            </td>
+            <td>
+                @Model.num
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="c_time">
+                    创建日期:
+                </label>
+            </td>
+            <td>
+                @Model.c_time
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="rec_date">
+                    记录日期:
+                </label>
+            </td>
+            <td>
+                <input id="rec_date" class="easyui-datebox" type="text" name="rec_date" value="@Model.rec_date" />
+            </td>
+        </tr>
+
+    </table>
+    <script type="text/javascript">
+
+    </script>
+</form>

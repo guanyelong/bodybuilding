@@ -50,6 +50,13 @@
         })
     });
 
+    function ReloadGrid() {
+        var queryData = {
+            uid: '@Model.uId'
+        };
+        $("#Consumegrid").datagrid("load", queryData);
+    } 
+
     function InitGrid() {
         var queryData = {
             uid: '@Model.uId'
@@ -84,11 +91,25 @@
                           },
                           { title: "次数", field: "num", width: 175, sortable: true },
                           { title: "处理人", field: "creator", width: 95, sortable: true },
-                          { title: "服务结束时间", field: "rec_date", width: 95, sortable: true },
-                          { title: "操作", field: "Opet", width: 95, sortable: true },
+                          { title: "服务结束时间", field: "rec_date", width: 95, sortable: true, formatter: DateFormatYMD },
+                          { title: "操作", field: "Opet", width: 95, sortable: true, formatter: OpetRec }
 
-            ]]
+            ]],
+            onLoadSuccess: function (row, data) {
+                if (data != null && data.total > 0) {
+
+                    $('.addcls').linkbutton({ text: '完成日期', plain: true, iconCls: 'icon-add' });
+                } 
+            }
         });
+    }
+
+    function OpetRec(value, row, index) {
+        var btn = "";
+        if (row.rec_date == null || row.rec_date == "") {
+            btn += "<a href=\"#\" class='addcls'   name=\"btnAddcls\" onclick=\"ShowRecLogDialog(" + row.Id + ")\">完成日期</a>";;
+        }
+        return btn;
     }
 
     //显示新增编辑页面
@@ -118,6 +139,53 @@
             }]
         });
     }
+
+    function ShowRecLogDialog(Id){
+        var title = "结束记录";
+
+        var href = "/ConsumeLog/ConsumeDialog" + "?Id=" + Id;
+
+        $("#Consumedialog").dialog({
+            title: title,
+            width: 550,
+            height: 300,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveRecLog();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#Consumedialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function SaveRecLog() {
+        //保存按钮
+        $("#dialogForm").form("submit", {
+            url: "/ConsumeLog/SaveRecLog",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#Consumedialog").dialog("close");
+                    ReloadGrid();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+
 
     function SaveCunsume() {
         //保存按钮

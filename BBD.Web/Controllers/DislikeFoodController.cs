@@ -39,7 +39,7 @@ namespace BBD.Web.Controllers
             int pageSize = int.Parse(Request["rows"]);  //页面行数
             string uid = Request["uid"];
             tb_User_Dislike_Food info = new tb_User_Dislike_Food();
-            if (!string.IsNullOrWhiteSpace(uid))
+            if (!string.IsNullOrWhiteSpace(uid) && uid != "undefined")
                 info.uId = int.Parse(uid);
             else
                 info.uId = 0;

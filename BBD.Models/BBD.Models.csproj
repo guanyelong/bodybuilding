@@ -72,6 +72,8 @@
     <Compile Include="ModelExtension\tb_User_Buy_Rec.cs" />
     <Compile Include="ModelExtension\tb_User_Dislike_Food.cs" />
     <Compile Include="ModelExtension\tb_User_Info.cs" />
+    <Compile Include="ModelExtension\tb_Weight_Chg.cs" />
+    <Compile Include="ModelExtension\tb_Weight_Chg_Self.cs" />
     <Compile Include="PocoModel\tb_Consume_Log.cs">
       <DependentUpon>ExtensionModels.tt</DependentUpon>
     </Compile>

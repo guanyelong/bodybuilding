@@ -12,7 +12,7 @@ $(function () {
     obj3.url = "/Account/Index";
     obj3.text = "账户信息";
     var obj4 = new Object();
-    obj4.url = "/DislikeFood/Index";
+    obj4.url = "/WeightChg/Index";
     obj4.text = "客户体重信息";
     nodes.push(obj1);
     nodes.push(obj2);

@@ -71,6 +71,8 @@
     <Compile Include="IBLLExtension\Itb_User_Buy_Rec_Bo_BLL.cs" />
     <Compile Include="IBLLExtension\Itb_User_Dislike_Food_Bo_BLL.cs" />
     <Compile Include="IBLLExtension\Itb_User_Info_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Weight_Chg_Bo_BLL.cs" />
+    <Compile Include="IBLLExtension\Itb_Weight_Chg_Self_Bo_BLL.cs" />
     <Compile Include="IBLLSession.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

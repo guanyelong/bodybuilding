@@ -1,0 +1,353 @@
+﻿@{
+    ViewBag.Title = "升高与标准体重列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section queryform
+{
+    <form id="appHei_WeiForm"></form>
+}
+
+<div class="easyui-panel" data-options="region:'west'" style="height:40%; width:100%;" title="预约记录">
+    <div style="padding-left:2px;padding-right:2px;height:100%;">
+        <form id="appWeigthChgForm">
+            <div style="height:5%">
+                <label for="wcName">
+                    姓名:
+                </label>
+                <input class="easyui-textbox" type="text" id="wcName" name="wcName" />
+                <label for="wcTel">
+                    手机号:
+                </label>
+                <input class="easyui-textbox" type="text" id="wcTel" name="wcTel" />
+                <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="query">查询</a>
+            </div>
+        </form>
+        <div style="padding-left: 2px; padding-right: 2px; height: 95%;">
+            <table id="wcgrid"></table>
+        </div>
+    </div>
+</div>
+<div class="easyui-panel" data-options="region:'east'" style="height: 60%; width: 100%; padding: 3px; " title="推荐服务">
+    <form id="appWeightChgSelForm">
+        <div style="height:5%">
+            <label for="wcsName">
+                姓名:
+            </label>
+            <input class="easyui-textbox" type="text" id="wcsName" name="wcsName" />
+            <label for="wcsTel">
+                手机号:
+            </label>
+            <input class="easyui-textbox" type="text" id="wcsTel" name="wcsTel" />
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="query_self">查询</a>
+        </div>
+    </form>
+    <div style="padding-left: 2px; padding-right: 2px; height: 95%;">
+        <table id="wcsgrid"></table>
+    </div>
+</div>
+<div id="wcdialog"></div>
+<div id="wcsdialog"></div>
+<script type="text/javascript">
+    /* 系统用户管理Javascript文件 */
+    $(document).ready(function () {
+        //加载Grid
+        InitToolbar();
+        $("#query").click(function () {
+            ReloadGrid();
+        })
+    });
+    // 查询
+    function ReloadGrid() {
+        var queryData = {
+            uName: $.trim($("#wcName").textbox("getValue")),
+            Mobile: $("#wcTel").textbox("getValue"),
+            uid: window.parent.$("#g_uid").val()
+        };
+        $("#wcgrid").datagrid("load", queryData);
+    }
+    //根据权限设置装载grid
+    function InitToolbar() {
+        var toolbar = [];
+        var actionBar2 = {
+            id: "RT06010202",
+            text: "编辑"
+        };
+        var actionBar4 = {
+            id: "RT06010204",
+            text: "刷新"
+        };
+        actionBar2.iconCls = "icon-edit",
+        actionBar2.handler = function () {
+            ShowEditOrViewDialog('edit');
+        }
+        actionBar4.iconCls = "icon-reload",
+        actionBar4.handler = function () {
+            ReloadGrid();
+        }
+        toolbar.push(actionBar2);
+        toolbar.push(actionBar4);
+        InitGrid(toolbar);
+    }
+
+    function InitGrid(toolbar) {
+        var queryData = {
+            uName: $.trim($("#wcName").textbox("getValue")),
+            Mobile: $("#wcTel").textbox("getValue"),
+            uid: window.parent.$("#g_uid").val()
+        };
+        $('#wcgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/WeightChg/GetAppHeightChList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '升高与标准体重信息',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            method: 'post',
+            idField: 'Id',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "Id", field: "Id", width: 135, hidden: true },
+                          { title: "会员名称", field: "uName", width: 95, sortable: true },
+                          { title: "记录日期", field: "RecDate", width: 135, sortable: true, formatter: DateFormatYMD },
+                          { title: "身高", field: "Hid", width: 135, sortable: true },
+                          { title: "体重", field: "Weight", width: 95, sortable: true },
+                          { title: "疗程", field: "BatchId", width: 95, sortable: true },
+                          {
+                              title: "产品类型", field: "TouchFlag", width: 95, sortable: true, formatter: function (value) {
+                                  if (value == 0) return "仪器";
+                                  else if (value == 1) return "点穴";
+                              }
+                          },
+                          { title: "照片", field: "PicPath", width: 95, sortable: true }
+
+
+            ]],
+            toolbar: toolbar
+        })
+    };
+
+    //显示新增编辑页面
+    function ShowEditOrViewDialog(action) {
+
+        var title = "新增数据";
+
+        var Id = 0;
+        if (action == "edit") {
+            title = "编辑数据";
+            var selectedRows = $("#wcgrid").datagrid("getSelected");
+            if (!selectedRows) {
+                $.messager.alert("提示", "请选择需要编辑的数据");
+                return;
+            }
+            Id = selectedRows.Id;
+        }
+        var href = "/WeightChg/Dialog" + "?Id=" + Id;
+
+        $("#wcdialog").dialog({
+            title: title,
+            width: 550,
+            height: 300,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveWeightCh();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#wcdialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function SaveWeightCh() {
+        //保存按钮
+        $("#dialogForm").form("submit", {
+            url: "/WeightChg/SaveWeightChg",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#wcdialog").dialog("close");
+                    ReloadGrid();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+
+
+</script>
+
+<script type="text/javascript">
+    /* 系统用户管理Javascript文件 */
+    $(document).ready(function () {
+        //加载Grid
+        InitToolbar_sel();
+        $("#query_self").click(function () {
+            ReloadGrid_self();
+        })
+    });
+    // 查询
+    function ReloadGrid_self() {
+        var queryData = {
+            uName: $.trim($("#wcsName").textbox("getValue")),
+            Mobile: $("#wcsTel").textbox("getValue"),
+            uid: window.parent.$("#g_uid").val()
+        };
+        $("#wcsgrid").datagrid("load", queryData);
+    }
+    //根据权限设置装载grid
+    function InitToolbar_sel() {
+        var toolbar = [];
+        var actionBar1 = {
+            id: "RT06010201",
+            text: "新增"
+        };
+        var actionBar2 = {
+            id: "RT06010202",
+            text: "编辑"
+        };
+        var actionBar4 = {
+            id: "RT06010204",
+            text: "刷新"
+        };
+        actionBar1.iconCls = "icon-add",
+        actionBar1.handler = function () {
+            ShowEditOrViewDialog('add');
+        }
+        actionBar2.iconCls = "icon-edit",
+        actionBar2.handler = function () {
+            ShowEditOrViewDialog('edit');
+        }
+        actionBar4.iconCls = "icon-reload",
+        actionBar4.handler = function () {
+            ReloadGrid();
+        }
+        toolbar.push(actionBar1);
+        toolbar.push(actionBar2);
+        toolbar.push(actionBar4);
+        InitGrid_self(toolbar);
+    }
+
+    function InitGrid_self(toolbar) {
+        var queryData = {
+            uName: $.trim($("#wcsName").textbox("getValue")),
+            Mobile: $("#wcsTel").textbox("getValue"),
+            uid: window.parent.$("#g_uid").val()
+        };
+        $('#wcsgrid').datagrid({   //定位到Table标签，Table标签的ID是grid
+            url: '/WeightChgSelf/GetAppWeightChgSelfList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
+            title: '升高与标准体重信息',
+            fit: true,
+            fitColumns: true,
+            nowrap: true,
+            autoRowHeight: false,
+            striped: true,
+            collapsible: true,
+            rownumbers: true,
+            sortOrder: 'asc',
+            remoteSort: false,
+            singleSelect: true,  //选中行唯一
+            pagination: true,
+            pageSize: 15,
+            pageList: [15, 30, 45, 60],
+            method: 'post',
+            idField: 'Id',
+            queryParams: queryData,  //异步查询的参数
+            columns: [[
+                          { title: "Id", field: "Id", width: 135, hidden: true },
+                          { title: "uId", field: "uId", width: 135, hidden: true },
+                          { title: "会员名称", field: "uName", width: 95, sortable: true },
+                          { title: "记录日期", field: "RecDate", width: 135, sortable: true, formatter: DateFormatYMD },
+                          { title: "身高", field: "Hid", width: 135, sortable: true },
+                          { title: "体重", field: "Weight", width: 95, sortable: true }
+
+            ]],
+            toolbar: toolbar
+        })
+    };
+
+    //显示新增编辑页面
+    function ShowEditOrViewDialog(action) {
+
+        var title = "新增数据";
+
+        var Id = 0;
+        var uid = 0;
+        if (action == "edit") {
+            title = "编辑数据";
+            var selectedRows = $("#wcsgrid").datagrid("getSelected");
+            if (!selectedRows) {
+                $.messager.alert("提示", "请选择需要编辑的数据");
+                return;
+            }
+            Id = selectedRows.Id;
+            uid = selectedRows.uId;
+        } else {
+            uid = window.parent.$("#g_uid").val();
+        }
+
+        var href = "/WeightChgSelf/Dialog" + "?Id=" + Id + "&uid=" + uid;
+
+        $("#wcsdialog").dialog({
+            title: title,
+            width: 550,
+            height: 300,
+            closed: false,
+            cache: false,
+            href: href,
+            modal: true,
+            buttons: [{
+                text: '&nbsp;保存&nbsp;',
+                handler: function () {
+                    SaveWeightCh();
+                }
+            }, {
+                text: '&nbsp;关闭&nbsp;',
+                handler: function () {
+                    $("#wcsdialog").dialog("close");
+                }
+            }]
+        });
+    }
+
+    function SaveWeightCh() {
+        //保存按钮
+        $("#dialogForm").form("submit", {
+            url: "/WeightChgSelf/SaveWeightChgSelf",
+            success: function (data) {
+                //form 提交返回的是字符串，需要转换成json
+                var returnData = $.parseJSON(data)
+                if (returnData && returnData.result == 'ok') {
+                    $.messager.alert("提示", returnData.message);
+                    $("#wcsdialog").dialog("close");
+                    ReloadGrid_self();
+                }
+                else {
+                    $.messager.alert("提示", returnData.message);
+                }
+            }
+        });
+    }
+
+
+</script>

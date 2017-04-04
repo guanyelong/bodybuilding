@@ -88,6 +88,10 @@ namespace BBD.Web.Controllers
             {
                 return Json(new { result = "error", mesage = "数据为空" });
             }
+            if (cl.Tnum==0 && cl.Enum==0)
+            {
+                return Json(new { result = "error", mesage = "消费次数不足" });
+            }
             string errMsg = "";
             //cl.creator = AdminSystemInfo.CurrentUser.uName;
             //cl.creatorid = AdminSystemInfo.CurrentUser.Uid;
