@@ -54,7 +54,7 @@ namespace BBD.BLL
                     new SqlParameter("@Name",info.uName)
                 };
                     var empids = appEntities.tb_Emp_Hoss.Where(p => p.hospid == hospid).Select(p => p.emp_id).ToList();//部分门店
-                    DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("PROC_Select_SysUserInfo", System.Data.CommandType.StoredProcedure, param);
+                    DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("Pro_Select_SysUserInfo", System.Data.CommandType.StoredProcedure, param);
                     if (dt == null) return null;
                     IList<tb_Sys_UserInfo> list = ModelConvertHelper<tb_Sys_UserInfo>.ConvertToModel(dt);
 

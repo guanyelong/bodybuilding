@@ -18,10 +18,11 @@ namespace BBD.BLL
                 using (BXUUEntities appEntities = new BXUUEntities()) 
                 {
                     var query = from s in appEntities.tb_Serv_Infos
+                                join h in appEntities.tb_Hosp_Infos on s.HospId equals h.HospId
                                 join t in appEntities.tb_Dicts on s.ServType equals t.KeyValue into temp
                                 from tt in temp.DefaultIfEmpty()
                                 where tt.KeyName=="ServType"
-                                select new { s,tt };
+                                select new { s,h,tt };
                     foreach (var item in query)
                     {
                         tb_Serv_Info si = new tb_Serv_Info();
@@ -35,11 +36,17 @@ namespace BBD.BLL
                         si.price = item.s.price;
                         si.IsDel = item.s.IsDel;
                         si.CTime = item.s.CTime;
+                        si.HospId = item.s.HospId;
+                        si.HospName = item.h.Hname;
                         querylist.Add(si);
                     }
                     if (!string.IsNullOrWhiteSpace(info.ServName))
                     {
                         querylist = querylist.Where(p => p.ServName.Contains(info.ServName)).ToList();
+                    }
+                    if (info.HospIds!=null)
+                    {
+                        querylist = querylist.Where(p => info.HospIds.Contains(p.HospId)).ToList();
                     }
                     count = querylist.Count;
                     querylist = querylist.OrderByDescending(p => p.CTime).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();

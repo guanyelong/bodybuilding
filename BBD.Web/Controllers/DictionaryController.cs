@@ -14,39 +14,9 @@ namespace BBD.Web.Controllers
         //
         // GET: /Dictionary/
         OperContext oc = OperContext.CurrentContext;
-        BXUUEntities appEntities = new BXUUEntities();
         //[AuthenticationAttribute]
         public ActionResult Index()
         {
-            //    try
-            //    {
-            //        using (IRedisClient Redis = RedisManager.GetClient())
-            //        {
-            //            List<tb_Dict> list = appEntities.tb_Dicts.ToList();
-            //            var ser = new ObjectSerializer();
-            //            JavaScriptSerializer jss = new JavaScriptSerializer();
-            //            HashOperator operators = new HashOperator();
-            //            if (operators != null)
-            //            {
-            //                //内存实例
-            //                //if (!operators.Exist<List<tb_Dict>>("hhys_hhm_id", "vkey"))
-            //                //{
-            //                //    bool reuslt = operators.Set<byte[]>("hhys_hhm_id", "vkey", ser.Serialize(list));
-            //                //}
-            //                //else
-            //                //{
-            //                //    byte[] b = operators.Get<byte[]>("hhys_hhm_id", "vkey");
-            //                //    List<PMM.Models.tb_Dict> dict = ser.Deserialize(b) as List<PMM.Models.tb_Dict>;
-            //                //}
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-            //        throw;
-            //    }
-
             return View();
         }
 
@@ -59,7 +29,6 @@ namespace BBD.Web.Controllers
         {
             if (Id > 0)
             {
-                oc.iBllSession.Itb_Dict_Bo_BLL.DbName = "hhm";
                 tb_Dict user = oc.iBllSession.Itb_Dict_Bo_BLL.GetObjet(o => o.Id == Id);
                 if (user == null)
                 {
@@ -77,23 +46,11 @@ namespace BBD.Web.Controllers
         /// <returns></returns>
         public ActionResult GetAppDictList()
         {
-            oc.iBllSession.Itb_Dict_Bo_BLL.DbName = "hhm";
             int pageIndex = int.Parse(Request["page"]);  //当前页  
             int pageSize = int.Parse(Request["rows"]);  //页面行数
             string name = Request["name"];
             string word = Request["word"];
             int count = 0;
-
-            //var DictList = appEntities.tb_Dicts.Where(o => o.state == 1);
-            //if (!string.IsNullOrWhiteSpace(name))
-            //{
-            //    DictList = DictList.Where(o => o.KeyName.Contains(name) || (o.mark != null && o.mark.Contains(name)));
-
-            //}
-            //if (!string.IsNullOrWhiteSpace(word))
-            //{
-            //    DictList = DictList.Where(o => o.KeyName.Contains(word) || o.mark.Contains(word) || o.KeyValue.Contains(word) || o.KeyWords.Contains(word));
-            //}
 
             List<tb_Dict> appDictList = oc.iBllSession.Itb_Dict_Bo_BLL.GetAppDictList(pageIndex, pageSize, ref count, name, word);
 
@@ -134,7 +91,6 @@ namespace BBD.Web.Controllers
         /// <returns></returns>
         public JsonResult SaveDict(tb_Dict dictInfo)
         {
-            oc.iBllSession.Itb_Dict_Bo_BLL.DbName = "hhm";
             if (dictInfo == null)
             {
                 return Json(new { result = "error", message = "字典数据为空" });
@@ -196,7 +152,6 @@ namespace BBD.Web.Controllers
         /// <returns></returns>
         public JsonResult DeleteDict(int dictId)
         {
-            oc.iBllSession.Itb_Dict_Bo_BLL.DbName = "hhm";
             if (dictId == 0)
             {
                 return Json(new { result = "error", message = "字典编号为空" });
@@ -238,8 +193,7 @@ namespace BBD.Web.Controllers
         [HttpPost]
         public JsonResult GetAppCityTree()
         {
-            oc.iBllSession.Itb_Dict_Bo_BLL.DbName = "hhm";
-            List<tb_Dict> list = oc.iBllSession.Itb_Dict_Bo_BLL.GetListBy(o => o.state == 1 && o.KeyName == "CITY", o => o.C_Time, false);
+            List<tb_Dict> list = oc.iBllSession.Itb_Dict_Bo_BLL.GetListBy(o => o.state == 1 && o.KeyName == "city", o => o.Seq);
             List<Hashtable> dictTree = new List<Hashtable>();
             foreach (tb_Dict item in list)
             {

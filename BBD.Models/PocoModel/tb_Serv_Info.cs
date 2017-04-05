@@ -47,6 +47,8 @@ namespace BBD.Models
 
 				ModifyId = this.ModifyId,
 
+				HospId = this.HospId,
+
 			};
 		}
 	}

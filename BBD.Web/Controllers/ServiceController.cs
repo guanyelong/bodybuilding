@@ -41,6 +41,19 @@ namespace BBD.Web.Controllers
             {
                 info.ServName = ServName;
             }
+            List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+            if (hospList != null && hospList.Count > 0)
+            {
+
+                var hids = hospList.Select(p => p.hospid).ToList();
+                info.HospIds = hids;
+            }
+            else
+            {
+                List<int?> a = new List<int?>();
+                a.Add(0);
+                info.HospIds = a;
+            }
             var query = oc.iBllSession.Itb_Serv_Info_Bo_BLL.GetAppServList(pageIndex, pageSize, ref count,info);
             var data = new
             {
@@ -91,8 +104,8 @@ namespace BBD.Web.Controllers
             {
                 si.IsDel = 0;
                 si.state = 0;
-                //si.Creator = AdminSystemInfo.CurrentUser.uName;
-                //si.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                si.Creator = AdminSystemInfo.CurrentUser.uName;
+                si.CreatorId = AdminSystemInfo.CurrentUser.Uid;
                 int num = oc.iBllSession.Itb_Serv_Info_Bo_BLL.Add(si);
                 if (num < 1) { errMsg = "添加失败"; }
                 else
@@ -141,5 +154,37 @@ namespace BBD.Web.Controllers
             return Json(htlist, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetAppHospTree()
+        {
+            var query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetListBy(p => p.IsDel == 0 && p.state==0, p => p.HospId);
+            List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+            List<Hashtable> htlist = new List<Hashtable>();
+            if (hospList != null && hospList.Count > 0)
+            {
+
+                var hids = hospList.Select(p => p.hospid).ToList();
+                foreach (var item in query)
+                {
+                    if (hids.Contains(item.HospId))
+                    {
+                        Hashtable ht = new Hashtable();
+                        ht.Add("id", item.HospId);
+                        ht.Add("value", item.HospId);
+                        ht.Add("text", item.Hname);
+                        htlist.Add(ht);
+                    }
+                }
+            }
+            else
+            {
+                Hashtable htsel = new Hashtable();
+                htsel.Add("id", "");
+                htsel.Add("value", "");
+                htsel.Add("text", "请选择");
+                htsel.Add("selected", true);
+                htlist.Add(htsel);
+            }
+            return Json(htlist, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="BXUUModel.tb_Emp_Hos" Width="1.5" PointX="6.5" PointY="4.125" />
         <EntityTypeShape EntityType="BXUUModel.tb_Hei_Wei" Width="1.5" PointX="0.75" PointY="0.5" />
         <EntityTypeShape EntityType="BXUUModel.tb_Hosp_Info" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="BXUUModel.tb_Serv_Info" Width="1.5" PointX="2.75" PointY="4" />
         <EntityTypeShape EntityType="BXUUModel.tb_Serv_POF" Width="1.5" PointX="4.75" PointY="4.125" />
         <EntityTypeShape EntityType="BXUUModel.tb_Sms_Down" Width="1.5" PointX="2.625" PointY="9.875" />
         <EntityTypeShape EntityType="BXUUModel.tb_Sms_report" Width="1.5" PointX="7.25" PointY="10.625" />
@@ -33,6 +32,7 @@
         <EntityTypeShape EntityType="BXUUModel.tb_Sys_LoginLog" Width="1.5" PointX="9.125" PointY="7.75" />
         <EntityTypeShape EntityType="BXUUModel.tb_User_Info" Width="1.5" PointX="13.625" PointY="1.125" />
         <EntityTypeShape EntityType="BXUUModel.tb_Consume_Log" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BXUUModel.tb_Serv_Info" Width="1.5" PointX="2.75" PointY="4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

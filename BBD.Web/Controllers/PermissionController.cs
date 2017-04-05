@@ -12,7 +12,7 @@ namespace BBD.Web.Controllers
     public class PermissionController : Controller
     {
         OperContext oc = OperContext.CurrentContext;
-        [AuthenticationAttribute]
+        //[AuthenticationAttribute]
         public ActionResult Index()
         {
             return View();

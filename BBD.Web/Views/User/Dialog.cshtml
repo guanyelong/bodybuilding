@@ -146,11 +146,6 @@
             </tr>*@
     </table>
 </form>
-<link href="~/Scripts/WebUploader/webuploader.css" rel="stylesheet" />
-<script src="~/Scripts/Easyui/easyui-validate-extend.js"></script>
-<script src="~/Scripts/WebUploader/importFile.js"></script>
-<script src="~/Scripts/WebUploader/webuploader.min.js"></script>
-<script src="~/Scripts/PortalCommon.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         InitDepartment();
@@ -175,9 +170,14 @@
             editable: false,
             onLoadSuccess: function () {
                 var data = $('#CityId').combobox('getData');
-                var uid=$("#Uid").val();
-                if (data.length > 0 && uid==null) {
-                    $('#CityId').combobox('select', data[0].id);
+                var city='@Model.CityId';
+                if (data.length > 0) {
+                    if (city != "" || city != 0) {
+                        $('#CityId').combobox('select', city);
+                    } else {
+                        $('#CityId').combobox('select', data[0].id);
+                    }
+                   
                 }
             }
         });

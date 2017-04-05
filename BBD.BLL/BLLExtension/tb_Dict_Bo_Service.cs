@@ -16,8 +16,6 @@ namespace BBD.BLL
 {
     public partial class tb_Dict_Bo_Service : Itb_Dict_Bo_BLL
     {
-        public string ALLDATA_HASHID = "PMM_HHM_HASHID";
-        public string ALLDATA_KEY = "PMM_HHM_KEY";  
         ///// <summary>
         ///// 获取所有用户
         ///// </summary>
@@ -96,7 +94,6 @@ namespace BBD.BLL
         {
             try
             {
-                this.DbName = "hhm";
                  using (BXUUEntities appEntities = new BXUUEntities())
                  {
                      //var existDict = appEntities.tb_Dicts.Where(o=>o.state==1).FirstOrDefault();
@@ -150,7 +147,6 @@ namespace BBD.BLL
                     DictItem.mark = DictInfo.mark;
 
                     appEntities.SaveChanges();
-                    CreateDictionary(true);
                 }
             }
             catch (Exception e)
@@ -158,36 +154,7 @@ namespace BBD.BLL
                 errMsg = e.Message;
             }
         }
-        ///// <summary>
-        ///// 删除字典
-        ///// </summary>
-        ///// <param name="DictId"></param>
-        ///// <param name="errMsg"></param>
-        //public void DeleteDict(int DictId, ref string errMsg)
-        //{
-        //    try
-        //    {
-        //        using (BXUUEntities appEntities = new BXUUEntities())
-        //        {
-        //            var DictItem = appEntities.tb_Dicts.Where(o => o.Id == DictId).FirstOrDefault();
-        //            if (DictItem == null)
-        //            {
-        //                errMsg = "查无数据";
-        //                return;
-        //            }
-        //            //标记删除字典数据
-        //            DictItem.state = 0;
-        //            //appEntities.tb_Dicts.Remove(DictItem);
-        //            appEntities.SaveChanges();
-        //            CreateDictionary(true);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        errMsg = e.Message;
-        //    }
-        //}
-
+        
         /// <summary>
         /// 获取Combobox数据
         /// </summary>
@@ -236,50 +203,5 @@ namespace BBD.BLL
                 return new List<Hashtable>();
             }
         }
-
-        public List<tb_Dict> GetDictList(string keyName)
-        {
-            var ser = new ObjectSerializer();
-            List<tb_Dict> list = new List<tb_Dict>();
-            try
-            {
-                HashOperator operators = new HashOperator();
-
-                if (!operators.Exist<List<tb_Dict>>(ALLDATA_HASHID, ALLDATA_KEY))
-                {
-                    CreateDictionary();
-                }
-                List<tb_Dict> items = ser.Deserialize(operators.Get<byte[]>(ALLDATA_HASHID, ALLDATA_KEY)) as List<tb_Dict>;
-                list = items.Where(p => p.KeyName == keyName).ToList();
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-            return list;
-        }
-
-        private void CreateDictionary(bool refresh=false)
-        {
-            try
-            {
-                using (IRedisClient redis = RedisManager.GetClient())
-                {
-                    var ser = new ObjectSerializer();
-                    HashOperator operators = new HashOperator();
-                    this.DbName = "hhm";
-                    List<tb_Dict> list = GetListBy(o => o.state == 1, o => o.C_Time, false);
-                    if (refresh) operators.Remove(ALLDATA_HASHID, ALLDATA_KEY);
-                    bool reuslt = operators.Set<byte[]>(ALLDATA_HASHID, ALLDATA_KEY, ser.Serialize(list));
-                    
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Error(ex);
-            }
-        }
-
     }
 }

@@ -19,11 +19,22 @@ namespace BBD.Web.Controllers
             return View();
         }
 
-        public ActionResult Dialog(int Id, string uid)
+        public ActionResult Dialog(int Id, string uid, int hospid)
         {
             tb_Serv_Buy_temp si = new tb_Serv_Buy_temp();
             if (uid == "undefined") uid = string.Empty;
             int uuid = string.IsNullOrWhiteSpace(uid) ? 0 : int.Parse(uid);
+            ViewBag.currentHospId = hospid;
+            var query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetObjet(p => p.HospId == hospid);
+            if (query!=null)
+            {
+                ViewBag.currentHospName = query.Hname;
+            }
+            //var hinfo = oc.iBllSession.Itb_User_Info_Bo_BLL.GetObjet(o => o.uId == uuid);
+            //if (hinfo != null)
+            //{
+            //    ViewBag.currentHospId = hinfo.HospId;
+            //}
             if (Id != 0)
             {
                 var info = oc.iBllSession.Itb_Serv_Info_Bo_BLL.GetObjet(p => p.ID == Id);
@@ -36,12 +47,13 @@ namespace BBD.Web.Controllers
                     si.ServPrice = Convert.ToDecimal(info.price);
                     si.PayMoney = si.ServPrice;
                     si.ServNum = 1;
+                    si.HospId = Convert.ToInt32(info.HospId);
                 }
-                var hinfo = oc.iBllSession.Itb_User_Info_Bo_BLL.GetObjet(o => o.uId == uuid);
-                if (hinfo != null)
-                {
-                    ViewBag.currentHospId = hinfo.HospId;
-                }
+                
+            }
+            else
+            {
+                si.uId = uuid;
             }
             return View(si);
         }
@@ -87,6 +99,30 @@ namespace BBD.Web.Controllers
             }
             info.IsDel = 0;
             info.state = 0;
+            
+            List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+            if (hospList != null && hospList.Count > 0)
+            {
+
+                var hids = hospList.Select(p => p.hospid).ToList();
+                var strHids = "";
+                for (int i = 0; i < hids.Count; i++)
+                {
+                    strHids += hids[i] + ",";
+                }
+                if (strHids.Length > 0)
+                {
+                    //strHids = strHids.Substring(0, strHids.Length - 1);
+                    strHids = "," + strHids;
+                }
+                info.HospStrIds = strHids;
+            }
+            else
+            {
+
+                info.HospStrIds = "0";
+            }
+
             IList<tb_Serv_Info> query = oc.iBllSession.Itb_Serv_POF_Bo_BLL.GetAppServList(pageIndex, pageSize, ref count, info);
 
             var data = new
@@ -114,8 +150,8 @@ namespace BBD.Web.Controllers
                 br.PayMoney = si.PayMoney;
                 br.ProductId = si.ID;
                 br.ProductPrice = si.ServPrice;
-                //br.Creator = AdminSystemInfo.CurrentUser.uName;
-                //br.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                br.Creator = AdminSystemInfo.CurrentUser.uName;
+                br.CreatorId = AdminSystemInfo.CurrentUser.Uid;
                 bool num = oc.iBllSession.Itb_User_Buy_Rec_Bo_BLL.BuyProductor(br);
                 if (!num) errMsg = "添加失败";
             }

@@ -6,7 +6,18 @@
 <form id="dialogForm" method="post" action="#">
     <input type="hidden" id="ID" value="@Model.ID" name="ID" />
     <input type="hidden" name="ServType" id="ServType" value="@Model.ServType" />
+    <input type="hidden" name="HospId" id="HospId" value="@Model.HospId" />
     <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="HospIdtree">
+                    所属门店:
+                </label>
+            </td>
+            <td>
+                <input id="HospIdtree" type="text" name="HospIdtree" data-options="required:true" />
+            </td>
+        </tr>
         <tr>
             <td>
                 <label for="ServName">
@@ -24,7 +35,7 @@
                 </label>
             </td>
             <td>
-                <input id="ServTypetree" class="easyui-combobox" type="text" name="ServTypetree" />
+                <input id="ServTypetree" type="text" name="ServTypetree" data-options="required:true" />
             </td>
         </tr>
         <tr>
@@ -51,6 +62,7 @@
     <script type="text/javascript">
         $(function () {
             InitTypeCombo();
+            InitHospCombo();
         })
 
         function InitTypeCombo() {
@@ -71,6 +83,52 @@
                             $('#ServTypetree').combobox('select', data[0].id);
                         else
                             $('#ServTypetree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+
+        //function InitTypeCombo() {
+        //    var cityUrl = "/Service/GetAppServiceTree";
+        //    $("#ServTypetree").combobox({
+        //        url: cityUrl,
+        //        valueField: 'value',
+        //        textField: 'text',
+        //        editable: true,
+        //        onSelect: function (rec) {
+        //            $("#ServType").val(rec.value);
+        //        },
+        //        onLoadSuccess: function () {
+        //            var data = $('#ServTypetree').combobox('getData');
+        //            if (data.length > 0) {
+        //                var stype = $("#ServType").val();
+        //                if (stype == 0)
+        //                    $('#ServTypetree').combobox('select', data[0].id);
+        //                else
+        //                    $('#ServTypetree').combobox('select', stype);
+        //            }
+        //        }
+        //    });
+        //}
+
+        function InitHospCombo() {
+            var hospUrl = "/Service/GetAppHospTree";
+            $("#HospIdtree").combobox({
+                url: hospUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#HospId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#HospIdtree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#HospId").val();
+                        if (stype == 0)
+                            $('#HospIdtree').combobox('select', data[0].id);
+                        else
+                            $('#HospIdtree').combobox('select', stype);
                     }
                 }
             });

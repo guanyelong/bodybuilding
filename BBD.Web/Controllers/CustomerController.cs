@@ -45,7 +45,25 @@ namespace BBD.Web.Controllers
             info.Mobile = Mobile;
             info.Female = Female;
             info.ComeFrom = ComeFrom;
-            info.HospId = string.IsNullOrWhiteSpace(HospId) ? 0 : int.Parse(HospId);
+            if (string.IsNullOrWhiteSpace(HospId))
+            {
+                List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+                if (hospList!=null && hospList.Count>0)
+                {
+                    var hid = hospList.OrderBy(p=>p.hospid).Select(p => p.hospid).FirstOrDefault();
+                    info.HospId = hid;
+                }
+                else
+                {
+                    info.HospId = -1;
+                }
+                
+            }
+            else
+            {
+                info.HospId = int.Parse(HospId);
+            }
+            //info.HospId = string.IsNullOrWhiteSpace(HospId) ? 0 : int.Parse(HospId);
             if (!string.IsNullOrWhiteSpace(uid) && uid != "0")
                 info.uId = int.Parse(uid);
             else
@@ -100,8 +118,8 @@ namespace BBD.Web.Controllers
             if (ui.uId == 0)
             {
                 ui.isDel = 0;
-                //ui.CreatorId = AdminSystemInfo.CurrentUser.Uid;
-                
+                ui.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                ui.Creator = AdminSystemInfo.CurrentUser.uName;
                 int num = oc.iBllSession.Itb_User_Info_Bo_BLL.Add(ui);
                 if (num < 1) errMsg = "添加失败";
             }
@@ -164,20 +182,33 @@ namespace BBD.Web.Controllers
         public JsonResult GetAppHospTree()
         {
             List<Hashtable> htlist = new List<Hashtable>();
-            var query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetListBy(p => p.IsDel == 0, p => p.C_Time, false);
-            Hashtable htq = new Hashtable();
-            htq.Add("id", "");
-            htq.Add("value", "");
-            htq.Add("text", "请选择");
-            htlist.Add(htq);
-            foreach (var item in query)
+            var query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetListBy(p => p.IsDel == 0, p => p.HospId);
+            List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+            if (hospList!=null && hospList.Count>0)
             {
-                Hashtable ht = new Hashtable();
-                ht.Add("id", item.HospId);
-                ht.Add("value", item.HospId);
-                ht.Add("text", item.Hname);
-                htlist.Add(ht);
+                List<int?> hospIds = hospList.OrderBy(p=>p.hospid).Select(p => p.hospid).ToList();
+                foreach (var item in query)
+                {
+                    if (hospIds.Contains(item.HospId))
+                    {
+                        Hashtable ht = new Hashtable();
+                        ht.Add("id", item.HospId);
+                        ht.Add("value", item.HospId);
+                        ht.Add("text", item.Hname);
+                        htlist.Add(ht);
+                    }
+                }
             }
+            else//没有权限
+            {
+                Hashtable htq = new Hashtable();
+                htq.Add("id", "-1");
+                htq.Add("value", "");
+                htq.Add("text", "请选择");
+                htlist.Add(htq);
+            }
+            
+            
             return Json(htlist, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetAppIndustryTypeTree()

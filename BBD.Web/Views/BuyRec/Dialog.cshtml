@@ -14,7 +14,8 @@
                 门店:
             </td>
             <td>
-                <input id="HospIdtree" class="easyui-combobox" type="text" name="HospIdtree" data-options="required:true" />
+                @*<input id="HospIdtree"  type="text" name="HospIdtree" data-options="required:true" />*@
+                @ViewBag.currentHospName
             </td>
         </tr>
         <tr>
@@ -22,7 +23,7 @@
                 购买人:
             </td>
             <td>
-                <input id="uidtree" class="easyui-combobox" type="text" name="uidtree" data-options="required:true" />
+                <input id="uidtree"  type="text" name="uidtree" data-options="required:true" />
             </td>
         </tr>
         <tr>
@@ -77,10 +78,9 @@
         </tr>
     </table>
     <script type="text/javascript">
-        var isload = true;
         $(function () {
            
-            InitHospCombo();
+            //InitHospCombo();
             InitUidCombo();
         })
 
@@ -121,8 +121,8 @@
                 }
             });
         }
-        function InitUidCombo(hospId) {
-            var userUrl = "/BuyRec/GetAppUserTree?hospId=" + hospId;
+        function InitUidCombo() {
+            var userUrl = "/BuyRec/GetAppUserTree?hospId=" + $("#currentHospId").val();
             $("#uidtree").combobox({
                 url: userUrl,
                 valueField: 'value',
@@ -134,17 +134,15 @@
                 onLoadSuccess: function () {
                     var data = $('#uidtree').combobox('getData');
                     if (data.length > 0) {
-                        if (isload) {
-                            isload = false;
-                            var hid = $("#uId").val();
-                            if (hid == 0 || hid == "" || hid == null)
-                                $('#uidtree').combobox('select', data[0].id);
-                            else
-                                $('#uidtree').combobox('select', hid);
-                        } else {
+                        var hid = $("#uId").val();
+                        var selId = [];
+                        $.each(data, function (index,ele) {
+                            selId.push(ele.value);
+                        })
+                        if (hid == 0 || hid == "" || hid == null || selId.indexOf(parseInt(hid)) < 0)
                             $('#uidtree').combobox('select', data[0].id);
-                        }
-                        
+                        else
+                            $('#uidtree').combobox('select', hid);
                     }
                 }
             });

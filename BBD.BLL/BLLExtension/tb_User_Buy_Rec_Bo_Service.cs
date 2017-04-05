@@ -65,8 +65,8 @@ namespace BBD.BLL
                                         ua.TouchFlag = item.TouchFlag;
                                         ua.total = item.Times * br.BuyNum;
                                         ua.delay = item.Times * br.BuyNum;
-                                        //ua.creator = br.Creator;
-                                        //ua.creatorId = br.CreatorId;
+                                        ua.creator = br.Creator;
+                                        ua.creatorId = br.CreatorId;
                                         appEntitys.tb_User_Accounts.Add(ua);
                                         appEntitys.SaveChanges();
                                         cont = true;
@@ -164,8 +164,8 @@ namespace BBD.BLL
                                             wc.uId = Convert.ToInt32(br.uId);
                                             wc.BatchId = Convert.ToInt32(maxBatch) + k;
                                             wc.TouchFlag = pof.TouchFlag;
-                                            //wc.CreatorId = br.CreatorId;
-                                            //wc.Creator = br.Creator;
+                                            wc.CreatorId = br.CreatorId;
+                                            wc.Creator = br.Creator;
                                             appEntitys.tb_Weight_Chgs.Add(wc);
                                             appEntitys.SaveChanges();
                                             weight = true;

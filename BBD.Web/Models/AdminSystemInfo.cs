@@ -88,6 +88,21 @@ namespace BBD.Web.Models
                 HttpContext.Current.Session["UserMenuInfos"] = value;
             }
         }
+        /// <summary>
+        /// 获取当前用户查询数据信息
+        /// </summary>
+        public static List<tb_Emp_Hos> EmpHospList
+        {
+            get
+            {
+                List<tb_Emp_Hos> ehList = HttpContext.Current.Session["EmpHosInfos"] as List<tb_Emp_Hos>;
+                return ehList;
+            }
+            set
+            {
+                HttpContext.Current.Session["EmpHosInfos"] = value;
+            }
+        }
 
 
         /// <summary>
@@ -142,6 +157,11 @@ namespace BBD.Web.Models
         public static void UpdateUserMenuList(List<tb_Sys_MenuInfo> menuList)
         {
             AdminSystemInfo.MenuInfoList = menuList;
+        }
+
+        public static void UpdateEmpHosList(List<tb_Emp_Hos> empHosList) 
+        {
+            AdminSystemInfo.EmpHospList = empHosList;
         }
     }
 }

@@ -44,6 +44,8 @@ public partial class tb_Serv_Info
 
     public Nullable<int> ModifyId { get; set; }
 
+    public Nullable<int> HospId { get; set; }
+
 }
 
 }

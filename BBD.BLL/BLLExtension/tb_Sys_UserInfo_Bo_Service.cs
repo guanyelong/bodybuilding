@@ -90,8 +90,7 @@ namespace BBD.BLL
 
                     //转换
                     List<tb_Sys_UserInfo> result = new List<tb_Sys_UserInfo>();
-                    List<tb_Dict> list_dict = new tb_Dict_Bo_Service().GetDictList("city");
-
+                    List<tb_Dict> list_dict = new tb_Dict_Bo_Service().GetListBy(p=>p.KeyName=="city",p=>p.Seq);
                     foreach (var item in queryResult)
                     {
 

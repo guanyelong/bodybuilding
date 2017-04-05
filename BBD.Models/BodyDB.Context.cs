@@ -43,8 +43,6 @@ public partial class BXUUEntities : DbContext
 
     public virtual DbSet<tb_Hosp_Info> tb_Hosp_Infos { get; set; }
 
-    public virtual DbSet<tb_Serv_Info> tb_Serv_Infos { get; set; }
-
     public virtual DbSet<tb_Serv_POF> tb_Serv_POFs { get; set; }
 
     public virtual DbSet<tb_Sms_Down> tb_Sms_Downs { get; set; }
@@ -90,6 +88,8 @@ public partial class BXUUEntities : DbContext
     public virtual DbSet<tb_User_Info> tb_User_Infos { get; set; }
 
     public virtual DbSet<tb_Consume_Log> tb_Consume_Logs { get; set; }
+
+    public virtual DbSet<tb_Serv_Info> tb_Serv_Infos { get; set; }
 
 
     public virtual int Pro_Build_Recommend_Str(string uname, string umobile, string para, ObjectParameter outCode)

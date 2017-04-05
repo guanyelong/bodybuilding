@@ -13,7 +13,7 @@ namespace BBD.Web.Controllers
         OperContext oc = OperContext.CurrentContext;
         //
         // GET: /Role/
-        [AuthenticationAttribute]
+        //[AuthenticationAttribute]
         public ActionResult Index()
         {
             return View();

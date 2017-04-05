@@ -42,24 +42,6 @@ namespace BBD.Web.Controllers
                     filterContext.Result = RedirectToAction("Index", "Login", new { returnUrl = HttpUtility.UrlEncode(Request.Url.ToString()) });
                 }
             }
-            else if (AdminSystemInfo.MenuInfoList == null)
-            {
-                filterContext.Result = RedirectToAction("Main", "Home", new { returnUrl = HttpUtility.UrlEncode(Request.Url.ToString()) });
-            }
-            else if (Request.Url.ToString().ToLower().IndexOf("home") < 0)
-            {
-                var isPer = AdminSystemInfo.MenuInfoList.Where(p => p.mUrl != string.Empty && p.mPId != 0 && Request.Url.ToString().Contains(p.mUrl)).FirstOrDefault();
-                if (isPer == null)
-                {
-                    //没有权限
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
-                     {
-                         {"controller", "Home"},
-                         {"action", "Main"},
-                         {"returnUrl",  HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.ToString())}
-                     });
-                }
-            }
             base.OnActionExecuting(filterContext);
         }
     }
@@ -95,29 +77,6 @@ namespace BBD.Web.Controllers
                      {
                          {"controller", "Login"},
                          {"action", "Index"},
-                         {"returnUrl",  HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.ToString())}
-                     });
-                }
-            }
-            else if (AdminSystemInfo.MenuInfoList == null)
-            {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
-                     {
-                         {"controller", "Home"},
-                         {"action", "Main"},
-                         {"returnUrl",  HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.ToString())}
-                     });
-            }
-            else if (filterContext.HttpContext.Request.Url.ToString().ToLower().IndexOf("home") < 0)
-            {
-                var isPer = AdminSystemInfo.MenuInfoList.Where(p => !string.IsNullOrWhiteSpace(p.mUrl) && p.mPId != 0 && filterContext.HttpContext.Request.Url.ToString().Contains(p.mUrl)).FirstOrDefault();
-                if (isPer == null)
-                {
-                    //没有权限
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
-                     {
-                         {"controller", "Home"},
-                         {"action", "Main"},
                          {"returnUrl",  HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.ToString())}
                      });
                 }

@@ -8,7 +8,7 @@
     <form id="appHei_WeiForm"></form>
 }
 
-<div class="easyui-panel" data-options="region:'west'" style="height:40%; width:100%;" title="预约记录">
+<div class="easyui-panel" data-options="region:'west'" style="height:100%; width:100%;" title="店内测量体重">
     <div style="padding-left:2px;padding-right:2px;height:100%;">
         <form id="appWeigthChgForm">
             <div style="height:5%">
@@ -28,7 +28,7 @@
         </div>
     </div>
 </div>
-<div class="easyui-panel" data-options="region:'east'" style="height: 60%; width: 100%; padding: 3px; " title="推荐服务">
+<div class="easyui-panel" data-options="region:'east'" style="height: 100%; width: 100%; padding: 3px;" title="客户自报体重">
     <form id="appWeightChgSelForm">
         <div style="height:5%">
             <label for="wcsName">
@@ -140,7 +140,6 @@
     function ShowEditOrViewDialog(action) {
 
         var title = "新增数据";
-
         var Id = 0;
         if (action == "edit") {
             title = "编辑数据";
@@ -232,11 +231,11 @@
         };
         actionBar1.iconCls = "icon-add",
         actionBar1.handler = function () {
-            ShowEditOrViewDialog('add');
+            ShowEditOrViewDialog_self('add');
         }
         actionBar2.iconCls = "icon-edit",
         actionBar2.handler = function () {
-            ShowEditOrViewDialog('edit');
+            ShowEditOrViewDialog_self('edit');
         }
         actionBar4.iconCls = "icon-reload",
         actionBar4.handler = function () {
@@ -287,7 +286,7 @@
     };
 
     //显示新增编辑页面
-    function ShowEditOrViewDialog(action) {
+    function ShowEditOrViewDialog_self(action) {
 
         var title = "新增数据";
 
@@ -319,7 +318,7 @@
             buttons: [{
                 text: '&nbsp;保存&nbsp;',
                 handler: function () {
-                    SaveWeightCh();
+                    SaveWeightCh_sef();
                 }
             }, {
                 text: '&nbsp;关闭&nbsp;',
@@ -330,7 +329,7 @@
         });
     }
 
-    function SaveWeightCh() {
+    function SaveWeightCh_sef() {
         //保存按钮
         $("#dialogForm").form("submit", {
             url: "/WeightChgSelf/SaveWeightChgSelf",

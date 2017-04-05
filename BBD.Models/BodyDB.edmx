@@ -96,6 +96,7 @@
           <Property Name="IsDel" Type="int" />
           <Property Name="LastModTime" Type="datetime" />
           <Property Name="ModifyId" Type="int" />
+          <Property Name="HospId" Type="int" />
         </EntityType>
         <EntityType Name="tb_Serv_POF">
           <Key>
@@ -492,7 +493,6 @@
           <EntitySet Name="tb_Emp_Hoss" EntityType="BXUUModel.tb_Emp_Hos" />
           <EntitySet Name="tb_Hei_Weis" EntityType="BXUUModel.tb_Hei_Wei" />
           <EntitySet Name="tb_Hosp_Infos" EntityType="BXUUModel.tb_Hosp_Info" />
-          <EntitySet Name="tb_Serv_Infos" EntityType="BXUUModel.tb_Serv_Info" />
           <EntitySet Name="tb_Serv_POFs" EntityType="BXUUModel.tb_Serv_POF" />
           <EntitySet Name="tb_Sms_Downs" EntityType="BXUUModel.tb_Sms_Down" />
           <EntitySet Name="tb_Sms_reports" EntityType="BXUUModel.tb_Sms_report" />
@@ -516,6 +516,7 @@
           <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
           <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
           <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
+          <EntitySet Name="tb_Serv_Infos" EntityType="BXUUModel.tb_Serv_Info" />
         </EntityContainer>
         <EntityType Name="tb_Dict">
           <Key>
@@ -577,24 +578,6 @@
           <Property Name="IsDel" Type="Int32" />
           <Property Name="PyShort" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PyLong" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tb_Serv_Info">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServId" Type="Int32" Nullable="false" />
-          <Property Name="ServName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ServMemo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="ServType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="state" Type="Int32" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CTime" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatorId" Type="Int32" />
-          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsDel" Type="Int32" />
-          <Property Name="LastModTime" Type="DateTime" Precision="3" />
-          <Property Name="ModifyId" Type="Int32" />
         </EntityType>
         <EntityType Name="tb_Serv_POF">
           <Key>
@@ -935,6 +918,25 @@
           <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
+        <EntityType Name="tb_Serv_Info">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServId" Type="Int32" Nullable="false" />
+          <Property Name="ServName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ServMemo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ServType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CTime" Type="DateTime" Precision="3" ConcurrencyMode="None" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDel" Type="Int32" />
+          <Property Name="LastModTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyId" Type="Int32" />
+          <Property Name="HospId" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1004,25 +1006,6 @@
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="Hname" ColumnName="Hname" />
                 <ScalarProperty Name="HospId" ColumnName="HospId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_Serv_Infos">
-            <EntityTypeMapping TypeName="BXUUModel.tb_Serv_Info">
-              <MappingFragment StoreEntitySet="tb_Serv_Info">
-                <ScalarProperty Name="ModifyId" ColumnName="ModifyId" />
-                <ScalarProperty Name="LastModTime" ColumnName="LastModTime" />
-                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
-                <ScalarProperty Name="CTime" ColumnName="CTime" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="ServType" ColumnName="ServType" />
-                <ScalarProperty Name="ServMemo" ColumnName="ServMemo" />
-                <ScalarProperty Name="ServName" ColumnName="ServName" />
-                <ScalarProperty Name="ServId" ColumnName="ServId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1384,6 +1367,26 @@
                 <ScalarProperty Name="rec_date" ColumnName="rec_date" />
                 <ScalarProperty Name="uId" ColumnName="uId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Serv_Infos">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Serv_Info">
+              <MappingFragment StoreEntitySet="tb_Serv_Info">
+                <ScalarProperty Name="HospId" ColumnName="HospId" />
+                <ScalarProperty Name="ModifyId" ColumnName="ModifyId" />
+                <ScalarProperty Name="LastModTime" ColumnName="LastModTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="CTime" ColumnName="CTime" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="ServType" ColumnName="ServType" />
+                <ScalarProperty Name="ServMemo" ColumnName="ServMemo" />
+                <ScalarProperty Name="ServName" ColumnName="ServName" />
+                <ScalarProperty Name="ServId" ColumnName="ServId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

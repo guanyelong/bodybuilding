@@ -118,6 +118,11 @@ namespace BBD.Web.Controllers
             //设置当前用户的菜单信息
             List<tb_Sys_MenuInfo> menuList = oc.iBllSession.Itb_Sys_UserRole_Bo_BLL.GetAppUserMenuList(userId);
             AdminSystemInfo.UpdateUserMenuList(menuList);
+             
+            //设置当前用户查询数据信息
+
+            List<tb_Emp_Hos> empHosList = oc.iBllSession.Itb_Emp_Hos_Bo_BLL.GetListBy(p => p.emp_id == userId);
+            AdminSystemInfo.UpdateEmpHosList(empHosList);
         }
 	}
 }

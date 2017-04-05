@@ -38,6 +38,14 @@ namespace BBD.Web.Controllers
             string tel = Request["tel"];
             int count = 0;
             tb_Hosp_Info info=new tb_Hosp_Info();
+            if (string.IsNullOrWhiteSpace(Hname))
+            {
+                Hname = "";
+            }
+            if (string.IsNullOrWhiteSpace(tel))
+            {
+                tel = "";
+            }
             info.Hname=Hname;
             info.tel=tel;
             IList<tb_Hosp_Info> query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetAppHospList(pageIndex, pageSize, ref count, info);
@@ -92,7 +100,7 @@ namespace BBD.Web.Controllers
                 hi.state = 0;
                 hi.PyLong = new ChineseToPinyin().GetPinyin(hi.Hname);
                 hi.PyShort = ChineseToPinyin.GetCodstring(hi.Hname);
-                //hi.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                hi.CreatorId = AdminSystemInfo.CurrentUser.Uid;
                 int num = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.Add(hi);
                 if (num < 1) errMsg = "添加失败";
             }
@@ -101,7 +109,7 @@ namespace BBD.Web.Controllers
                 string[] prop = { "HospId", "C_time", "CreatorId", "IsDel", "state", "sTypeName", "CityName" };
                 hi.PyLong = new ChineseToPinyin().GetPinyin(hi.Hname);
                 hi.PyShort = ChineseToPinyin.GetCodstring(hi.Hname);
-                //hi.ModfyId = AdminSystemInfo.CurrentUser.Uid;
+                hi.ModfyId = AdminSystemInfo.CurrentUser.Uid;
                 hi.ModLastTime = DateTime.Now;
                 int num = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.Modifyed(hi, prop);
                 if (num < 1) errMsg = "修改失败";

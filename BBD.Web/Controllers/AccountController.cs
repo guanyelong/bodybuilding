@@ -93,13 +93,21 @@ namespace BBD.Web.Controllers
                 return Json(new { result = "error", mesage = "消费次数不足" });
             }
             string errMsg = "";
-            //cl.creator = AdminSystemInfo.CurrentUser.uName;
-            //cl.creatorid = AdminSystemInfo.CurrentUser.Uid;
-            bool num = oc.iBllSession.Itb_Consume_Log_Bo_BLL.UpdConsumeLog(cl);
-            if (!num)
+            cl.creator = AdminSystemInfo.CurrentUser.uName;
+            cl.creatorid = AdminSystemInfo.CurrentUser.Uid;
+            if (cl.Enum==0 && cl.Tnum==0)
             {
                 errMsg = "操作失败";
             }
+            else
+            {
+                bool num = oc.iBllSession.Itb_Consume_Log_Bo_BLL.UpdConsumeLog(cl);
+                if (!num)
+                {
+                    errMsg = "操作失败";
+                }
+            }
+            
             var result = new { result = "ok", message = "操作成功" };
 
             if (!string.IsNullOrEmpty(errMsg))

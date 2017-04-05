@@ -20,8 +20,10 @@ namespace BBD.BLL
                 SqlParameter[] param = new SqlParameter[]{
                     new SqlParameter("@ServName",info.ServName),
                     new SqlParameter("@state",info.state),
-                    new SqlParameter("@IsDel",info.IsDel)
+                    new SqlParameter("@IsDel",info.IsDel),
+                    new SqlParameter("@HospIds",SqlDbType.VarChar)
                 };
+                param[3].Value = info.HospStrIds;
                 DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("Pro_Select_ServInfo", System.Data.CommandType.StoredProcedure, param);
                 if (dt == null) return null;
                 IList<tb_Serv_Info> list = ModelConvertHelper<tb_Serv_Info>.ConvertToModel(dt);

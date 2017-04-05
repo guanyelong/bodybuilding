@@ -159,6 +159,8 @@
             columns: [[
                           { title: "ID", field: "ID", width: 95, hidden: true },
                           { title: "ServId", field: "ServId", width: 95, hidden: true },
+                          { title: "HospId", field: "HospId", width: 135, hidden: true },
+                          { title: "门店", field: "HospName", width: 135, sortable: true },
                           { title: "产品名称", field: "ServName", width: 135, sortable: true },
                           { title: "产品类型", field: "ServTypeName", width: 95, sortable: true },
                           { title: "产品价格（元）", field: "price", width: 95, sortable: true },
@@ -181,13 +183,16 @@
     };
 
     function Operation(value, row, index) {
-        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowPayDialog(" + row.ID + ")\">立即购买</a>";
+        var btnAdd = "<a href=\"#\" class='addcls'   name=\"btnAdd\" onclick=\"ShowPayDialog(" + row.ID + "," + row.HospId + ")\">立即购买</a>";
+        if (row.TouchTimes == 0 && row.InstrumentTimes==0) {
+            btnAdd = "";
+        }
         return btnAdd;
     }
 
-    function ShowPayDialog(servid) {
+    function ShowPayDialog(servid, HospId) {
 
-        var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val();
+        var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val() + "&hospid=" + HospId;
         $("#Serv_dialog").dialog({
             title: "购买服务",
             width: 850,

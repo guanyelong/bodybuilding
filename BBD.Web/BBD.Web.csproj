@@ -245,6 +245,7 @@
     <Content Include="Scripts\Easyui\extension\jquery-easyui-portal\datagrid_data.json" />
     <Content Include="Scripts\Easyui\extension\jquery-easyui-rtl\datagrid_data1.json" />
     <Content Include="Scripts\Easyui\extension\jquery-easyui-rtl\tree_data1.json" />
+    <None Include="Properties\PublishProfiles\77777.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\easyuiExtension.js" />
     <Content Include="Scripts\Easyui\demo\accordion\actions.html" />

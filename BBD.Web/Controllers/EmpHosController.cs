@@ -82,8 +82,8 @@ namespace BBD.Web.Controllers
                         tb_Emp_Hos eh = new tb_Emp_Hos();
                         eh.emp_id = empid;
                         eh.hospid = hospid;
-                        //eh.creator = AdminSystemInfo.CurrentUser.uName;
-                        //eh.creatorid = AdminSystemInfo.CurrentUser.Uid;
+                        eh.creator = AdminSystemInfo.CurrentUser.uName;
+                        eh.creatorid = AdminSystemInfo.CurrentUser.Uid;
                         oc.iBllSession.Itb_Emp_Hos_Bo_BLL.Add(eh);
                     }
                 }

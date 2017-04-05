@@ -128,8 +128,8 @@ namespace BBD.Web.Controllers
             var info = oc.iBllSession.Itb_User_Dislike_Food_Bo_BLL.GetObjet(p => p.uId == hw.uId && p.FoodType == hw.FoodType);
             if (info==null)//添加
             {
-                //info.Creator = AdminSystemInfo.CurrentUser.uName;
-                //info.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                info.Creator = AdminSystemInfo.CurrentUser.uName;
+                info.CreatorId = AdminSystemInfo.CurrentUser.Uid;
                 int num = oc.iBllSession.Itb_User_Dislike_Food_Bo_BLL.Add(hw);
                 if (num < 1) errMsg = "添加失败";
             }
