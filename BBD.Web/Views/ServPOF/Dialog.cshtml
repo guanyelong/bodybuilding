@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "产品配置编辑";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model BBD.Models.tb_Serv_POF
+<form id="dialogForm" method="post" action="#">
+    <input type="hidden" id="Id" value="@Model.Id" name="Id" />
+    <input type="hidden" name="ServId" id="ServId" value="@Model.ServId" />
+    @if (Model.TouchFlag==null)
+    {
+        <input type="hidden" name="TouchFlag" id="TouchFlag" value="2" />
+    }
+    else 
+    {
+        <input type="hidden" name="TouchFlag" id="TouchFlag" value="@Model.TouchFlag" />
+    }
+    
+    <table style="width: 100%; text-align: center">
+        <tr>
+            <td>
+                <label for="SerNametree">
+                    产品名称:
+                </label>
+            </td>
+            <td>
+                @if (Model.Id==0)
+                {
+                    <input id="SerNametree" name="SerNametree" type="text" />
+                }
+                else 
+                {
+                    <text>@Model.ServName</text>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="groupTouchFlag">
+                    类型:
+                </label>
+            </td>
+            <td>
+                @if (Model.TouchFlag == null)
+                {
+                    <input type="checkbox" name="groupTouchFlag" value="0" checked onclick="selTouchFlag()" /><text>仪器</text>
+                    <input type="checkbox" name="groupTouchFlag" value="1" checked onclick="selTouchFlag()" /><text>点穴</text>
+                }
+                else if (Model.TouchFlag == 0)
+                {
+                    <text>仪器</text>
+                }
+                else if (Model.TouchFlag == 1)
+                {
+                    <text>点穴</text>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Times">
+                    数量:
+                </label>
+            </td>
+            <td>
+                <input id="Times" class="easyui-textbox" type="text" name="Times" value="@Model.Times" />
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            InitServNameCombo();
+        })
+
+        function InitServNameCombo() {
+            var hosUrl = "/ServPOF/GetAppServNameTree";
+            $("#SerNametree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#ServId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#SerNametree').combobox('getData');
+                    if (data.length > 0) {
+                        var sid = $("#ServId").val();
+                        if (sid == 0 || sid == "" || sid == null)
+                            $('#SerNametree').combobox('select', data[0].id);
+                        else
+                            $('#SerNametree').combobox('select', sid);
+                    }
+                }
+            });
+        }
+
+
+        function selTouchFlag() {
+            var touchs = [];
+            $("input[name='groupTouchFlag']").each(function () {
+                var self = $(this);
+                if (self.prop('checked')) {
+                    touchs.push(self.val());
+                }
+            });
+            if (touchs.length == 1) {
+                $("#TouchFlag").val(touchs[0]);
+            } else if (touchs.length == 2) {
+                $("#TouchFlag").val(2);
+            } else {
+                $("#TouchFlag").val('');
+            }
+        }
+    </script>
+</form>
