@@ -5,26 +5,26 @@
 }
 @section queryform{
     <div style="padding:8px">
-        <span>预约工单查询客户工单。</span>
+        <span>查询客户购买记录。</span>
     </div>
 }
-<div class="easyui-panel" data-options="region:'west'" style="height:40%; width:100%;" title="预约记录">
+<div class="easyui-panel" data-options="region:'west'" style="height:40%; width:100%;" title="购买记录">
     <div style="padding-left:2px;padding-right:2px;height:100%;">
         <table id="App_grid" title="购买记录"></table>
     </div>
 </div>
-<div class="easyui-panel" data-options="region:'east'" style="height: 60%; width: 100%; padding: 3px; " title="推荐服务">
+<div class="easyui-panel" data-options="region:'east'" style="height: 60%; width: 100%; padding: 3px; " title="推荐产品">
     <form id="appAppointmentForm">
         <div style="height:5%">
             <label for="Serv_ServName">
-                服务名称:
+                产品名称:
             </label>
             <input class="easyui-textbox" type="text" id="Serv_ServName" name="Serv_ServName" style="width: 115px" />
             <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="Serv_query">查询</a>&nbsp;&nbsp;
         </div>
     </form>
     <div style="padding-left: 2px; padding-right: 2px; height: 95%;">
-        <table id="serv_grid" title="服务列表"></table>
+        <table id="serv_grid" title="产品列表"></table>
     </div>
 </div>
 <div id="Buy_dialog"></div>
@@ -43,7 +43,7 @@
         };
         $('#App_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
             url: '/BuyRec/GetAppBuyRecList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
-            title: '工单记录',
+            title: '购买记录',
             iconCls: 'icon-view',
             fit: true,
             fitColumns: true,
@@ -64,11 +64,13 @@
             columns: [[
                           { title: "Id", field: "Id", width: 95, hidden: true },
                           { title: "uId", field: "uId", width: 95, hidden: true },
+                          { title: "销售门店", field: "Hname", width: 135, width: 135, sortable: true },
+                          { title: "销售人", field: "SalesName", width: 95, width: 135, sortable: true },
+                          { title: "购买人", field: "uName", width: 95, width: 135, sortable: true },
                           { title: "产品名称", field: "ProductName", width: 135, sortable: true },
                           { title: "产品价格（元）", field: "ProductPrice", width: 95, sortable: true },
                           { title: "产品点穴次数", field: "TouchTimes", width: 65, sortable: true },
                           { title: "产品点仪器次数", field: "InstrumentTimes", width: 65, sortable: true },
-                          { title: "结算门店", field: "Hname", width: 95, sortable: true },
                           { title: "购买日期", field: "RecDate", width: 135, sortable: true, formatter: DataYMDFormat },
                           { title: "购买数量", field: "BuyNum", width: 95, sortable: true },
                           { title: "消费金额", field: "PayMoney", width: 95, sortable: true }
@@ -103,7 +105,7 @@
 
         var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val();
         $("#Buy_dialog").dialog({
-            title: "购买服务",
+            title: "购买产品",
             width: 850,
             height: 330,
             closed: false,
@@ -138,7 +140,7 @@
         };
         $('#serv_grid').datagrid({   //定位到Table标签，Table标签的ID是grid
             url: '/BuyRec/GetAppServList',   //指向后台的Action来获取当前菜单的信息的Json格式的数据
-            title: '购买记录',
+            title: '产品列表',
             iconCls: 'icon-view',
             fit: true,
             fitColumns: true,
@@ -194,7 +196,7 @@
 
         var href = "/BuyRec/Dialog?Id=" + servid + "&uid=" + window.parent.$("#g_uid").val() + "&hospid=" + HospId;
         $("#Serv_dialog").dialog({
-            title: "购买服务",
+            title: "购买产品",
             width: 850,
             height: 330,
             closed: false,

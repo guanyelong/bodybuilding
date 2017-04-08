@@ -40,6 +40,8 @@ public partial class tb_User_Buy_Rec
 
     public Nullable<System.DateTime> C_time { get; set; }
 
+    public Nullable<int> SalesId { get; set; }
+
 }
 
 }

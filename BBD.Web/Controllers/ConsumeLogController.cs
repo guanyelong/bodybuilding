@@ -38,11 +38,11 @@ namespace BBD.Web.Controllers
             string errMsg = "";
             if (cl.Id != 0)
             {
-                string[] prop = { "rec_date" };
+                string[] prop = { "finish_time" };
                 var info = oc.iBllSession.Itb_Consume_Log_Bo_BLL.GetObjet(p => p.Id == cl.Id);
                 if (info!=null)
                 {
-                    info.rec_date = cl.rec_date;
+                    info.finish_time = cl.finish_time;
                     int num = oc.iBllSession.Itb_Consume_Log_Bo_BLL.Modify(info, prop);
                     if (num < 1) errMsg = "修改失败";
                 }

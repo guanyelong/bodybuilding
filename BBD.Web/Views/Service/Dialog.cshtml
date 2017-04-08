@@ -5,6 +5,7 @@
 @model BBD.Models.tb_Serv_Info
 <form id="dialogForm" method="post" action="#">
     <input type="hidden" id="ID" value="@Model.ID" name="ID" />
+    <input type="hidden" id="ServId" name="ServId" value="@Model.ServId" />
     <input type="hidden" name="ServType" id="ServType" value="@Model.ServType" />
     <input type="hidden" name="HospId" id="HospId" value="@Model.HospId" />
     <table style="width: 100%; text-align: center">
@@ -35,7 +36,7 @@
                 </label>
             </td>
             <td>
-                <input id="ServTypetree" type="text" name="ServTypetree" data-options="required:true" />
+                <input id="ServTypetree" type="text" name="ServTypetree" data-options="required:true,validType:'checkNotData'" />
             </td>
         </tr>
         <tr>

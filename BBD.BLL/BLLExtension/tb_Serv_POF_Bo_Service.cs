@@ -37,5 +37,28 @@ namespace BBD.BLL
                 return null;
             }
         }
+
+        public IList<tb_Serv_POF> GetAppServPOFList(int pageIndex, int pageSize, ref int count, tb_Serv_POF info)
+        {
+            try
+            {
+                SqlParameter[] param = new SqlParameter[]{
+                    new SqlParameter("@ServName",info.ServName),
+                    new SqlParameter("@HospIds",info.HospIds)
+                };
+                DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("Pro_Select_ServPOF", System.Data.CommandType.StoredProcedure, param);
+                if (dt == null) return null;
+                IList<tb_Serv_POF> list = ModelConvertHelper<tb_Serv_POF>.ConvertToModel(dt);
+                count = list.Count;
+                list = list.OrderByDescending(p => p.ServId).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex);
+                return null;
+            }
+        }
+
     }
 }

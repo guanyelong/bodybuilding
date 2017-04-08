@@ -31,8 +31,6 @@ namespace BBD.Models
 
 				Weight = this.Weight,
 
-				BatchId = this.BatchId,
-
 				TouchFlag = this.TouchFlag,
 
 				PicPath = this.PicPath,

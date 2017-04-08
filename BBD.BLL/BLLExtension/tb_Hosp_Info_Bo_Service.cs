@@ -19,7 +19,8 @@ namespace BBD.BLL
             {
                 SqlParameter[] param = new SqlParameter[]{
                     new SqlParameter("@Hname",info.Hname),
-                    new SqlParameter("@tel",info.tel)
+                    new SqlParameter("@tel",info.tel),
+                    new SqlParameter("@HospIds",info.HospStrIds)
                 };
                 DataTable dt = BBD.Common.SQLHelp.ExecuteDataTable("Pro_Select_HospInfo", System.Data.CommandType.StoredProcedure, param);
                 if (dt == null) return null;

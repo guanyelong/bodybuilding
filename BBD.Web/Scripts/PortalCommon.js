@@ -95,6 +95,14 @@ $(function () {
                 return true;
             },
             message: '部门不能为空'
+        },
+        checkNotData: {//检查数据不能为空
+            validator: function (value, param) {
+                if ($.trim(value) == "") return false;
+                if (value == "请选择") return false;
+                return true;
+            },
+            message: '数据不能为空'
         }
 
     });

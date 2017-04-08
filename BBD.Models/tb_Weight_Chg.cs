@@ -28,8 +28,6 @@ public partial class tb_Weight_Chg
 
     public Nullable<double> Weight { get; set; }
 
-    public Nullable<int> BatchId { get; set; }
-
     public Nullable<int> TouchFlag { get; set; }
 
     public string PicPath { get; set; }

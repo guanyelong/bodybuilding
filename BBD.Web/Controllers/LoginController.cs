@@ -121,8 +121,37 @@ namespace BBD.Web.Controllers
              
             //设置当前用户查询数据信息
 
-            List<tb_Emp_Hos> empHosList = oc.iBllSession.Itb_Emp_Hos_Bo_BLL.GetListBy(p => p.emp_id == userId);
-            AdminSystemInfo.UpdateEmpHosList(empHosList);
+            //List<tb_Emp_Hos> empHosList = oc.iBllSession.Itb_Emp_Hos_Bo_BLL.GetListBy(p => p.emp_id == userId);
+            
+            using (BXUUEntities appEntities=new BXUUEntities())
+            {
+                List<tb_Emp_Hos> empHosList = new List<tb_Emp_Hos>();
+                var query = from eh in appEntities.tb_Emp_Hoss
+                            join h in appEntities.tb_Hosp_Infos on eh.hospid equals h.HospId
+                            where h.IsDel == 0 && h.state == 0
+                            select new 
+                            {
+                                c_time = eh.c_time,
+                                hospid = eh.hospid,
+                                creator = eh.creator,
+                                creatorid = eh.creatorid,
+                                emp_id = eh.emp_id,
+                                Id = eh.Id
+                            };
+                foreach (var item in query)
+                {
+                    tb_Emp_Hos info = new tb_Emp_Hos();
+                    info.Id = item.Id;
+                    info.creatorid = item.creatorid;
+                    info.hospid = item.hospid;
+                    info.creator = item.creator;
+                    info.emp_id = item.emp_id;
+                    empHosList.Add(info);
+                }
+                //List<tb_Emp_Hos> empHosList = query.ToList();
+                AdminSystemInfo.UpdateEmpHosList(empHosList);
+            }
+           
         }
 	}
 }

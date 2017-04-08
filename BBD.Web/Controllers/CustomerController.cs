@@ -55,7 +55,7 @@ namespace BBD.Web.Controllers
                 }
                 else
                 {
-                    info.HospId = -1;
+                    info.HospId = -2;
                 }
                 
             }

@@ -71,11 +71,7 @@ public partial class BXUUEntities : DbContext
 
     public virtual DbSet<tb_User_Account> tb_User_Accounts { get; set; }
 
-    public virtual DbSet<tb_User_Buy_Rec> tb_User_Buy_Recs { get; set; }
-
     public virtual DbSet<tb_User_Dislike_Food> tb_User_Dislike_Foods { get; set; }
-
-    public virtual DbSet<tb_Weight_Chg> tb_Weight_Chgs { get; set; }
 
     public virtual DbSet<tb_Weight_Chg_Self> tb_Weight_Chg_Selfs { get; set; }
 
@@ -87,9 +83,13 @@ public partial class BXUUEntities : DbContext
 
     public virtual DbSet<tb_User_Info> tb_User_Infos { get; set; }
 
+    public virtual DbSet<tb_Serv_Info> tb_Serv_Infos { get; set; }
+
+    public virtual DbSet<tb_User_Buy_Rec> tb_User_Buy_Recs { get; set; }
+
     public virtual DbSet<tb_Consume_Log> tb_Consume_Logs { get; set; }
 
-    public virtual DbSet<tb_Serv_Info> tb_Serv_Infos { get; set; }
+    public virtual DbSet<tb_Weight_Chg> tb_Weight_Chgs { get; set; }
 
 
     public virtual int Pro_Build_Recommend_Str(string uname, string umobile, string para, ObjectParameter outCode)

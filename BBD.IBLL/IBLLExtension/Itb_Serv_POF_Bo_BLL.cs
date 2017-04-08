@@ -10,5 +10,6 @@ namespace BBD.IBLL
     public partial interface Itb_Serv_POF_Bo_BLL
     {
         IList<tb_Serv_Info> GetAppServList(int pageIndex, int pageSize, ref int count, tb_Serv_Info info);
+        IList<tb_Serv_POF> GetAppServPOFList(int pageIndex, int pageSize, ref int count, tb_Serv_POF info);
     }
 }

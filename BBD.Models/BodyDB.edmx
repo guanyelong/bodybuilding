@@ -17,6 +17,7 @@
           <Property Name="creatorid" Type="int" />
           <Property Name="creator" Type="varchar" MaxLength="50" />
           <Property Name="c_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="finish_time" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tb_Dict">
           <Key>
@@ -353,6 +354,7 @@
           <Property Name="CreatorId" Type="int" />
           <Property Name="Creator" Type="varchar" MaxLength="50" />
           <Property Name="C_time" Type="datetime" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesId" Type="int" />
         </EntityType>
         <EntityType Name="tb_User_Dislike_Food">
           <Key>
@@ -406,7 +408,6 @@
           <Property Name="RecDate" Type="date" />
           <Property Name="Hid" Type="int" />
           <Property Name="Weight" Type="float" />
-          <Property Name="BatchId" Type="int" />
           <Property Name="TouchFlag" Type="int" />
           <Property Name="PicPath" Type="varchar" MaxLength="200" />
           <Property Name="CreatorId" Type="int" />
@@ -507,16 +508,16 @@
           <EntitySet Name="tb_Sys_UserRoles" EntityType="BXUUModel.tb_Sys_UserRole" />
           <EntitySet Name="tb_Sys_UserVipPermissions" EntityType="BXUUModel.tb_Sys_UserVipPermission" />
           <EntitySet Name="tb_User_Accounts" EntityType="BXUUModel.tb_User_Account" />
-          <EntitySet Name="tb_User_Buy_Recs" EntityType="BXUUModel.tb_User_Buy_Rec" />
           <EntitySet Name="tb_User_Dislike_Foods" EntityType="BXUUModel.tb_User_Dislike_Food" />
-          <EntitySet Name="tb_Weight_Chgs" EntityType="BXUUModel.tb_Weight_Chg" />
           <EntitySet Name="tb_Weight_Chg_Selfs" EntityType="BXUUModel.tb_Weight_Chg_Self" />
           <EntitySet Name="tb_Sys_logs" EntityType="BXUUModel.tb_Sys_log" />
           <EntitySet Name="tb_Sys_Notices" EntityType="BXUUModel.tb_Sys_Notice" />
           <EntitySet Name="tb_Sys_LoginLogs" EntityType="BXUUModel.tb_Sys_LoginLog" />
           <EntitySet Name="tb_User_Infos" EntityType="BXUUModel.tb_User_Info" />
-          <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
           <EntitySet Name="tb_Serv_Infos" EntityType="BXUUModel.tb_Serv_Info" />
+          <EntitySet Name="tb_User_Buy_Recs" EntityType="BXUUModel.tb_User_Buy_Rec" />
+          <EntitySet Name="tb_Consume_Logs" EntityType="BXUUModel.tb_Consume_Log" />
+          <EntitySet Name="tb_Weight_Chgs" EntityType="BXUUModel.tb_Weight_Chg" />
         </EntityContainer>
         <EntityType Name="tb_Dict">
           <Key>
@@ -776,22 +777,6 @@
           <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="tb_User_Buy_Rec">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="uId" Type="Int32" />
-          <Property Name="RecDate" Type="DateTime" Precision="0" />
-          <Property Name="Buy_Hospid" Type="Int32" />
-          <Property Name="BuyNum" Type="Int32" />
-          <Property Name="PayMoney" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="ProductPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CreatorId" Type="Int32" />
-          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="tb_User_Dislike_Food">
           <Key>
             <PropertyRef Name="id" />
@@ -800,22 +785,6 @@
           <Property Name="uId" Type="Int32" Nullable="false" />
           <Property Name="FoodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="FoodName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CreatorId" Type="Int32" />
-          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="tb_Weight_Chg">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="uId" Type="Int32" Nullable="false" />
-          <Property Name="RecDate" Type="DateTime" Precision="0" />
-          <Property Name="Hid" Type="Int32" />
-          <Property Name="Weight" Type="Double" />
-          <Property Name="BatchId" Type="Int32" />
-          <Property Name="TouchFlag" Type="Int32" />
-          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreatorId" Type="Int32" />
           <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
@@ -905,19 +874,6 @@
           <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="isDel" Type="Int32" />
         </EntityType>
-        <EntityType Name="tb_Consume_Log">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="uId" Type="Int32" Nullable="false" />
-          <Property Name="rec_date" Type="DateTime" Precision="0" />
-          <Property Name="num" Type="Int32" />
-          <Property Name="flag" Type="Int32" />
-          <Property Name="creatorid" Type="Int32" />
-          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="tb_Serv_Info">
           <Key>
             <PropertyRef Name="ID" />
@@ -936,6 +892,52 @@
           <Property Name="LastModTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyId" Type="Int32" />
           <Property Name="HospId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_User_Buy_Rec">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" />
+          <Property Name="RecDate" Type="DateTime" Precision="0" />
+          <Property Name="Buy_Hospid" Type="Int32" />
+          <Property Name="BuyNum" Type="Int32" />
+          <Property Name="PayMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalesId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tb_Consume_Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="rec_date" Type="DateTime" Precision="0" />
+          <Property Name="num" Type="Int32" />
+          <Property Name="flag" Type="Int32" />
+          <Property Name="creatorid" Type="Int32" />
+          <Property Name="creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="c_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="finish_time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tb_Weight_Chg">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uId" Type="Int32" Nullable="false" />
+          <Property Name="RecDate" Type="DateTime" Precision="0" />
+          <Property Name="Hid" Type="Int32" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="TouchFlag" Type="Int32" />
+          <Property Name="PicPath" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreatorId" Type="Int32" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="C_time" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1220,23 +1222,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_User_Buy_Recs">
-            <EntityTypeMapping TypeName="BXUUModel.tb_User_Buy_Rec">
-              <MappingFragment StoreEntitySet="tb_User_Buy_Rec">
-                <ScalarProperty Name="C_time" ColumnName="C_time" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
-                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="PayMoney" ColumnName="PayMoney" />
-                <ScalarProperty Name="BuyNum" ColumnName="BuyNum" />
-                <ScalarProperty Name="Buy_Hospid" ColumnName="Buy_Hospid" />
-                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
-                <ScalarProperty Name="uId" ColumnName="uId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_User_Dislike_Foods">
             <EntityTypeMapping TypeName="BXUUModel.tb_User_Dislike_Food">
               <MappingFragment StoreEntitySet="tb_User_Dislike_Food">
@@ -1247,23 +1232,6 @@
                 <ScalarProperty Name="FoodType" ColumnName="FoodType" />
                 <ScalarProperty Name="uId" ColumnName="uId" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tb_Weight_Chgs">
-            <EntityTypeMapping TypeName="BXUUModel.tb_Weight_Chg">
-              <MappingFragment StoreEntitySet="tb_Weight_Chg">
-                <ScalarProperty Name="C_time" ColumnName="C_time" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
-                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
-                <ScalarProperty Name="TouchFlag" ColumnName="TouchFlag" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="Hid" ColumnName="Hid" />
-                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
-                <ScalarProperty Name="uId" ColumnName="uId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1356,20 +1324,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tb_Consume_Logs">
-            <EntityTypeMapping TypeName="BXUUModel.tb_Consume_Log">
-              <MappingFragment StoreEntitySet="tb_Consume_Log">
-                <ScalarProperty Name="c_time" ColumnName="c_time" />
-                <ScalarProperty Name="creator" ColumnName="creator" />
-                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
-                <ScalarProperty Name="flag" ColumnName="flag" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="rec_date" ColumnName="rec_date" />
-                <ScalarProperty Name="uId" ColumnName="uId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tb_Serv_Infos">
             <EntityTypeMapping TypeName="BXUUModel.tb_Serv_Info">
               <MappingFragment StoreEntitySet="tb_Serv_Info">
@@ -1387,6 +1341,55 @@
                 <ScalarProperty Name="ServName" ColumnName="ServName" />
                 <ScalarProperty Name="ServId" ColumnName="ServId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_User_Buy_Recs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_User_Buy_Rec">
+              <MappingFragment StoreEntitySet="tb_User_Buy_Rec">
+                <ScalarProperty Name="SalesId" ColumnName="SalesId" />
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="PayMoney" ColumnName="PayMoney" />
+                <ScalarProperty Name="BuyNum" ColumnName="BuyNum" />
+                <ScalarProperty Name="Buy_Hospid" ColumnName="Buy_Hospid" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Consume_Logs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Consume_Log">
+              <MappingFragment StoreEntitySet="tb_Consume_Log">
+                <ScalarProperty Name="finish_time" ColumnName="finish_time" />
+                <ScalarProperty Name="c_time" ColumnName="c_time" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="creatorid" ColumnName="creatorid" />
+                <ScalarProperty Name="flag" ColumnName="flag" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="rec_date" ColumnName="rec_date" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_Weight_Chgs">
+            <EntityTypeMapping TypeName="BXUUModel.tb_Weight_Chg">
+              <MappingFragment StoreEntitySet="tb_Weight_Chg">
+                <ScalarProperty Name="C_time" ColumnName="C_time" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreatorId" ColumnName="CreatorId" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="TouchFlag" ColumnName="TouchFlag" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Hid" ColumnName="Hid" />
+                <ScalarProperty Name="RecDate" ColumnName="RecDate" />
+                <ScalarProperty Name="uId" ColumnName="uId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

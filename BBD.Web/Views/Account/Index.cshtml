@@ -18,7 +18,7 @@
                 {
                     <label>点穴剩余</label>@ViewBag.TouchCount<label>次</label>
                      <label>仪器剩余</label>@ViewBag.instrumentCount<label>次</label>
-                    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="btnAdd">立即使用</a>
+                    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" id="btnAdd">立即使用</a>
                 }
                 else
                 {
@@ -90,8 +90,9 @@
                               }
                           },
                           { title: "次数", field: "num", width: 175, sortable: true },
-                          { title: "处理人", field: "creator", width: 95, sortable: true },
-                          { title: "服务结束时间", field: "rec_date", width: 95, sortable: true, formatter: DateFormatYMD },
+                          { title: "记录员", field: "creator", width: 95, sortable: true },
+                          { title: "服务时间", field: "rec_date", width: 95, sortable: true, formatter: DateFormatYMD },
+                          { title: "完成时间", field: "finish_time", width: 95, sortable: true },
                           { title: "操作", field: "Opet", width: 95, sortable: true, formatter: OpetRec }
 
             ]],
@@ -106,8 +107,8 @@
 
     function OpetRec(value, row, index) {
         var btn = "";
-        if (row.rec_date == null || row.rec_date == "") {
-            btn += "<a href=\"#\" class='addcls'   name=\"btnAddcls\" onclick=\"ShowRecLogDialog(" + row.Id + ")\">完成日期</a>";;
+        if (row.finish_time == null || row.finish_time == "") {
+            btn += "<a href=\"#\" class='addcls'   name=\"btnAddcls\" onclick=\"ShowRecLogDialog(" + row.Id + ")\">完成时间</a>";;
         }
         return btn;
     }
@@ -120,8 +121,8 @@
 
         $("#Consumedialog").dialog({
             title: title,
-            width: 550,
-            height: 300,
+            width: 450,
+            height: 200,
             closed: false,
             cache: false,
             href: href,
@@ -141,13 +142,13 @@
     }
 
     function ShowRecLogDialog(Id){
-        var title = "结束记录";
+        var title = "完成消费";
 
         var href = "/ConsumeLog/ConsumeDialog" + "?Id=" + Id;
 
         $("#Consumedialog").dialog({
             title: title,
-            width: 550,
+            width: 450,
             height: 300,
             closed: false,
             cache: false,

@@ -101,6 +101,7 @@ namespace BBD.Web.Controllers
             }
             else
             {
+                cl.rec_date = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 bool num = oc.iBllSession.Itb_Consume_Log_Bo_BLL.UpdConsumeLog(cl);
                 if (!num)
                 {

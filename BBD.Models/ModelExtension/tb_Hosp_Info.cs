@@ -10,5 +10,6 @@ namespace BBD.Models
     {
         public string sTypeName { get; set; }
         public string CityName { get; set; }
+        public string HospStrIds { get; set; }
     }
 }

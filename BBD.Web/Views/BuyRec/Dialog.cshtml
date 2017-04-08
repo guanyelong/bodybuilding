@@ -6,7 +6,8 @@
 <form id="dialogForm" method="post" action="#">
     <input type="hidden" id="ID" value="@Model.ID" name="ID" />
     <input type="hidden" id="uId" value="@Model.uId" name="uId" />
-    <input type="hidden" id="HospId" value="" name="HospId" />
+    <input type="hidden" id="SalesId" value="" name="SalesId" />
+    <input type="hidden" id="HospId" value="@Model.HospId" name="HospId" />
     <input type="hidden" id="currentHospId" value="@ViewBag.currentHospId" />
     <table style="width: 100%; text-align: center">
         <tr>
@@ -20,10 +21,18 @@
         </tr>
         <tr>
             <td>
+                售出人:
+            </td>
+            <td>
+                <input id="salestree" type="text" name="salestree" data-options="required:true,validType:'checkNotData'" />
+            </td>
+        </tr>
+        <tr>
+            <td>
                 购买人:
             </td>
             <td>
-                <input id="uidtree"  type="text" name="uidtree" data-options="required:true" />
+                <input id="uidtree" type="text" name="uidtree" data-options="required:true,validType:'checkNotData'" />
             </td>
         </tr>
         <tr>
@@ -82,6 +91,7 @@
            
             //InitHospCombo();
             InitUidCombo();
+            InitSalesCombo();
         })
 
         $('#ServNum').numberspinner({
@@ -143,6 +153,32 @@
                             $('#uidtree').combobox('select', data[0].id);
                         else
                             $('#uidtree').combobox('select', hid);
+                    }
+                }
+            });
+        }
+        function InitSalesCombo() {
+            var salesUrl = "/BuyRec/GetAppSalesTree?hospId=" + $("#currentHospId").val();
+            $("#salestree").combobox({
+                url: salesUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#SalesId").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#salestree').combobox('getData');
+                    if (data.length > 0) {
+                        var hid = $("#SalesId").val();
+                        var selId = [];
+                        $.each(data, function (index, ele) {
+                            selId.push(ele.value);
+                        })
+                        if (hid == 0 || hid == "" || hid == null || selId.indexOf(parseInt(hid)) < 0)
+                            $('#salestree').combobox('select', data[0].id);
+                        else
+                            $('#salestree').combobox('select', hid);
                     }
                 }
             });

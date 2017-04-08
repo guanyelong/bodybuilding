@@ -26,7 +26,7 @@ namespace BBD.BLL
                 if (dt == null) return null;
                 IList<tb_Weight_Chg> list = ModelConvertHelper<tb_Weight_Chg>.ConvertToModel(dt);
                 count = list.Count;
-                list = list.OrderBy(o => o.uId).ThenBy(o => o.BatchId).ThenByDescending(o => o.C_time).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                list = list.OrderBy(o => o.uId).ThenByDescending(o => o.C_time).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
                 return list;
             }
             catch (Exception ex)

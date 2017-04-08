@@ -1,4 +1,5 @@
-﻿using BBD.Web.Models;
+﻿using BBD.Models;
+using BBD.Web.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +23,10 @@ namespace BBD.Web.Controllers
         public ActionResult Main()
         {
             if (AdminSystemInfo.CurrentUser != null)
+            {
+                InitEmpHosData();
                 return View(AdminSystemInfo.CurrentUser);
+            }
             else
                 return RedirectToAction("Index", "Login");
         }
@@ -73,6 +77,36 @@ namespace BBD.Web.Controllers
             Response.Cookies["HHYS_TokenId"].Value = null;
             Response.Cookies["HHYS_TokenId"].Expires = DateTime.Now.AddDays(-1);
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public void InitEmpHosData() {
+            using (BXUUEntities appEntities = new BXUUEntities())
+            {
+                List<tb_Emp_Hos> empHosList = new List<tb_Emp_Hos>();
+                var query = from eh in appEntities.tb_Emp_Hoss
+                            join h in appEntities.tb_Hosp_Infos on eh.hospid equals h.HospId
+                            where h.IsDel == 0 && h.state == 0
+                            select new
+                            {
+                                c_time = eh.c_time,
+                                hospid = eh.hospid,
+                                creator = eh.creator,
+                                creatorid = eh.creatorid,
+                                emp_id = eh.emp_id,
+                                Id = eh.Id
+                            };
+                foreach (var item in query)
+                {
+                    tb_Emp_Hos info = new tb_Emp_Hos();
+                    info.Id = item.Id;
+                    info.creatorid = item.creatorid;
+                    info.hospid = item.hospid;
+                    info.creator = item.creator;
+                    info.emp_id = item.emp_id;
+                    empHosList.Add(info);
+                }
+                AdminSystemInfo.UpdateEmpHosList(empHosList);
+            }
         }
 	}
 }

@@ -12,6 +12,8 @@ namespace BBD.Models
         public int TouchTimes { get; set; }
         public int InstrumentTimes { get; set; }
         public string ProductName { get; set; }
+        public string uName { get; set; }
+        public string SalesName { get; set; }
     }
 
     public partial class tb_Serv_Buy_temp 
@@ -30,5 +32,7 @@ namespace BBD.Models
         public int HospId { get; set; }
 
         public decimal PayMoney { get; set; }
+
+        public int SalesId { get; set; }
     }
 }

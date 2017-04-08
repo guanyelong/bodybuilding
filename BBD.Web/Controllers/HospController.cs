@@ -48,6 +48,28 @@ namespace BBD.Web.Controllers
             }
             info.Hname=Hname;
             info.tel=tel;
+
+            List<tb_Emp_Hos> hospList = AdminSystemInfo.EmpHospList;
+            if (hospList != null && hospList.Count > 0)
+            {
+
+                var hids = hospList.Select(p => p.hospid).ToList();
+                var strHids = "";
+                for (int i = 0; i < hids.Count; i++)
+                {
+                    strHids += hids[i] + ",";
+                }
+                if (strHids.Length > 0)
+                {
+                    strHids = "," + strHids;
+                }
+                info.HospStrIds = strHids;
+            }
+            else
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+
             IList<tb_Hosp_Info> query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetAppHospList(pageIndex, pageSize, ref count, info);
             
             var data = new
@@ -58,6 +80,36 @@ namespace BBD.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetAppHospListForEmp()
+        {
+            int pageIndex = int.Parse(Request["page"]);  //当前页  
+            int pageSize = int.Parse(Request["rows"]);  //页面行数
+            string Hname = Request["Hname"];
+            string tel = Request["tel"];
+            int count = 0;
+            tb_Hosp_Info info = new tb_Hosp_Info();
+            if (string.IsNullOrWhiteSpace(Hname))
+            {
+                Hname = "";
+            }
+            if (string.IsNullOrWhiteSpace(tel))
+            {
+                tel = "";
+            }
+            info.Hname = Hname;
+            info.tel = tel;
+            info.HospStrIds = "-1";
+            
+
+            IList<tb_Hosp_Info> query = oc.iBllSession.Itb_Hosp_Info_Bo_BLL.GetAppHospList(pageIndex, pageSize, ref count, info);
+
+            var data = new
+            {
+                total = count,
+                rows = query
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult DeleteHosp(int Id)
         {
             string errMsg = "";
@@ -106,7 +158,7 @@ namespace BBD.Web.Controllers
             }
             else
             {
-                string[] prop = { "HospId", "C_time", "CreatorId", "IsDel", "state", "sTypeName", "CityName" };
+                string[] prop = { "HospId", "C_time", "CreatorId", "IsDel", "state", "sTypeName", "CityName", "HospStrIds" };
                 hi.PyLong = new ChineseToPinyin().GetPinyin(hi.Hname);
                 hi.PyShort = ChineseToPinyin.GetCodstring(hi.Hname);
                 hi.ModfyId = AdminSystemInfo.CurrentUser.Uid;

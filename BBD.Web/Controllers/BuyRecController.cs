@@ -30,6 +30,7 @@ namespace BBD.Web.Controllers
             {
                 ViewBag.currentHospName = query.Hname;
             }
+            si.uId = uuid;
             //var hinfo = oc.iBllSession.Itb_User_Info_Bo_BLL.GetObjet(o => o.uId == uuid);
             //if (hinfo != null)
             //{
@@ -49,12 +50,12 @@ namespace BBD.Web.Controllers
                     si.ServNum = 1;
                     si.HospId = Convert.ToInt32(info.HospId);
                 }
+
+            }
+            //else
+            //{
                 
-            }
-            else
-            {
-                si.uId = uuid;
-            }
+            //}
             return View(si);
         }
 
@@ -152,6 +153,7 @@ namespace BBD.Web.Controllers
                 br.ProductPrice = si.ServPrice;
                 br.Creator = AdminSystemInfo.CurrentUser.uName;
                 br.CreatorId = AdminSystemInfo.CurrentUser.Uid;
+                br.SalesId = si.SalesId;
                 bool num = oc.iBllSession.Itb_User_Buy_Rec_Bo_BLL.BuyProductor(br);
                 if (!num) errMsg = "添加失败";
             }
@@ -184,6 +186,43 @@ namespace BBD.Web.Controllers
                 ht.Add("value", item.uId);
                 ht.Add("text", item.Name);
                 htlist.Add(ht);
+            }
+            return Json(htlist, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAppSalesTree(string hospId)
+        {
+            int count = 0;
+            List<Hashtable> htlist = new List<Hashtable>();
+            int empId = AdminSystemInfo.CurrentUser.Uid;
+            if (!string.IsNullOrWhiteSpace(hospId))
+            {
+                int hid = int.Parse(hospId);
+                tb_Sys_UserInfo info = new tb_Sys_UserInfo();
+                info.uName = "";
+                var query = oc.iBllSession.Itb_Emp_Hos_Bo_BLL.GetAppEmpHosList(1, 100, ref count, hid, info);
+                if (query!=null)
+                {
+                    foreach (var item in query)
+                    {
+                        Hashtable ht = new Hashtable();
+                        if (empId == item.Uid)
+                        {
+                            ht.Add("id", item.Uid);
+                            ht.Add("value", item.Uid);
+                            ht.Add("text", item.uName);
+                            ht.Add("seleted", true);
+                        }
+                        else
+                        {
+                            ht.Add("id", item.Uid);
+                            ht.Add("value", item.Uid);
+                            ht.Add("text", item.uName);
+                        }
+                        htlist.Add(ht);
+                    }
+                }
+                
             }
             return Json(htlist, JsonRequestBehavior.AllowGet);
         }

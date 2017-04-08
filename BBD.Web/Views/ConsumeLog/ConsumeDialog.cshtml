@@ -36,28 +36,29 @@
         </tr>
         <tr>
             <td>
-                <label for="c_time">
+                <label for="rec_date">
                     创建日期:
                 </label>
             </td>
             <td>
-                @Model.c_time
+                @Convert.ToDateTime(Model.rec_date).ToString("yyyy-MM-dd")
             </td>
         </tr>
 
         <tr>
             <td>
-                <label for="rec_date">
-                    记录日期:
+                <label for="finish_time">
+                    完成时间:
                 </label>
             </td>
             <td>
-                <input id="rec_date" class="easyui-datebox" type="text" name="rec_date" value="@Model.rec_date" />
+                <input id="finish_time" class="easyui-timespinner" style="width:80px;" value="@Model.finish_time" name="finish_time">
+                @*<input id="finish_time" class="easyui-datetimebox" type="text" name="finish_time" value="@Model.finish_time" data-options="onshowpanel:function(){$(this).datetimebox('spinner').timespinner('setvalue','00:00:00'); }" />*@
             </td>
         </tr>
 
     </table>
     <script type="text/javascript">
-
+  
     </script>
 </form>

@@ -34,6 +34,8 @@ public partial class tb_Consume_Log
 
     public Nullable<System.DateTime> c_time { get; set; }
 
+    public string finish_time { get; set; }
+
 }
 
 }

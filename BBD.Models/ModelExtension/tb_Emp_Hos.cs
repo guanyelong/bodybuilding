@@ -8,6 +8,7 @@ namespace BBD.Models
 {
     public partial class tb_Emp_Hos
     {
+        
         //public int Uid { get; set; }
 
         //public string uName { get; set; }

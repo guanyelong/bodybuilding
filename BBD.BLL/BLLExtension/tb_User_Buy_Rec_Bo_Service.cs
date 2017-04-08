@@ -150,35 +150,54 @@ namespace BBD.BLL
                                     }
                                 }
                                 /////插入疗程
-                                
-                                foreach (var pof in pofInfo)
-                                {
-                                    int? maxBatch = appEntitys.tb_Weight_Chgs.Where(p => p.uId == br.uId && p.TouchFlag == pof.TouchFlag).Max(p => p.BatchId);
-                                    if (maxBatch == null) maxBatch = 1;
-                                    else maxBatch += 1;
-                                    for (int k = 0; k < br.BuyNum; k++)
-                                    {
-                                        for (int z = 0; z < pof.Times; z++)
-                                        {
-                                            tb_Weight_Chg wc = new tb_Weight_Chg();
-                                            wc.uId = Convert.ToInt32(br.uId);
-                                            wc.BatchId = Convert.ToInt32(maxBatch) + k;
-                                            wc.TouchFlag = pof.TouchFlag;
-                                            wc.CreatorId = br.CreatorId;
-                                            wc.Creator = br.Creator;
-                                            appEntitys.tb_Weight_Chgs.Add(wc);
-                                            appEntitys.SaveChanges();
-                                            weight = true;
-                                        }
-                                    }
-                                }
+                                //int? maxCount = pofInfo.Max(p => p.Times);
+                                //int? maxBatch = appEntitys.tb_Weight_Chgs.Where(p => p.uId == br.uId).Max(p => p.BatchId);
+                                //if (maxBatch == null) maxBatch = 1;
+                                //else maxBatch += 1;
+                                //for (int k = 0; k < br.BuyNum; k++)
+                                //{
+                                //    for (int z = 0; z < maxCount; z++)
+                                //    {
+                                //        tb_Weight_Chg wc = new tb_Weight_Chg();
+                                //        wc.uId = Convert.ToInt32(br.uId);
+                                //        wc.BatchId = Convert.ToInt32(maxBatch) + k;
+                                //        //wc.TouchFlag = pof.TouchFlag;
+                                //        wc.CreatorId = br.CreatorId;
+                                //        wc.Creator = br.Creator;
+                                //        appEntitys.tb_Weight_Chgs.Add(wc);
+                                //        appEntitys.SaveChanges();
+                                //        weight = true;
+                                //    }
+                                //}
+
+                                //foreach (var pof in pofInfo)
+                                //{
+                                //    int? maxBatch = appEntitys.tb_Weight_Chgs.Where(p => p.uId == br.uId && p.TouchFlag == pof.TouchFlag).Max(p => p.BatchId);
+                                //    if (maxBatch == null) maxBatch = 1;
+                                //    else maxBatch += 1;
+                                //    for (int k = 0; k < br.BuyNum; k++)
+                                //    {
+                                //        for (int z = 0; z < pof.Times; z++)
+                                //        {
+                                //            tb_Weight_Chg wc = new tb_Weight_Chg();
+                                //            wc.uId = Convert.ToInt32(br.uId);
+                                //            wc.BatchId = Convert.ToInt32(maxBatch) + k;
+                                //            wc.TouchFlag = pof.TouchFlag;
+                                //            wc.CreatorId = br.CreatorId;
+                                //            wc.Creator = br.Creator;
+                                //            appEntitys.tb_Weight_Chgs.Add(wc);
+                                //            appEntitys.SaveChanges();
+                                //            weight = true;
+                                //        }
+                                //    }
+                                //}
 
 
                             }
                             #endregion
                         }
 
-                        if (cont && weight) tran.Complete();
+                        if (cont) tran.Complete();
                         return cont;
                     }
                 }

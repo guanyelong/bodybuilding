@@ -43,6 +43,8 @@ namespace BBD.Models
 
 				C_time = this.C_time,
 
+				SalesId = this.SalesId,
+
 			};
 		}
 	}

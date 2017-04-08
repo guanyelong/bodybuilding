@@ -147,7 +147,7 @@
                           { title: "门店", field: "HospName", width: 95, sortable: true },
                           { title: "姓名", field: "Name", width: 35, sortable: true },
                           { title: "出生日期", field: "Birth", width: 95, sortable: true, formatter: DataYMDFormat },
-                          { title: "手机号码", field: "Mobile", width: 95, sortable: true },
+                          { title: "手机号码", field: "Mobile", width: 135, sortable: true, formatter: subMobile },
                           { title: "性别", field: "Female", width: 35, sortable: true },
                           { title: "来源", field: "ComeFromName", width: 95, sortable: true },
                           { title: "本人推荐码", field: "Self_code", width: 95, sortable: true },
@@ -175,6 +175,15 @@
             }
         })
     };
+
+    function subMobile(val) {
+        if (val != null && val != "") {
+            val = val.substring(0, 3) + "*****" + val.substring(8);
+            return val;
+        } else {
+            return "";
+        }
+    }
 
     function DataYMDFormat(val) {
         if (val != null && val != "") {

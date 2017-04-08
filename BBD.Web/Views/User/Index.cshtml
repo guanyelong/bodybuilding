@@ -176,7 +176,7 @@
 
     function subMobile(val) {
         if (val != null && val != "") {
-            val = val.substring(0, 3) + "********";
+            val = val.substring(0, 3) + "*****" + val.substring(8);
             return val;
         } else {
             return "";

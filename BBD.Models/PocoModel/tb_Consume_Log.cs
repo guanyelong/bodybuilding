@@ -37,6 +37,8 @@ namespace BBD.Models
 
 				c_time = this.c_time,
 
+				finish_time = this.finish_time,
+
 			};
 		}
 	}

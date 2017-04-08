@@ -117,8 +117,8 @@ namespace BBD.Web.Controllers
             }
             else
             {
-                string[] prop = { "ID", "CTime" };
-                //si.ModifyId = AdminSystemInfo.CurrentUser.Uid;
+                string[] prop = { "ID", "CTime", "CreatorId", "Creator", "ServTypeName", "TouchTimes", "InstrumentTimes", "HospIds", "HospName", "CityName", "HospStrIds", "state", "IsDel" };
+                si.ModifyId = AdminSystemInfo.CurrentUser.Uid;
                 si.LastModTime = DateTime.Now;
                 int num = oc.iBllSession.Itb_Serv_Info_Bo_BLL.Modifyed(si, prop);
                 if (num < 1) errMsg = "修改失败";

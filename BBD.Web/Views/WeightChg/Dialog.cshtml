@@ -1,62 +1,48 @@
 ﻿@{
-    ViewBag.Title = "体重编辑";
+    ViewBag.Title = "体重日记";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model BBD.Models.tb_Weight_Chg
 <form id="dialogForm" method="post" action="#">
     <input type="hidden" id="Id" value="@Model.Id" name="Id" />
+    <input type="hidden" id="uId" value="@Model.uId" name="uId" />
+    <input type="hidden" id="Hid" name="Hid" value="@Model.Hid" />
+    <input type="hidden" id="TouchFlag" name="TouchFlag" value="@Model.TouchFlag" />
     <table style="width: 100%; text-align: center">
         <tr>
             <td>
-                <label for="Female">
+                <label for="hosptree">
+                    记录门店:
+                </label>
+            </td>
+            <td>
+                <input id="hosptree" name="hosptree" data-options="required:true,validType:'checkNotData'">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="uName">
                     用户姓名:
                 </label>
             </td>
             <td>
-                @Model.uName
+                <input id="uName" readonly class="easyui-textbox" type="text" name="uName" value="@Model.uName" data-options="required:true"  />
             </td>
         </tr>
         <tr>
             <td>
-                <label for="BatchId">
-                    疗程阶段:
-                </label>
-            </td>
-            <td>
-                @Model.BatchId
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="TouchFlag">
+                <label for="TouchFlagtree">
                     类型:
                 </label>
             </td>
             <td>
-                @if (Model.TouchFlag == 0)
-                {
-                    <text>仪器</text>
-                }
-                else if (Model.TouchFlag == 1)
-                {
-                    <text>点穴</text>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="Hid">
-                    升高:
-                </label>
-            </td>
-            <td>
-                <input id="Hid" class="easyui-numberbox" type="text" name="Hid" value="@Model.Hid" data-options="min:0,precision:0" />
+                <input id="TouchFlagtree" name="TouchFlagtree">
             </td>
         </tr>
         <tr>
             <td>
                 <label for="Weight">
-                    体重:
+                    体重(千克):
                 </label>
             </td>
             <td>
@@ -89,6 +75,85 @@
 
     </table>
     <script type="text/javascript">
-        
+        $(function () {
+            InitHospCombo();
+            InitTouchFlagCombo();
+        })
+
+        function InitHospCombo() {
+            var hosUrl = "/WeightChg/GetAppHospTree";
+            $("#hosptree").combobox({
+                url: hosUrl,
+                valueField: 'value',
+                textField: 'text',
+                editable: true,
+                onSelect: function (rec) {
+                    $("#Hid").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#hosptree').combobox('getData');
+                    if (data.length > 0) {
+                        var stype = $("#Hid").val();
+                        if (stype == 0)
+                            $('#hosptree').combobox('select', data[0].id);
+                        else
+                            $('#hosptree').combobox('select', stype);
+                    }
+                }
+            });
+        }
+
+        function InitTouchFlagCombo() {
+            $("#TouchFlagtree").combobox({
+                valueField: 'value',
+                textField: 'text',
+                data: [{
+                    "id":0,
+                    "value": 0,
+                    "text": "仪器前称重"
+                }, {
+                    "id": 1,
+                    "value": 1,
+                    "text": "点穴前称重"
+                }, {
+                    "id": 2,
+                    "value": 2,
+                    "text": "自报体重"
+                }],
+                editable: true,
+                onSelect: function (rec) {
+                    $("#TouchFlag").val(rec.value);
+                },
+                onLoadSuccess: function () {
+                    var data = $('#TouchFlagtree').combobox('getData');
+                    if (data.length > 0) {
+                        var flag = $("#TouchFlag").val();
+                        if (flag == null || flag == "")
+                            $('#TouchFlagtree').combobox('select', data[0].id);
+                        else
+                            $('#TouchFlagtree').combobox('select', flag);
+                    }
+                }
+            });
+        }
+
+        function selTouch()
+        {
+            var touchs = [];
+            $("input[name='groupTouch']").each(function () {
+                var self = $(this);
+                if (self.prop('checked')) {
+                    touchs.push(self.val());
+                }
+            });
+            if (touchs.length==1) {
+                $("#TouchFlag").val(touchs[0]);
+            } else if (touchs.length == 2) {
+                $("#TouchFlag").val(2);
+            } else
+            {
+                $("#TouchFlag").val('');
+            }
+        }
     </script>
 </form>

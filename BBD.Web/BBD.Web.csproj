@@ -186,7 +186,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\RolePermissionController.cs" />
-    <Compile Include="Controllers\ServController.cs" />
+    <Compile Include="Controllers\ServPOFController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
@@ -1444,11 +1444,12 @@
     <Content Include="Views\WeightChg\Index.cshtml" />
     <Content Include="Views\WeightChgSelf\Dialog.cshtml" />
     <Content Include="Views\ConsumeLog\ConsumeDialog.cshtml" />
+    <Content Include="Views\ServPOF\Index.cshtml" />
+    <Content Include="Views\ServPOF\Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Consume\" />
-    <Folder Include="Views\Serv\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

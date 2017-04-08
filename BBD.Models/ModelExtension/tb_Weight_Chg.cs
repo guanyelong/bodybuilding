@@ -10,5 +10,7 @@ namespace BBD.Models
     {
         public string uName { get; set; }
         public string Mobile { get; set; }
+
+        public string Hname { get; set; }
     }
 }
